@@ -14,6 +14,7 @@ service.interceptors.request.use(
     if (UserModule.token) {
       config.headers["X-Access-Token"] = UserModule.token;
     }
+    config.headers["Content-Type"] = "application/x-www-form-urlencoded";
     return config;
   },
   error => {
@@ -33,7 +34,7 @@ service.interceptors.response.use(
     // code == 50005: username or password is incorrect
     // You can change this part for your own usage.
     const res = response.data;
-    if (res.code !== 200) {
+    if (res.code !== 0) {
       Message({
         message: res.message || "Error",
         type: "error",

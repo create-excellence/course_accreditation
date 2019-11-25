@@ -27,8 +27,6 @@
   ],
   // 保存时eslint自动修复错误
   "eslint.autoFixOnSave": true,
-  // 开启 eslint 支持
-  "prettier.eslintIntegration": true,
   // 使用单引号
   "prettier.singleQuote": true,
   // 结尾不加分号
