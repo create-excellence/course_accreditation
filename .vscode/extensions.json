@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    // Lint-on-save with Stylelint
+    // https://github.com/shinnn/vscode-stylelint
+    "shinnn.stylelint",
+    "octref.vetur",
+    "esbenp.prettier-vscode"
+  ]
+}
