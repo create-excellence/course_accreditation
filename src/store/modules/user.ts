@@ -5,6 +5,7 @@ import {
   Mutation,
   getModule
 } from "vuex-module-decorators";
+import * as m from "@/api/model";
 import { login, logout, getUserInfo } from "@/api/users";
 import { getToken, setToken, removeToken } from "@/utils/cookies";
 import store from "@/store";
@@ -51,15 +52,23 @@ class User extends VuexModule implements IUserState {
   }
 
   @Action
-  public async Login(userInfo: { username: string; password: string }) {
-    let { username, password } = userInfo;
-    username = username.trim();
+  public async Login(userInfo: m.LoginForm) {
+    let { code, password } = userInfo;
+    code = code.trim();
     const { data } = await login({
-      code: username,
+      code: code,
       password: password
     });
-    setToken(data.accessToken);
-    this.SET_TOKEN(data.accessToken);
+    const token = "token";
+    setToken(token);
+    this.SET_TOKEN(token);
+
+    const { name, avatar } = data;
+    const roles = [data.role] || [];
+
+    this.SET_ROLES(roles);
+    this.SET_NAME(name);
+    this.SET_AVATAR(avatar);
   }
 
   @Action
@@ -96,7 +105,7 @@ class User extends VuexModule implements IUserState {
     if (this.token === "") {
       throw Error("LogOut: token is undefined!");
     }
-    await logout();
+    // await logout();
     removeToken();
     this.SET_TOKEN("");
     this.SET_ROLES([]);

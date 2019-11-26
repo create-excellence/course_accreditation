@@ -2,10 +2,9 @@ import { isValidUsername, isExternal } from "@/utils/validate";
 
 describe("Utils:validate", () => {
   it("isValidUsername", () => {
-    expect(isValidUsername("123")).toBe(true);
     expect(isValidUsername("admin")).toBe(true);
     expect(isValidUsername("editor")).toBe(true);
-    // expect(isValidUsername("xxxx")).toBe(false);
+    expect(isValidUsername("xxxx")).toBe(false);
   });
 
   it("isExternal", () => {

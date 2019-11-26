@@ -14,7 +14,7 @@ service.interceptors.request.use(
     if (UserModule.token) {
       config.headers["X-Access-Token"] = UserModule.token;
     }
-    config.headers["Content-Type"] = "application/x-www-form-urlencoded";
+    // config.headers["Content-Type"] = "application/x-www-form-urlencoded";
     return config;
   },
   error => {
@@ -34,13 +34,17 @@ service.interceptors.response.use(
     // code == 50005: username or password is incorrect
     // You can change this part for your own usage.
     const res = response.data;
-    if (res.code !== 0) {
+    if (res.status !== 0) {
       Message({
         message: res.message || "Error",
         type: "error",
         duration: 5 * 1000
       });
-      if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
+      if (
+        res.status === 50008 ||
+        res.status === 50012 ||
+        res.status === 50014
+      ) {
         MessageBox.confirm(
           "You have been logged out, try to login again.",
           "Log out",

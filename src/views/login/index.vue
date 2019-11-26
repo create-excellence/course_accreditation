@@ -14,17 +14,17 @@
         </h3>
       </div>
 
-      <el-form-item prop="username">
+      <el-form-item prop="code">
         <span class="svg-container">
           <svg-icon name="user" />
         </span>
         <el-input
-          ref="username"
-          v-model="loginForm.username"
-          name="username"
+          ref="code"
+          v-model="loginForm.code"
+          name="code"
           type="text"
           autocomplete="on"
-          placeholder="username"
+          placeholder="code"
         />
       </el-form-item>
 
@@ -60,7 +60,7 @@
 
       <div style="position:relative">
         <div class="tips">
-          <span> username: admin </span>
+          <span> code: 123 </span>
           <span> password: any </span>
         </div>
       </div>
@@ -73,15 +73,16 @@ import { Component, Vue, Watch } from "vue-property-decorator";
 import { Route } from "vue-router";
 import { Dictionary } from "vuex";
 import { Form as ElForm, Input } from "element-ui";
+import * as m from "@/api/model";
 import { UserModule } from "@/store/modules/user";
-import { isValidUsername } from "@/utils/validate";
+import { isValidCode } from "@/utils/validate";
 
 @Component({
   name: "Login"
 })
 export default class extends Vue {
-  private validateUsername = (rule: any, value: string, callback: Function) => {
-    if (!isValidUsername(value)) {
+  private validateCode = (rule: any, value: string, callback: Function) => {
+    if (!isValidCode(value)) {
       callback(new Error("Please enter the correct user name"));
     } else {
       callback();
@@ -94,12 +95,12 @@ export default class extends Vue {
       callback();
     }
   };
-  private loginForm = {
-    username: "123",
+  private loginForm: m.LoginForm = {
+    code: "123",
     password: "123456"
   };
   private loginRules = {
-    username: [{ validator: this.validateUsername, trigger: "blur" }],
+    code: [{ validator: this.validateCode, trigger: "blur" }],
     password: [{ validator: this.validatePassword, trigger: "blur" }]
   };
   private passwordType = "password";
@@ -120,8 +121,8 @@ export default class extends Vue {
   }
 
   mounted() {
-    if (this.loginForm.username === "") {
-      (this.$refs.username as Input).focus();
+    if (this.loginForm.code === "") {
+      (this.$refs.code as Input).focus();
     } else if (this.loginForm.password === "") {
       (this.$refs.password as Input).focus();
     }
@@ -141,8 +142,14 @@ export default class extends Vue {
   private handleLogin() {
     (this.$refs.loginForm as ElForm).validate(async (valid: boolean) => {
       if (valid) {
-        this.loading = true;
-        await UserModule.Login(this.loginForm);
+        this.loading = false;
+        await UserModule.Login(this.loginForm)
+          .then(() => {
+            console.log("login success");
+          })
+          .catch(err => {
+            console.log("login fail");
+          });
         this.$router.push({
           path: this.redirect || "/",
           query: this.otherQuery
