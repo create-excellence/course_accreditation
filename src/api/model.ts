@@ -1,2 +1,2 @@
-export * from "../.generated/model";
+export * from '../.generated/model'
 // export * from './enums'
