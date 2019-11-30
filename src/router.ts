@@ -51,6 +51,20 @@ export default new Router({
       ]
     },
     {
+      path: '/course',
+      component: Layout,
+      children: [
+        {
+          path: 'index',
+          component: () => import(/* webpackChunkName: "form" */ '@/views/course/index.vue'),
+          meta: {
+            title: 'Course',
+            icon: 'form'
+          }
+        }
+      ]
+    },
+    {
       path: '/example',
       component: Layout,
       redirect: '/example/tree',
