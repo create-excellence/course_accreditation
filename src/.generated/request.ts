@@ -89,10 +89,10 @@ export function queryCourse(options: {
     queryItems.pageSize = options.pageSize;
   }
   const query = encodeQuery(queryItems);
-  const url = `/course?${query}`;
+  const url = `/v1/course?${query}`;
   const reqOptions: ApiRequestOptions = {
     url,
-    method: "POST",
+    method: "GET",
     reqName: "queryCourse"
   };
   return request<m.CourseListResp>(reqOptions);

@@ -22,7 +22,6 @@
       </el-form-item>
       <el-form-item>
         <el-button
-          v-waves
           icon="el-icon-search"
           @click="handleFilter"
         >
