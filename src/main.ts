@@ -11,6 +11,7 @@ import store from '@/store'
 import router from '@/router'
 import '@/icons/components'
 import '@/permission'
+import Pagination from '@/components/Pagination/index.vue'
 
 Vue.use(ElementUI)
 Vue.use(SvgIcon, {
@@ -19,9 +20,9 @@ Vue.use(SvgIcon, {
   defaultHeight: '1em'
 })
 
+Vue.component('pagination', Pagination)
 Vue.prototype.model = model
 Vue.prototype.api = api
-
 Vue.config.productionTip = false
 
 new Vue({

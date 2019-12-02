@@ -1,3 +1,5 @@
+/* eslint-disable handle-callback-err */
+/* eslint-disable handle-callback-err */
 <template>
   <div class="login-container">
     <el-form
@@ -148,7 +150,6 @@ export default class extends Vue {
           .then(() => {
             console.log('login success')
           })
-
         this.$router.push({
           path: this.redirect || '/',
           query: this.otherQuery

@@ -25,12 +25,14 @@
       "autoFix": true
     }
   ],
+  "editor.formatOnSave": false,
   // 保存时eslint自动修复错误
   "eslint.autoFixOnSave": true,
   // 使用单引号
   "prettier.singleQuote": true,
   // 结尾不加分号
   "prettier.semi": false,
+
   // CSS
   "stylelint.enable": true,
   "css.validate": false,
