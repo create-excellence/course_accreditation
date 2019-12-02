@@ -4,11 +4,11 @@ import {
   Action,
   Mutation,
   getModule
-} from "vuex-module-decorators";
-import * as m from "@/api/model";
-import { login, logout, getUserInfo } from "@/api/users";
-import { getToken, setToken, removeToken } from "@/utils/cookies";
-import store from "@/store";
+} from 'vuex-module-decorators'
+import * as m from '@/api/models'
+import { login, logout, getUserInfo } from '@/api/users'
+import { getToken, setToken, removeToken } from '@/utils/cookies'
+import store from '@/store'
 
 export interface IUserState {
   token: string;
@@ -18,98 +18,98 @@ export interface IUserState {
   roles: string[];
 }
 
-@Module({ dynamic: true, store, name: "user" })
+@Module({ dynamic: true, store, name: 'user' })
 class User extends VuexModule implements IUserState {
-  public token = getToken() || "";
-  public name = "";
-  public avatar = "";
-  public introduction = "";
+  public token = getToken() || '';
+  public name = '';
+  public avatar = '';
+  public introduction = '';
   public roles: string[] = [];
 
   @Mutation
   private SET_TOKEN(token: string) {
-    this.token = token;
+    this.token = token
   }
 
   @Mutation
   private SET_NAME(name: string) {
-    this.name = name;
+    this.name = name
   }
 
   @Mutation
   private SET_AVATAR(avatar: string) {
-    this.avatar = avatar;
+    this.avatar = avatar
   }
 
   @Mutation
   private SET_INTRODUCTION(introduction: string) {
-    this.introduction = introduction;
+    this.introduction = introduction
   }
 
   @Mutation
   private SET_ROLES(roles: string[]) {
-    this.roles = roles;
+    this.roles = roles
   }
 
   @Action
   public async Login(userInfo: m.LoginForm) {
-    let { code, password } = userInfo;
-    code = code.trim();
+    let { code, password } = userInfo
+    code = code.trim()
     const { data } = await login({
       code: code,
       password: password
-    });
-    const token = "token";
-    setToken(token);
-    this.SET_TOKEN(token);
+    })
+    const token = 'token'
+    setToken(token)
+    this.SET_TOKEN(token)
 
-    const { name, avatar } = data;
-    const roles = [data.role] || [];
+    const { name, avatar } = data
+    const roles = [data.role] || []
 
-    this.SET_ROLES(roles);
-    this.SET_NAME(name);
-    this.SET_AVATAR(avatar);
+    this.SET_ROLES(roles)
+    this.SET_NAME(name)
+    this.SET_AVATAR(avatar)
   }
 
   @Action
   public ResetToken() {
-    removeToken();
-    this.SET_TOKEN("");
-    this.SET_ROLES([]);
+    removeToken()
+    this.SET_TOKEN('')
+    this.SET_ROLES([])
   }
 
   @Action
   public async GetUserInfo() {
-    if (this.token === "") {
-      throw Error("GetUserInfo: token is undefined!");
+    if (this.token === '') {
+      throw Error('GetUserInfo: token is undefined!')
     }
     const { data } = await getUserInfo({
       /* Your params here */
-    });
+    })
     if (!data) {
-      throw Error("Verification failed, please Login again.");
+      throw Error('Verification failed, please Login again.')
     }
-    const { roles, name, avatar, introduction } = data.user;
+    const { roles, name, avatar, introduction } = data.user
     // roles must be a non-empty array
     if (!roles || roles.length <= 0) {
-      throw Error("GetUserInfo: roles must be a non-null array!");
+      throw Error('GetUserInfo: roles must be a non-null array!')
     }
-    this.SET_ROLES(roles);
-    this.SET_NAME(name);
-    this.SET_AVATAR(avatar);
-    this.SET_INTRODUCTION(introduction);
+    this.SET_ROLES(roles)
+    this.SET_NAME(name)
+    this.SET_AVATAR(avatar)
+    this.SET_INTRODUCTION(introduction)
   }
 
   @Action
   public async LogOut() {
-    if (this.token === "") {
-      throw Error("LogOut: token is undefined!");
+    if (this.token === '') {
+      throw Error('LogOut: token is undefined!')
     }
     // await logout();
-    removeToken();
-    this.SET_TOKEN("");
-    this.SET_ROLES([]);
+    removeToken()
+    this.SET_TOKEN('')
+    this.SET_ROLES([])
   }
 }
 
-export const UserModule = getModule(User);
+export const UserModule = getModule(User)

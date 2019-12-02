@@ -42,7 +42,10 @@
           autocomplete="on"
           @keyup.enter.native="handleLogin"
         />
-        <span class="show-pwd" @click="showPwd">
+        <span
+          class="show-pwd"
+          @click="showPwd"
+        >
           <svg-icon
             :name="passwordType === 'password' ? 'eye-off' : 'eye-on'"
           />
@@ -69,108 +72,104 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from "vue-property-decorator";
-import { Route } from "vue-router";
-import { Dictionary } from "vuex";
-import { Form as ElForm, Input } from "element-ui";
-import * as m from "@/api/model";
-import { UserModule } from "@/store/modules/user";
-import { isValidCode } from "@/utils/validate";
+import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Route } from 'vue-router'
+import { Dictionary } from 'vuex'
+import { Form as ElForm, Input } from 'element-ui'
+import * as m from '@/api/models'
+import { UserModule } from '@/store/modules/user'
+import { isValidCode } from '@/utils/validate'
 
 @Component({
-  name: "Login"
+  name: 'Login'
 })
 export default class extends Vue {
-  private validateCode = (rule: any, value: string, callback: Function) => {
-    if (!isValidCode(value)) {
-      callback(new Error("Please enter the correct user name"));
-    } else {
-      callback();
-    }
-  };
-  private validatePassword = (rule: any, value: string, callback: Function) => {
-    if (value.length < 6) {
-      callback(new Error("The password can not be less than 6 digits"));
-    } else {
-      callback();
-    }
-  };
+  // private validateCode = (rule: any, value: string, callback: Function) => {
+  //   if (!isValidCode(value)) {
+  //     callback(new Error('Please enter the correct user name'))
+  //   } else {
+  //     callback()
+  //   }
+  // }
+  // private validatePassword = (rule: any, value: string, callback: Function) => {
+  //   if (value.length < 6) {
+  //     callback(new Error('The password can not be less than 6 digits'))
+  //   } else {
+  //     callback()
+  //   }
+  // }
   private loginForm: m.LoginForm = {
-    code: "123",
-    password: "123456"
+    code: '123',
+    password: '123456'
   };
   private loginRules = {
-    code: [{ validator: this.validateCode, trigger: "blur" }],
-    password: [{ validator: this.validatePassword, trigger: "blur" }]
+    code: [{ required: true, trigger: 'blur' }],
+    password: [{ required: true, trigger: 'blur' }]
   };
-  private passwordType = "password";
+  private passwordType = 'password';
   private loading = false;
   private showDialog = false;
   private redirect?: string;
   private otherQuery: Dictionary<string> = {};
 
-  @Watch("$route", { immediate: true })
+  @Watch('$route', { immediate: true })
   private onRouteChange(route: Route) {
-    // TODO: remove the "as Dictionary<string>" hack after v4 release for vue-router
-    // See https://github.com/vuejs/vue-router/pull/2050 for details
-    const query = route.query as Dictionary<string>;
+    const query = route.query as Dictionary<string>
     if (query) {
-      this.redirect = query.redirect;
-      this.otherQuery = this.getOtherQuery(query);
+      this.redirect = query.redirect
+      this.otherQuery = this.getOtherQuery(query)
     }
   }
 
   mounted() {
-    if (this.loginForm.code === "") {
-      (this.$refs.code as Input).focus();
-    } else if (this.loginForm.password === "") {
-      (this.$refs.password as Input).focus();
+    if (this.loginForm.code === '') {
+      (this.$refs.code as Input).focus()
+    } else if (this.loginForm.password === '') {
+      (this.$refs.password as Input).focus()
     }
   }
 
   private showPwd() {
-    if (this.passwordType === "password") {
-      this.passwordType = "";
+    if (this.passwordType === 'password') {
+      this.passwordType = ''
     } else {
-      this.passwordType = "password";
+      this.passwordType = 'password'
     }
     this.$nextTick(() => {
-      (this.$refs.password as Input).focus();
-    });
+      (this.$refs.password as Input).focus()
+    })
   }
 
   private handleLogin() {
-    (this.$refs.loginForm as ElForm).validate(async (valid: boolean) => {
+    (this.$refs.loginForm as ElForm).validate(async(valid: boolean) => {
       if (valid) {
-        this.loading = false;
+        this.loading = false
         await UserModule.Login(this.loginForm)
           .then(() => {
-            console.log("login success");
+            console.log('login success')
           })
-          .catch(err => {
-            console.log("login fail");
-          });
+
         this.$router.push({
-          path: this.redirect || "/",
+          path: this.redirect || '/',
           query: this.otherQuery
-        });
+        })
         // Just to simulate the time of the request
         setTimeout(() => {
-          this.loading = false;
-        }, 0.5 * 1000);
+          this.loading = false
+        }, 0.5 * 1000)
       } else {
-        return false;
+        return false
       }
-    });
+    })
   }
 
   private getOtherQuery(query: Dictionary<string>) {
     return Object.keys(query).reduce((acc, cur) => {
-      if (cur !== "redirect") {
-        acc[cur] = query[cur];
+      if (cur !== 'redirect') {
+        acc[cur] = query[cur]
       }
-      return acc;
-    }, {} as Dictionary<string>);
+      return acc
+    }, {} as Dictionary<string>)
   }
 }
 </script>

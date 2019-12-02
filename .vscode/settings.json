@@ -45,5 +45,6 @@
   },
   "[css]": {
     "editor.formatOnSave": true
-  }
+  },
+  "editor.fontSize": 15
 }
