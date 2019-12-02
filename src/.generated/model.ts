@@ -24,7 +24,7 @@ export interface Course {
    * @type {string}
    * @memberof Course
    */
-  code?: string;
+  code: string;
   /**
    * 创建时间
    * @type {Date}
@@ -36,25 +36,25 @@ export interface Course {
    * @type {number}
    * @memberof Course
    */
-  credit?: number;
+  credit: number;
   /**
    * id
    * @type {number}
    * @memberof Course
    */
-  id?: number;
+  id : number;
   /**
    * 课程名称
    * @type {string}
    * @memberof Course
    */
-  name?: string;
+  name : string;
   /**
    * 课程性质
    * @type {string}
    * @memberof Course
    */
-  nature?: string;
+  nature: string;
   /**
    * 更新时间
    * @type {Date}
@@ -539,6 +539,12 @@ export interface Student {
    * @memberof Student
    */
   id?: number;
+   /**
+   * 头像
+   * @type {string}
+   * @memberof Student
+   */
+  avatar?: string;
   /**
    * 上此登录数据
    * @type {Date}
@@ -669,6 +675,13 @@ export interface Teacher {
    * @memberof Teacher
    */
   jno?: string;
+
+   /**
+   * 头像
+   * @type {string}
+   * @memberof Teacher
+   */
+  avatar?: string;
   /**
    * 上传登录时间
    * @type {Date}
@@ -717,7 +730,7 @@ export interface Teacher {
  */
 export interface Course {
 
-  id: string;
+  id: number;
 
   code: string;
 

@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import * as model from '@/api/models'
+import * as model from '@/api/model'
 import 'normalize.css'
 import ElementUI from 'element-ui'
 import SvgIcon from 'vue-svgicon'

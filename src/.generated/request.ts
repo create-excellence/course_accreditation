@@ -73,7 +73,7 @@ export function queryCourse(options: {
   code?: string;
   page?: number;
   pageSize?: number;
-}): Promise<m.CourseListResp> {
+}){
   options.pageSize = options.pageSize || defaultPageSize;
   const queryItems: any = {};
   if (options.name) {
@@ -95,5 +95,5 @@ export function queryCourse(options: {
     method: "GET",
     reqName: "queryCourse"
   };
-  return request<m.CourseListResp>(reqOptions);
+  return request(reqOptions);
 }
