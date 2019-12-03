@@ -271,7 +271,7 @@ export default class Course extends Vue {
         } else {
           const res = await this.api.createCourse(this.editForm)
           if (res.status === 0) {
-            console.log(res);
+            res.
             (this.$refs['editForm'] as ElForm).resetFields()
             this.showDialog = false
             this.$message(res.msg)

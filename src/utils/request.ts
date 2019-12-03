@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { Message, MessageBox } from 'element-ui'
 import { UserModule } from '@/store/modules/user'
+import * as m from '@/api/model'
 
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,

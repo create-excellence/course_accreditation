@@ -166,25 +166,8 @@ export interface CreateGraduationPointForm {
    */
   no?: string;
 
-}/**
-* 
-* @export
-* @interface CreateLoginFormForm
-*/
-export interface CreateLoginFormForm {
-  /**
-   * 工号/学号
-   * @type {string}
-   * @memberof CreateLoginFormForm
-   */
-  code?: string;
-  /**
-   * 密码
-   * @type {string}
-   * @memberof CreateLoginFormForm
-   */
-  password?: string;
-}/**
+}
+/**
 * 
 * @export
 * @interface CreateMajorForm
