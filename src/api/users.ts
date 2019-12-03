@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-
+import * as m from '@/api/model'
 export const getUserInfo = (data: any) =>
   request({
     url: '/users/info',
@@ -7,7 +7,7 @@ export const getUserInfo = (data: any) =>
     data
   })
 
-export const login = (data: any) =>
+export const login = (data: m.LoginForm) =>
   request({
     url: '/system/login',
     method: 'post',

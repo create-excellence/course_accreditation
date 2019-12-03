@@ -494,25 +494,25 @@ export interface ServerResponse {
    * @type {any}
    * @memberof ServerResponse
    */
-  data?: any;
+  data: any;
   /**
    * 
    * @type {string}
    * @memberof ServerResponse
    */
-  msg?: string;
+  msg: string;
   /**
    * 
    * @type {number}
    * @memberof ServerResponse
    */
-  status?: number;
+  status: number;
   /**
    * 
    * @type {boolean}
    * @memberof ServerResponse
    */
-  success?: boolean;
+  success: boolean;
 }
 
 /**

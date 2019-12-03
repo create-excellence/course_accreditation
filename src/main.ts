@@ -18,14 +18,13 @@ Vue.use(SvgIcon, {
   defaultWidth: '1em',
   defaultHeight: '1em'
 })
-Vue.prototype.$api = api
+Vue.prototype.api = api
 Vue.component('pagination', Pagination)
 Vue.config.productionTip = false
 
 declare module 'vue/types/vue' {
   interface Vue {
-    $api: any
-    $Message: any
+    api: api.api
   }
 }
 

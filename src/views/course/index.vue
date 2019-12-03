@@ -11,7 +11,7 @@
       >
         <el-input
           v-model="queryOptions.name"
-          placeholder="校区名称"
+          placeholder="课程名称"
           maxlength="10"
         />
       </el-form-item>
@@ -20,7 +20,7 @@
       >
         <el-input
           v-model="queryOptions.code"
-          placeholder="校区代码"
+          placeholder="课程代码"
           maxlength="10"
         />
       </el-form-item>
@@ -36,7 +36,7 @@
           icon="el-icon-plus"
           @click="handleCreate"
         >
-          校区
+          课程
         </el-button>
       </el-form-item>
     </el-form>
@@ -117,6 +117,7 @@
         ref="editForm"
         :model="editForm"
         :rules="rules"
+        label-position="top"
       >
         <el-form-item
           prop="name"
@@ -140,11 +141,14 @@
         </el-form-item>
         <el-form-item
           label="课程学分"
+          prop="credit"
         >
-          <el-input
-            v-model.number="editForm.credit"
-            type="number"
-            placeholder="请输入课程学分"
+          <el-input-number
+            v-model="editForm.credit"
+            :min="0"
+            :precision="1"
+            :step="0.5"
+            :max="10"
           />
         </el-form-item>
         <el-form-item
@@ -199,8 +203,10 @@ export default class Course extends Vue {
   }
 
   rules={
-    name: [{ required: true, message: '校区名称不能为空', trigger: 'blur' }],
-    code: [{ required: true, message: '校区代码不能为空', trigger: 'blur' }]
+    name: [{ required: true, message: '课程名称不能为空', trigger: 'blur' }],
+    code: [{ required: true, message: '课程代码不能为空', trigger: 'blur' }],
+    credit: [{ required: true, message: '课程学分不能为空', trigger: 'blur' }],
+    nature: [{ required: true, message: '课程性质不能为空', trigger: 'blur' }]
   }
 
   created() {
@@ -218,7 +224,7 @@ export default class Course extends Vue {
 
   async requestData() {
     this.loading = true
-    const res = await this.$api.getCourseList({
+    const res = await this.api.getCourseList({
       page: 1,
       pageSize: 20
     })
@@ -236,7 +242,7 @@ export default class Course extends Vue {
     this.editForm = {
       name: '',
       code: '',
-      credit: 0,
+      credit: 2.0,
       nature: ''
     }
   }
@@ -256,17 +262,19 @@ export default class Course extends Vue {
     (this.$refs['editForm'] as ElForm).validate(async(valid : boolean) => {
       if (valid) {
         if (this.course.id) {
-          const res = await api.putCampus({ id: this.course.id, body: this.editForm })
-          if (res.code === 0) {
+          const res = await this.api.putCourse(this.course.id, this.editForm)
+          if (res.status === 0) {
             this.resetForm()
             this.showDialog = false
             this.requestData()
           }
         } else {
-          const res = await api.postCampus({ body: this.editForm })
-          if (res.code === 0) {
+          const res = await this.api.createCourse(this.editForm)
+          if (res.status === 0) {
+            console.log(res);
             (this.$refs['editForm'] as ElForm).resetFields()
             this.showDialog = false
+            this.$message(res.msg)
             this.requestData()
           }
         }
@@ -280,8 +288,8 @@ export default class Course extends Vue {
     this.$confirm(`确定删除${course.name}吗？`, '提示', {
       type: 'warning'
     }).then(async() => {
-      const resp = await api.deleteCampus({ id: course.id })
-      if (resp.code === 0) {
+      const resp = await this.api.deleteCourse(course.id)
+      if (resp.status === 0) {
         this.$message({
           type: 'success',
           message: '删除成功!'
