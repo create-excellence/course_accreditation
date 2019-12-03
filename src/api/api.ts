@@ -9,9 +9,8 @@ export interface api {
     logout():m.ServerResponse,
 
     // Course
-    getCourseList(queryOptions:any):m.ServerResponse,
+    queryCourse(queryOptions:any):m.ServerResponse,
     createCourse(data:m.CreateCourseForm):m.ServerResponse
     deleteCourse(id:number):m.ServerResponse
     putCourse(id:number, data:m.CreateCourseForm):m.ServerResponse
-
   }

@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 import * as m from '@/api/model'
 
-export const getCourseList = (queryOptions:any) =>
+export const queryCourse = (queryOptions:any) =>
   request({
     url: '/course/list',
     params: queryOptions,

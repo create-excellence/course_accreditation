@@ -9,11 +9,27 @@
       <el-form-item
         prop="name"
       >
-        <el-input
+        <!-- <el-input
           v-model="queryOptions.name"
           placeholder="课程名称"
           maxlength="10"
-        />
+        /> -->
+        <el-select
+          v-model="queryOptions.name"
+          filterable
+          remote
+          reserve-keyword
+          placeholder="请输入课程名称"
+          :remote-method="queryCourseList"
+          :loading="loading"
+        >
+          <el-option
+            v-for="item in courseList"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item
         prop="code"
@@ -193,6 +209,7 @@ export default class Course extends Vue {
   loading = true
   course: m.Course = {} as any
   showDialog = false
+  courseList:m.Course[] = []
   editForm:m.CreateCourseForm={} as any
 
   queryOptions = {
@@ -215,19 +232,18 @@ export default class Course extends Vue {
 
   async init() {
     this.requestData()
+    this.queryCourseList('')
   }
 
   handleFilter() {
     this.queryOptions.page = 1
+    console.log(this.queryOptions)
     this.requestData()
   }
 
   async requestData() {
     this.loading = true
-    const res = await this.api.getCourseList({
-      page: 1,
-      pageSize: 20
-    })
+    const res = await this.api.queryCourse(this.queryOptions)
     this.data = res.data.records
     this.loading = false
   }
@@ -266,15 +282,21 @@ export default class Course extends Vue {
           if (res.status === 0) {
             this.resetForm()
             this.showDialog = false
+            this.$message({
+              type: 'success',
+              message: '修改成功!'
+            })
             this.requestData()
           }
         } else {
           const res = await this.api.createCourse(this.editForm)
           if (res.status === 0) {
-            res.
             (this.$refs['editForm'] as ElForm).resetFields()
             this.showDialog = false
-            this.$message(res.msg)
+            this.$message({
+              type: 'success',
+              message: '添加成功!'
+            })
             this.requestData()
           }
         }
@@ -302,6 +324,18 @@ export default class Course extends Vue {
         }
       }
     })
+  }
+
+  async queryCourseList(query: string) {
+    const option = {
+      page: 1,
+      pageSize: 20,
+      name: query
+    }
+    const res = await api.queryCourse(option)
+    if (res.status === 0 && res.data.records.length > 0) {
+      this.courseList = res.data.records
+    }
   }
 }
 </script>
