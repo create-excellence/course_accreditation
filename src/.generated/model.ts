@@ -742,19 +742,6 @@ export interface Teacher {
 //   nature: string;
 // }
 // /**
-//  * 课程
-//  */
-// export interface CourseForm {
-
-//   code: string;
-
-//   name: string;
-
-//   credit: number;
-
-//   nature: string;
-// }
-// /**
 //  * 课程Resp
 //  */
 // export interface CourseListResp {
@@ -795,25 +782,37 @@ export interface Teacher {
 //    */
 //   total: number;
 // }
+/**
+ * 课程
+ */
+export interface CourseForm {
 
-// export interface CourseResp {
-//   /**
-//    * 响应码
-//    *
-//    * @serverType integer
-//    */
-//   code: number;
-//   /**
-//    *
-//    *
-//    * @serverType object
-//    */
-//   data: Course;
-//   /**
-//    * 响应消息
-//    *
-//    * @serverType string
-//    */
-//   message: string;
-// }
+  code: string;
+
+  name: string;
+
+  credit: number;
+
+  nature: string;
+}
+export interface CourseResp {
+  /**
+   * 响应码
+   *
+   * @serverType integer
+   */
+  code: number;
+  /**
+   *
+   *
+   * @serverType object
+   */
+  data: Course;
+  /**
+   * 响应消息
+   *
+   * @serverType string
+   */
+  message: string;
+}
 

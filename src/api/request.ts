@@ -13,7 +13,7 @@ const defaultAxiosOptions: AxiosRequestConfig = {
   timeout: 20000, // ms
   withCredentials: false,
   headers: {
-    'X-Client': 'Admin'
+    'Authentication': 'Admin'
   }
 }
 

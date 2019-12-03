@@ -54,18 +54,17 @@ class User extends VuexModule implements IUserState {
   @Action
   public async Login(userInfo: m.LoginForm) {
     let { code, password } = userInfo
-    code = code.trim()
+    code = code ? code.trim() : undefined
     const { data } = await login({
       code: code,
       password: password
     })
-    const token = 'token'
-    setToken(token)
-    this.SET_TOKEN(token)
 
-    const { name, avatar } = data
+    const { token, name, avatar } = data
     const roles = [data.role] || []
 
+    setToken(token)
+    this.SET_TOKEN(token)
     this.SET_ROLES(roles)
     this.SET_NAME(name)
     this.SET_AVATAR(avatar)
