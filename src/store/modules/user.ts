@@ -80,14 +80,22 @@ class User extends VuexModule implements IUserState {
 
   @Action
   public async GetUserInfo() {
-    if (this.token === '') {
-      throw Error('GetUserInfo: token is undefined!')
-    }
-    const { data } = await getUserInfo({
-      /* Your params here */
-    })
-    if (!data) {
-      throw Error('Verification failed, please Login again.')
+    // if (this.token === '') {
+    //   throw Error('GetUserInfo: token is undefined!')
+    // }
+    // const { data } = await getUserInfo({
+    //   /* Your params here */
+    // })
+    // if (!data) {
+    //   throw Error('Verification failed, please Login again.')
+    // }
+    let data = {
+      user: {
+        roles: ['admin'],
+        name: 'ashe',
+        avatar: '',
+        introduction: ''
+      }
     }
     const { roles, name, avatar, introduction } = data.user
     // roles must be a non-empty array

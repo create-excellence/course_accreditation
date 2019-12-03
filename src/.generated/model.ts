@@ -725,94 +725,94 @@ export interface Teacher {
    */
   updateTime?: Date;
 }
-/**
- * 课程
- */
-export interface Course {
+// /**
+//  * 课程
+//  */
+// export interface Course {
 
-  id: number;
+//   id: number;
 
-  code: string;
+//   code: string;
 
-  name: string;
+//   name: string;
 
-  credit: number;
+//   credit: number;
 
-  nature: string;
-}
-/**
- * 课程
- */
-export interface CourseForm {
+//   nature: string;
+// }
+// /**
+//  * 课程
+//  */
+// export interface CourseForm {
 
-  code: string;
+//   code: string;
 
-  name: string;
+//   name: string;
 
-  credit: number;
+//   credit: number;
 
-  nature: string;
-}
-/**
- * 课程Resp
- */
-export interface CourseListResp {
-  /**
-   * 响应码
-   *
-   * @serverType integer
-   */
-  code: number;
-  /**
-   *
-   *
-   * @serverType array
-   */
-  data: Course[];
-  /**
-   * 响应消息
-   *
-   * @serverType string
-   */
-  message: string;
-  /**
-   * 当前页
-   *
-   * @serverType integer
-   */
-  page: number;
-  /**
-   * 每页记录数
-   *
-   * @serverType integer
-   */
-  pageSize: number;
-  /**
-   * 记录总数
-   *
-   * @serverType integer
-   */
-  total: number;
-}
+//   nature: string;
+// }
+// /**
+//  * 课程Resp
+//  */
+// export interface CourseListResp {
+//   /**
+//    * 响应码
+//    *
+//    * @serverType integer
+//    */
+//   code: number;
+//   /**
+//    *
+//    *
+//    * @serverType array
+//    */
+//   data: Course[];
+//   /**
+//    * 响应消息
+//    *
+//    * @serverType string
+//    */
+//   message: string;
+//   /**
+//    * 当前页
+//    *
+//    * @serverType integer
+//    */
+//   page: number;
+//   /**
+//    * 每页记录数
+//    *
+//    * @serverType integer
+//    */
+//   pageSize: number;
+//   /**
+//    * 记录总数
+//    *
+//    * @serverType integer
+//    */
+//   total: number;
+// }
 
-export interface CourseResp {
-  /**
-   * 响应码
-   *
-   * @serverType integer
-   */
-  code: number;
-  /**
-   *
-   *
-   * @serverType object
-   */
-  data: Course;
-  /**
-   * 响应消息
-   *
-   * @serverType string
-   */
-  message: string;
-}
+// export interface CourseResp {
+//   /**
+//    * 响应码
+//    *
+//    * @serverType integer
+//    */
+//   code: number;
+//   /**
+//    *
+//    *
+//    * @serverType object
+//    */
+//   data: Course;
+//   /**
+//    * 响应消息
+//    *
+//    * @serverType string
+//    */
+//   message: string;
+// }
 

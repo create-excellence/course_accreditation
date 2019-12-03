@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import * as model from '@/api/model'
 import 'normalize.css'
 import ElementUI from 'element-ui'
 import SvgIcon from 'vue-svgicon'
@@ -19,11 +18,16 @@ Vue.use(SvgIcon, {
   defaultWidth: '1em',
   defaultHeight: '1em'
 })
-
+Vue.prototype.$api = api
 Vue.component('pagination', Pagination)
-Vue.prototype.model = model
-Vue.prototype.api = api
 Vue.config.productionTip = false
+
+declare module 'vue/types/vue' {
+  interface Vue {
+    $api: any
+    $Message: any
+  }
+}
 
 new Vue({
   router,
