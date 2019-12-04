@@ -256,7 +256,7 @@ export default class Course extends Vue {
   async requestData() {
     this.loading = true
     const res = await this.api.queryCourse(this.queryOptions)
-    this.data = res.data.records
+    this.data = res.data.list
     this.total = res.data.size
     this.loading = false
   }
@@ -346,8 +346,8 @@ export default class Course extends Vue {
       name: query
     }
     const res = await api.queryCourse(option)
-    if (res.status === 0 && res.data.records.length > 0) {
-      this.courseList = res.data.records
+    if (res.status === 0 && res.data.list.length > 0) {
+      this.courseList = res.data.list
     }
   }
 }
