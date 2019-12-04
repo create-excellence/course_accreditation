@@ -55,7 +55,13 @@
           课程
         </el-button>
       </el-form-item>
+      <el-button
+        @click="showExcelDialog=true"
+      >
+        批量导入课程
+      </el-button>
     </el-form>
+
     <el-table
       v-loading="loading"
       :data="data"
@@ -193,6 +199,11 @@
         </el-button>
       </div>
     </el-dialog>
+    <excel-dialog
+      action="/course/batchSave"
+      :show.sync="showExcelDialog"
+      @requestData="requestData"
+    />
   </div>
 </template>
 
@@ -211,6 +222,8 @@ export default class Course extends Vue {
   showDialog = false
   courseList:m.Course[] = []
   editForm:m.CreateCourseForm={} as any
+
+  showExcelDialog=false
 
   queryOptions = {
     name: '',
@@ -237,7 +250,6 @@ export default class Course extends Vue {
 
   handleFilter() {
     this.queryOptions.page = 1
-    console.log(this.queryOptions)
     this.requestData()
   }
 
@@ -245,6 +257,7 @@ export default class Course extends Vue {
     this.loading = true
     const res = await this.api.queryCourse(this.queryOptions)
     this.data = res.data.records
+    this.total = res.data.size
     this.loading = false
   }
 

@@ -11,6 +11,7 @@ import router from '@/router'
 import '@/icons/components'
 import '@/permission'
 import Pagination from '@/components/Pagination/index.vue'
+import UploadExcel from '@/components/UploadExcel/index.vue'
 
 Vue.use(ElementUI)
 Vue.use(SvgIcon, {
@@ -20,6 +21,7 @@ Vue.use(SvgIcon, {
 })
 Vue.prototype.api = api
 Vue.component('pagination', Pagination)
+Vue.component('excel-dialog', UploadExcel)
 Vue.config.productionTip = false
 
 declare module 'vue/types/vue' {
