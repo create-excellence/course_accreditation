@@ -51,7 +51,6 @@
         </el-button>
       </el-form-item>
       <el-button
-        style="float:right"
         type="primary"
         plain
         @click="showExcelDialog=true"
@@ -165,6 +164,7 @@
       <el-table-column
         align="center"
         label="操作"
+        width="300"
       >
         <template slot-scope="scope">
           <el-button
@@ -172,7 +172,7 @@
             @click="handleEdit(scope.row)"
           >
             编辑
-          </el-button><br>
+          </el-button>
           <el-button
             style="marginTop:3px"
             type="danger"
