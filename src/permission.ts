@@ -24,7 +24,7 @@ router.beforeEach(async(to: Route, _: Route, next: any) => {
       if (UserModule.roles.length === 0) {
         try {
           // 注释掉获取信息模块
-          // await UserModule.GetUserInfo()
+          await UserModule.GetUserInfo()
           // Set the replace: true, so the navigation will not leave a history record
           next({ ...to, replace: true })
         } catch (err) {
