@@ -9,11 +9,6 @@
       <el-form-item
         prop="name"
       >
-        <!-- <el-input
-          v-model="queryOptions.name"
-          placeholder="课程名称"
-          maxlength="10"
-        /> -->
         <el-select
           v-model="queryOptions.name"
           filterable
@@ -27,7 +22,7 @@
             v-for="item in courseList"
             :key="item.id"
             :label="item.name"
-            :value="item.id"
+            :value="item.name"
           />
         </el-select>
       </el-form-item>
@@ -56,6 +51,9 @@
         </el-button>
       </el-form-item>
       <el-button
+        style="float:right"
+        type="primary"
+        plain
         @click="showExcelDialog=true"
       >
         批量导入课程
@@ -250,6 +248,7 @@ export default class Course extends Vue {
 
   handleFilter() {
     this.queryOptions.page = 1
+    console.log(this.queryOptions)
     this.requestData()
   }
 
@@ -257,7 +256,7 @@ export default class Course extends Vue {
     this.loading = true
     const res = await this.api.queryCourse(this.queryOptions)
     this.data = res.data.list
-    this.total = res.data.size
+    this.total = res.data.total
     this.loading = false
   }
 

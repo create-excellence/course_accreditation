@@ -1,6 +1,8 @@
 import * as m from '@/api/model'
 export * from '@/api/users'
 export * from '@/api/course.ts'
+export * from '@/api/student.ts'
+export * from '@/api/major.ts'
 
 export interface api {
     // User
@@ -13,4 +15,16 @@ export interface api {
     createCourse(data:m.CreateCourseForm):m.ServerResponse
     deleteCourse(id:number):m.ServerResponse
     putCourse(id:number, data:m.CreateCourseForm):m.ServerResponse
-  }
+
+    // Student
+    queryStudent(queryOptions:any):m.ServerResponse,
+    createStudent(data:m.CreateStudentForm):m.ServerResponse
+    deleteStudent(id:number):m.ServerResponse
+    putStudent(id:number, data:m.CreateStudentForm):m.ServerResponse
+
+    // Major
+    queryMajor(queryOptions:any):m.ServerResponse,
+    createMajor(data:m.CreateMajorForm):m.ServerResponse
+    deleteMajor(id:number):m.ServerResponse
+    putMajor(id:number, data:m.CreateMajorForm):m.ServerResponse
+}

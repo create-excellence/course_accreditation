@@ -559,6 +559,12 @@ export interface Student {
    */
   majorId?: number;
   /**
+   * 专业
+   * @type {number}
+   * @memberof Student
+   */
+  major: string;
+  /**
    * 姓名
    * @type {string}
    * @memberof Student
