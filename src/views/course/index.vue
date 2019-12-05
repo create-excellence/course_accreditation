@@ -19,12 +19,12 @@
           :fetch-suggestions="queryCourseList"
           :loading="loading"
         >
-          <!-- <el-option
+          <el-option
             v-for="item in courseList"
             :key="item.id"
             :label="item.name"
-            :value="item.id"
-          /> -->
+            :value="item.name"
+          />
         </el-select>
       </el-form-item>
       <el-form-item
@@ -52,6 +52,9 @@
         </el-button>
       </el-form-item>
       <el-button
+        style="float:right"
+        type="primary"
+        plain
         @click="showExcelDialog=true"
       >
         批量导入课程
@@ -245,6 +248,7 @@ export default class Course extends Vue {
 
   handleFilter() {
     this.queryOptions.page = 1
+    console.log(this.queryOptions)
     this.requestData()
   }
 

@@ -51,6 +51,21 @@ export default new Router({
       ]
     },
     {
+      path: '/student',
+      component: Layout,
+      redirect: '/student/index',
+      children: [
+        {
+          path: 'index',
+          component: () => import('@/views/student/index.vue'),
+          meta: {
+            title: 'Student',
+            icon: 'example'
+          }
+        }
+      ]
+    },
+    {
       path: '/course',
       component: Layout,
       redirect: '/course/index',
