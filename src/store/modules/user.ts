@@ -78,6 +78,7 @@ class User extends VuexModule implements IUserState {
 
   @Action
   public async GetUserInfo() {
+    // 未使用
     let data = {
       user: {
         roles: ['admin'],
@@ -91,9 +92,9 @@ class User extends VuexModule implements IUserState {
     if (!roles || roles.length <= 0) {
       throw Error('GetUserInfo: roles must be a non-null array!')
     }
-    // this.SET_ROLES(roles)
+    this.SET_ROLES(roles)
     this.SET_NAME(name)
-    // this.SET_AVATAR(avatar)
+    this.SET_AVATAR(avatar)
     this.SET_INTRODUCTION(introduction)
   }
 

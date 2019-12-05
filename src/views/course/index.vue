@@ -15,7 +15,6 @@
           remote
           reserve-keyword
           placeholder="请输入课程名称"
-
           :fetch-suggestions="queryCourseList"
           :loading="loading"
         >
