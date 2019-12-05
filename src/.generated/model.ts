@@ -92,7 +92,7 @@ export interface CourseClass {
    * @type {number}
    * @memberof CourseClass
    */
-  id?: number;
+  id: number;
   /**
    * 课程序号
    * @type {string}
@@ -154,7 +154,7 @@ export interface CourseTarget {
    * @type {number}
    * @memberof CourseTarget
    */
-  id?: number;
+  id: number;
   /**
    * 选项
    * @type {string}
@@ -234,7 +234,7 @@ export interface GraduationPoint {
    * @type {number}
    * @memberof GraduationPoint
    */
-  id?: number;
+  id: number;
   /**
    * 指标点编号
    * @type {string}
@@ -292,7 +292,7 @@ export interface Major {
    * @type {number}
    * @memberof Major
    */
-  id?: number;
+  id: number;
   /**
    * 专业名称
    * @type {string}
@@ -336,7 +336,7 @@ export interface Questionnaire {
    * @type {number}
    * @memberof Questionnaire
    */
-  id?: number;
+  id: number;
   /**
    * 问卷名称
    * @type {string}
@@ -380,7 +380,7 @@ export interface SelectCourse {
    * @type {number}
    * @memberof SelectCourse
    */
-  id?: number;
+  id: number;
   /**
    * 学生Id
    * @type {number}
@@ -424,7 +424,7 @@ export interface SelfEvaluation {
    * @type {number}
    * @memberof SelfEvaluation
    */
-  id?: number;
+  id: number;
   /**
    * 得分
    * @type {number}
@@ -462,7 +462,7 @@ export interface Semester {
    * @type {number}
    * @memberof Semester
    */
-  id?: number;
+  id: number;
   /**
    * 学期名称
    * @type {string}
@@ -539,7 +539,7 @@ export interface Student {
    * @type {number}
    * @memberof Student
    */
-  id?: number;
+  id: number;
    /**
    * 头像
    * @type {string}
@@ -625,7 +625,7 @@ export interface SupportingCourse {
    * @type {number}
    * @memberof SupportingCourse
    */
-  id?: number;
+  id: number;
   /**
    * 更新时间
    * @type {Date}
@@ -669,7 +669,7 @@ export interface Teacher {
    * @type {number}
    * @memberof Teacher
    */
-  id?: number;
+  id: number;
   /**
    * 工号
    * @type {string}

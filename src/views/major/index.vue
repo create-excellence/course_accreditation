@@ -14,17 +14,16 @@
           filterable
           remote
           reserve-keyword
-          placeholder="请输入课程名称"
-
-          :fetch-suggestions="queryCourseList"
+          placeholder="请输入专业名称"
+          :remote-method="queryMajorList"
           :loading="loading"
         >
-          <!-- <el-option
-            v-for="item in courseList"
+          <el-option
+            v-for="item in majorList"
             :key="item.id"
             :label="item.name"
             :value="item.id"
-          /> -->
+          />
         </el-select>
       </el-form-item>
       <el-form-item
@@ -32,7 +31,7 @@
       >
         <el-input
           v-model="queryOptions.code"
-          placeholder="请输入课程代码"
+          placeholder="请输入专业代码"
           maxlength="10"
         />
       </el-form-item>
@@ -48,13 +47,13 @@
           icon="el-icon-plus"
           @click="handleCreate"
         >
-          课程
+          专业
         </el-button>
       </el-form-item>
       <el-button
         @click="showExcelDialog=true"
       >
-        批量导入课程
+        批量导入专业
       </el-button>
     </el-form>
 
@@ -75,16 +74,6 @@
         align="center"
         label="课程代码"
         prop="code"
-      />
-      <el-table-column
-        align="center"
-        prop="credit"
-        label="学分"
-      />
-      <el-table-column
-        align="center"
-        prop="nature"
-        label="课程性质"
       />
       <el-table-column
         align="center"
@@ -126,7 +115,7 @@
     />
 
     <el-dialog
-      :title="`${course.id ? '编辑' : '添加'}课程`"
+      :title="`${major.id ? '编辑' : '添加'}专业`"
       :visible.sync="showDialog"
       @close="showDialog = false"
     >
@@ -157,28 +146,6 @@
             maxlength="10"
           />
         </el-form-item>
-        <el-form-item
-          label="课程学分"
-          prop="credit"
-        >
-          <el-input-number
-            v-model="editForm.credit"
-            :min="0"
-            :precision="1"
-            :step="0.5"
-            :max="10"
-          />
-        </el-form-item>
-        <el-form-item
-          prop="nature"
-          label="课程性质"
-        >
-          <el-input
-            v-model="editForm.nature"
-            placeholder="请输入课程性质"
-            maxlength="10"
-          />
-        </el-form-item>
       </el-form>
       <div
         slot="footer"
@@ -196,7 +163,7 @@
       </div>
     </el-dialog>
     <excel-dialog
-      action="/course/batchSave"
+      action="/major/batchSave"
       :show.sync="showExcelDialog"
       @requestData="requestData"
     />
@@ -207,16 +174,17 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { ElForm } from 'element-ui/types/form'
 import * as m from '@/api/model'
+import * as api from '@/api/api'
 
 @Component({})
-export default class Course extends Vue {
-  data:m.Course[] = []
+export default class Major extends Vue {
+  data:m.Major[] = []
   total = 0
   loading = true
-  course: m.Course = {} as any
+  major: m.Major = {} as any
   showDialog = false
-  courseList:m.Course[] = []
-  editForm:m.CreateCourseForm={} as any
+  majorList:m.Major[] = []
+  editForm:m.CreateMajorForm={} as any
 
   showExcelDialog=false
 
@@ -228,10 +196,8 @@ export default class Course extends Vue {
   }
 
   rules={
-    name: [{ required: true, message: '课程名称不能为空', trigger: 'blur' }],
-    code: [{ required: true, message: '课程代码不能为空', trigger: 'blur' }],
-    credit: [{ required: true, message: '课程学分不能为空', trigger: 'blur' }],
-    nature: [{ required: true, message: '课程性质不能为空', trigger: 'blur' }]
+    name: [{ required: true, message: '专业名称不能为空', trigger: 'blur' }],
+    code: [{ required: true, message: '专业代码不能为空', trigger: 'blur' }]
   }
 
   created() {
@@ -240,7 +206,7 @@ export default class Course extends Vue {
 
   async init() {
     this.requestData()
-    this.queryCourseList('')
+    this.queryMajorList('')
   }
 
   handleFilter() {
@@ -250,14 +216,14 @@ export default class Course extends Vue {
 
   async requestData() {
     this.loading = true
-    const res = await this.api.queryCourse(this.queryOptions)
+    const res = await this.api.queryMajor(this.queryOptions)
     this.data = res.data.list
     this.total = res.data.total
     this.loading = false
   }
 
   handleCreate() {
-    this.course = {} as any
+    this.major = {} as any
     this.resetForm()
     this.showDialog = true
   }
@@ -265,19 +231,15 @@ export default class Course extends Vue {
   resetForm() {
     this.editForm = {
       name: '',
-      code: '',
-      credit: 2.0,
-      nature: ''
+      code: ''
     }
   }
 
-  handleEdit(course: m.Course) {
-    this.course = course
+  handleEdit(major: m.Major) {
+    this.major = major
     this.editForm = {
-      code: course.code,
-      name: course.name,
-      credit: course.credit,
-      nature: course.nature
+      code: major.code,
+      name: major.name
     }
     this.showDialog = true
   }
@@ -285,8 +247,8 @@ export default class Course extends Vue {
   handleSave() {
     (this.$refs['editForm'] as ElForm).validate(async(valid : boolean) => {
       if (valid) {
-        if (this.course.id) {
-          const res = await this.api.putCourse(this.course.id, this.editForm)
+        if (this.major.id) {
+          const res = await this.api.putMajor(this.major.id, this.editForm)
           if (res.status === 0) {
             this.resetForm()
             this.showDialog = false
@@ -297,7 +259,7 @@ export default class Course extends Vue {
             this.requestData()
           }
         } else {
-          const res = await this.api.createCourse(this.editForm)
+          const res = await this.api.createMajor(this.editForm)
           if (res.status === 0) {
             (this.$refs['editForm'] as ElForm).resetFields()
             this.showDialog = false
@@ -314,17 +276,17 @@ export default class Course extends Vue {
     })
   }
 
-  handleDelete(course: m.Course) {
-    this.$confirm(`确定删除${course.name}吗？`, '提示', {
+  handleDelete(major: m.Major) {
+    this.$confirm(`确定删除${major.name}吗？`, '提示', {
       type: 'warning'
     }).then(async() => {
-      const resp = await this.api.deleteCourse(course.id)
+      const resp = await this.api.deleteMajor(major.id)
       if (resp.status === 0) {
         this.$message({
           type: 'success',
           message: '删除成功!'
         })
-        this.data = this.data.filter((e: m.Course) => e.id !== course.id)
+        this.data = this.data.filter((e: m.Major) => e.id !== major.id)
         if (this.total > 1) {
           this.total--
         } else {
@@ -334,15 +296,15 @@ export default class Course extends Vue {
     })
   }
 
-  async queryCourseList(query: string) {
+  async queryMajorList(query: string) {
     const option = {
       page: 1,
       pageSize: 20,
       name: query
     }
-    const res = await this.api.queryCourse(option)
+    const res = await this.api.queryMajor(option)
     if (res.status === 0 && res.data.list.length > 0) {
-      this.courseList = res.data.list
+      this.majorList = res.data.list
     }
   }
 }

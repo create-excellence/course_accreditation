@@ -66,6 +66,21 @@ export default new Router({
       ]
     },
     {
+      path: '/major',
+      component: Layout,
+      redirect: '/major/index',
+      children: [
+        {
+          path: 'index',
+          component: () => import('@/views/major/index.vue'),
+          meta: {
+            title: 'Major',
+            icon: 'table'
+          }
+        }
+      ]
+    },
+    {
       path: '/form',
       component: Layout,
       children: [

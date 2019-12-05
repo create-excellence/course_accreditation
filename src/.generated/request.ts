@@ -1,98 +1,98 @@
-import * as m from "./model";
-import { encodeQuery } from "@/utils/index";
-import { request, ApiRequestOptions } from "@/api/request";
+// /* eslint-disable no-async-promise-executor */
+// import { UserModule } from '@/store/modules/user'
+// import axios, { AxiosRequestConfig } from 'axios'
+// import { Message, MessageBox, Loading } from 'element-ui'
 
-const defaultPageSize = 20;
-const protocol = "http";
-export const apiHost = "localhost:8888"
-const basePath = "/v1";
-export const baseUrl = `${protocol}://${apiHost}${basePath}`;
+// interface ApiRequestOptions extends AxiosRequestConfig {
+//   reqName?: string;
+//   // headers?: { [key: string]: any };
+//   // data?: any;
+// }
 
-/**
- * 新建课程
- * @param courseId string string 校区id
- * @param body m.CourseForm  表单
- */
-export function postCourse(options: {
-  courseId: string;
-  body: m.CourseForm;
-}): Promise<m.CourseResp> {
-  const url = `/course/${options.courseId}/Course`;
-  const reqOptions: ApiRequestOptions = {
-    url,
-    method: "POST",
-    reqName: "postCourse"
-  };
-  reqOptions.data = options.body;
-  return request<m.CourseResp>(reqOptions);
-}
+// const defaultAxiosOptions: AxiosRequestConfig = {
+//   timeout: 20000, // ms
+//   withCredentials: false,
+//   headers: {
+//     'Authentication': 'Admin'
+//   }
+// }
 
-/**
- * 删除课程
- * @param id string string 课程id
- */
-export function deleteCourse(options: { id: string }): Promise<m.CommonResp> {
-  const url = `/course/${options.id}`;
-  const reqOptions: ApiRequestOptions = {
-    url,
-    method: "DELETE",
-    reqName: "deleteCourse"
-  };
-  return request<m.CommonResp>(reqOptions);
-}
+// const apiAxios = axios.create(defaultAxiosOptions)
+// apiAxios.interceptors.request.use(
+//   config => {
+//     if (UserModule.token) {
+//       config.headers.Authorization = UserModule.token
+//     }
+//     return config
+//   },
+//   error => {
+//     // Handle request error here
+//     // Promise.reject(error);
+//     console.log('apiRequest error: ', error)
+//   }
+// )
 
-/**
- * 更新课程
- * @param id string string 课程id
- * @param body m.CourseForm  表单
- */
-export function putCourse(options: {
-  id: string;
-  body: m.CourseForm;
-}): Promise<m.CourseResp> {
-  const url = `/course/${options.id}`;
-  const reqOptions: ApiRequestOptions = {
-    url,
-    method: "PUT",
-    reqName: "putCourse"
-  };
-  reqOptions.data = options.body;
-  return request<m.CourseResp>(reqOptions);
-}
+// // respone 拦截器
+// apiAxios.interceptors.response.use(
+//   response => {
+//     const { data } = response
+//     const msg = `code=${data.code}, ${data.message}`
+//     if (data.code === 401) {
+//       UserModule.LogOut()
+//     }
+//     if (data.code !== 0) {
+//       Message({
+//         message: msg,
+//         type: 'error',
+//         duration: 5 * 1000
+//       })
+//       throw new Error(msg)
+//     }
 
-/**
- * 校区列表
- * @param name string string 校区名称
- * @param code string string 校区编号
- * @param page number integer 页码
- * @param pageSize number integer 每页记录数
- */
-export function queryCourse(options: {
-  name?: string;
-  code?: string;
-  page?: number;
-  pageSize?: number;
-}){
-  options.pageSize = options.pageSize || defaultPageSize;
-  const queryItems: any = {};
-  if (options.name) {
-    queryItems.name = options.name;
-  }
-  if (options.code) {
-    queryItems.code = options.code;
-  }
-  if (options.page !== undefined) {
-    queryItems.page = options.page;
-  }
-  if (options.pageSize !== undefined) {
-    queryItems.pageSize = options.pageSize;
-  }
-  const query = encodeQuery(queryItems);
-  const url = `/v1/course?${query}`;
-  const reqOptions: ApiRequestOptions = {
-    url,
-    method: "GET",
-    reqName: "queryCourse"
-  };
-  return request(reqOptions);
-}
+//     return response
+//   },
+//   error => {
+//     if (error.response) {
+//       console.log('API ERROR error.response:', error.response)
+//       switch (error.response.status) {
+//         case 400:
+//           Message({
+//             message: error.response.data.code + ':' + error.response.data.message,
+//             type: 'error',
+//             duration: 5 * 1000
+//           })
+//           break
+//         case 401:
+//           UserModule.LogOut()
+//           break
+//         case 403:
+//           MessageBox.alert(`code=403: ${error.response.data.message}`, '警告')
+//           break
+//         case 500:
+//           MessageBox.alert(`服务器错误: ${error.response.data.message}`, '警告')
+//           break
+//         default:
+//           MessageBox.alert(`错误:code=${error.response.status},response=${error.response.data.message}`, '错误')
+//       }
+//     } else {
+//       console.log('API ERROR:', error)
+//       MessageBox.alert(`错误:response=${error}`, '错误')
+//     }
+//     return Promise.reject(error)
+//   }
+// )
+
+// async function request<R>(opts: AxiosRequestConfig): Promise<R> {
+//   const options = Object.assign(defaultAxiosOptions, opts)
+//   const promise = new Promise(async(resolve, reject) => {
+//     try {
+//       const res = await apiAxios(options)
+//       resolve(res.data as R)
+//     } catch (error) {
+//       reject(error)
+//     }
+//   })
+//   return promise as Promise<R>
+// }
+// export default request
+// export { request, ApiRequestOptions }

@@ -16,6 +16,7 @@
             :action="'http://localhost:8888/v1'+action"
             :show-file-list="false"
             :on-success="success"
+            :headers="headers"
           >
             <i class="el-icon-upload" />
             <div class="el-upload__text">
@@ -97,6 +98,7 @@
 </template>
 <script lang="ts" >
 import { Component, Prop, Vue } from 'vue-property-decorator'
+import { UserModule } from '@/store/modules/user'
 
 @Component({
   name: 'UploadExcel'
@@ -111,6 +113,14 @@ export default class extends Vue {
   pageOption={
     page: 1,
     pageSize: 10
+  }
+
+  headers={} as any
+
+  created() {
+    if (UserModule.token) {
+      this.headers['Authentication'] = UserModule.token
+    }
   }
 
   get visible() {
