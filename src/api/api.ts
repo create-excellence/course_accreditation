@@ -3,6 +3,7 @@ export * from '@/api/users'
 export * from '@/api/course.ts'
 export * from '@/api/student.ts'
 export * from '@/api/major.ts'
+export * from '@/api/teacher.ts'
 
 export interface api {
     // User
@@ -27,4 +28,10 @@ export interface api {
     createMajor(data:m.CreateMajorForm):m.ServerResponse
     deleteMajor(id:number):m.ServerResponse
     putMajor(id:number, data:m.CreateMajorForm):m.ServerResponse
-}
+
+    // Teacher
+    queryTeacher(queryOptions:any):m.ServerResponse,
+    createTeacher(data:m.CreateTeacherForm):m.ServerResponse
+    deleteTeacher(id:number):m.ServerResponse
+    putTeacher(id:number, data:m.CreateTeacherForm):m.ServerResponse
+ }

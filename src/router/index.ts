@@ -96,6 +96,21 @@ export default new Router({
       ]
     },
     {
+      path: '/teacher',
+      component: Layout,
+      redirect: '/teacher/index',
+      children: [
+        {
+          path: 'index',
+          component: () => import('@/views/teacher/index.vue'),
+          meta: {
+            title: 'Teacher',
+            icon: 'table'
+          }
+        }
+      ]
+    },
+    {
       path: '/form',
       component: Layout,
       children: [
