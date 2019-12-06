@@ -111,11 +111,6 @@
       />
       <el-table-column
         align="center"
-        prop="avatar"
-        label="头像"
-      />
-      <el-table-column
-        align="center"
         prop="birth"
         label="出生日期"
       />
@@ -127,22 +122,12 @@
       <el-table-column
         align="center"
         prop="graduateMajor"
-        label="毕业转移"
+        label="毕业专业"
       />
       <el-table-column
         align="center"
         prop="loginTime"
         label="上次登录时间"
-      />
-      <el-table-column
-        align="center"
-        prop="createTime"
-        label="添加时间"
-      />
-      <el-table-column
-        align="center"
-        prop="updateTime"
-        label="更新时间"
       />
       <el-table-column
         align="center"
@@ -269,6 +254,16 @@
           </el-select>
         </el-form-item>
         <el-form-item
+          prop="出生日期"
+          label="birth"
+        >
+          <el-date-picker
+            v-model="editForm.birth"
+            type="datetime"
+            placeholder="选择日期"
+          />
+        </el-form-item>
+        <el-form-item
           prop="graduateSchool"
           label="毕业学校"
         >
@@ -284,7 +279,7 @@
         >
           <el-input
             v-model="editForm.graduateMajor"
-            placeholder="请输入毕业转移"
+            placeholder="请输入毕业专业"
             maxlength="10"
           />
         </el-form-item>
@@ -363,6 +358,7 @@ export default class Teacher extends Vue {
     this.loading = true
     const res = await this.api.queryTeacher(this.queryOptions)
     this.data = res.data.list
+    this.total = res.data.total
     this.loading = false
   }
 
