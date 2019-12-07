@@ -9,7 +9,13 @@
       <el-form-item
         prop="sno"
       >
-        <el-select
+        <el-autocomplete
+          v-model="queryOptions.sno"
+          class="inline-input"
+          :fetch-suggestions="queryStudentList"
+          placeholder="请输入学生学号"
+        />
+        <!-- <el-select
           v-model="queryOptions.sno"
           filterable
           remote
@@ -24,7 +30,7 @@
             :label="item.sno"
             :value="item.sno"
           />
-        </el-select>
+        </el-select> -->
       </el-form-item>
       <el-form-item
         prop="name"
@@ -322,7 +328,6 @@ export default class Student extends Vue {
   student: m.Student = {} as any
   showDialog = false
   majorList:m.Major[] = []
-  studentSearch:m.Student[] = []
   studentList:m.Student[] = []
   editForm:m.CreateStudentForm={} as any
 
@@ -360,7 +365,6 @@ export default class Student extends Vue {
   async init() {
     this.requestData()
     this.queryMajorList('')
-    this.queryStudentList('')
   }
 
   handleFilter() {
@@ -470,21 +474,38 @@ export default class Student extends Vue {
     }
   }
 
-  async queryStudentList(query: string) {
+  async queryStudentList(query: string, callback: any) {
     const option = {
       page: 1,
       pageSize: 20,
       sno: query
     }
     const res = await api.queryStudent(option)
+    let list = [{}]
     if (res.status === 0 && res.data.list.length > 0) {
-      this.studentSearch = res.data.list
-      if (query !== undefined && query !== '') {
-        this.studentSearch = [Object.assign({}, this.studentSearch[0]), ...this.studentSearch]
-        this.studentSearch[0].sno = query
-        this.studentSearch[0].id = -1 * Math.floor(Math.random() * 99999)
-      }
+      list = res.data.list
+      list.forEach((element:any) => {
+        element.value = element.sno
+      })
     }
+    callback(list)
   }
+
+  // async queryStudentList(query: string) {
+  //   const option = {
+  //     page: 1,
+  //     pageSize: 20,
+  //     sno: query
+  //   }
+  //   const res = await api.queryStudent(option)
+  //   if (res.status === 0 && res.data.list.length > 0) {
+  //     this.studentSearch = res.data.list
+  //     if (query !== undefined && query !== '') {
+  //       this.studentSearch = [Object.assign({}, this.studentSearch[0]), ...this.studentSearch]
+  //       this.studentSearch[0].sno = query
+  //       this.studentSearch[0].id = -1 * Math.floor(Math.random() * 99999)
+  //     }
+  //   }
+  // }
 }
 </script>
