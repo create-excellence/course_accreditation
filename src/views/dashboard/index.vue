@@ -1,13 +1,13 @@
 <template>
   <div class="dashboard-container">
     <div class="dashboard-text">
-      name:{{ name }}
+      name: {{ name }}
     </div>
     <div class="dashboard-text">
-      roles:<span
+      roles: <span
         v-for="role in roles"
         :key="role"
-      >{{ role }}</span>
+      >{{ role }} </span>
     </div>
   </div>
 </template>

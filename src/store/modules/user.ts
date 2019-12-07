@@ -61,7 +61,7 @@ class User extends VuexModule implements IUserState {
     })
 
     const { token, name, avatar } = data
-    const roles = [data.role] || []
+    const roles = data.role || []
     setToken(token)
     this.SET_TOKEN(token)
     this.SET_ROLES(roles)
@@ -81,7 +81,7 @@ class User extends VuexModule implements IUserState {
     const { data } = await getUserInfo()
 
     const { token, name, avatar } = data
-    const roles = [data.role]
+    const roles = data.role
     // roles must be a non-empty array
     if (!roles || roles.length <= 0) {
       throw Error('GetUserInfo: roles must be a non-null array!')
