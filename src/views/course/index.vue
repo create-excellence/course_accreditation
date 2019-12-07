@@ -15,7 +15,7 @@
           remote
           reserve-keyword
           placeholder="请输入课程名称"
-          :fetch-suggestions="queryCourseList"
+          :remote-method="queryCourseList"
           :loading="loading"
         >
           <el-option
@@ -247,7 +247,6 @@ export default class Course extends Vue {
 
   handleFilter() {
     this.queryOptions.page = 1
-    console.log(this.queryOptions)
     this.requestData()
   }
 
@@ -346,6 +345,11 @@ export default class Course extends Vue {
     const res = await this.api.queryCourse(option)
     if (res.status === 0 && res.data.list.length > 0) {
       this.courseList = res.data.list
+      if (query !== undefined && query !== '') {
+        this.courseList = [Object.assign({}, this.courseList[0]), ...this.courseList]
+        this.courseList[0].name = query
+        this.courseList[0].id = -1 * Math.floor(Math.random() * 99999)
+      }
     }
   }
 }

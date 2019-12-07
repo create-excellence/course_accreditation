@@ -360,6 +360,7 @@ export default class Student extends Vue {
   async init() {
     this.requestData()
     this.queryMajorList('')
+    this.queryStudentList('')
   }
 
   handleFilter() {
@@ -478,6 +479,11 @@ export default class Student extends Vue {
     const res = await api.queryStudent(option)
     if (res.status === 0 && res.data.list.length > 0) {
       this.studentSearch = res.data.list
+      if (query !== undefined && query !== '') {
+        this.studentSearch = [Object.assign({}, this.studentSearch[0]), ...this.studentSearch]
+        this.studentSearch[0].sno = query
+        this.studentSearch[0].id = -1 * Math.floor(Math.random() * 99999)
+      }
     }
   }
 }

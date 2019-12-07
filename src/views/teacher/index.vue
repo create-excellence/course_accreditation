@@ -450,11 +450,16 @@ export default class Teacher extends Vue {
     const option = {
       page: 1,
       pageSize: 20,
-      name: query
+      jno: query
     }
     const res = await api.queryTeacher(option)
     if (res.status === 0 && res.data.list.length > 0) {
       this.teacherSearch = res.data.list
+      if (query !== undefined && query !== '') {
+        this.teacherSearch = [Object.assign({}, this.teacherSearch[0]), ...this.teacherSearch]
+        this.teacherSearch[0].jno = query
+        this.teacherSearch[0].id = -1 * Math.floor(Math.random() * 99999)
+      }
     }
   }
 }

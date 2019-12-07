@@ -1,10 +1,9 @@
 import request from '@/utils/request'
 import * as m from '@/api/model'
-export const getUserInfo = (data: any) =>
+export const getUserInfo = () =>
   request({
-    url: '/users/info',
-    method: 'post',
-    data
+    url: '/system/getUserInfo',
+    method: 'post'
   })
 
 export const login = (data: m.LoginForm) =>

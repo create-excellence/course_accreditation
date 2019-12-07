@@ -305,6 +305,11 @@ export default class Major extends Vue {
     const res = await this.api.queryMajor(option)
     if (res.status === 0 && res.data.list.length > 0) {
       this.majorList = res.data.list
+      if (query !== undefined && query !== '') {
+        this.majorList = [Object.assign({}, this.majorList[0]), ...this.majorList]
+        this.majorList[0].name = query
+        this.majorList[0].id = -1 * Math.floor(Math.random() * 99999)
+      }
     }
   }
 }
