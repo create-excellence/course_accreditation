@@ -9,7 +9,7 @@
       <el-form-item
         prop="name"
       >
-        <el-select
+        <!-- <el-select
           v-model="queryOptions.name"
           filterable
           remote
@@ -24,7 +24,12 @@
             :label="item.name"
             :value="item.name"
           />
-        </el-select>
+        </el-select> -->
+        <el-autocomplete
+          v-model="queryOptions.name"
+          :fetch-suggestions="queryCourseList"
+          placeholder="请输入内容"
+        />
       </el-form-item>
       <el-form-item
         prop="code"
@@ -51,7 +56,6 @@
         </el-button>
       </el-form-item>
       <el-button
-        style="float:right"
         type="primary"
         plain
         @click="showExcelDialog=true"
@@ -217,7 +221,6 @@ export default class Course extends Vue {
   loading = true
   course: m.Course = {} as any
   showDialog = false
-  courseList:m.Course[] = []
   editForm:m.CreateCourseForm={} as any
 
   showExcelDialog=false
@@ -242,7 +245,7 @@ export default class Course extends Vue {
 
   async init() {
     this.requestData()
-    this.queryCourseList('')
+    // this.queryCourseList('')
   }
 
   handleFilter() {
@@ -336,20 +339,18 @@ export default class Course extends Vue {
     })
   }
 
-  async queryCourseList(query: string) {
+  async queryCourseList(query: string, cb:any) {
     const option = {
       page: 1,
       pageSize: 20,
       name: query
     }
     const res = await this.api.queryCourse(option)
-    if (res.status === 0 && res.data.list.length > 0) {
-      this.courseList = res.data.list
-      if (query !== undefined && query !== '') {
-        this.courseList = [Object.assign({}, this.courseList[0]), ...this.courseList]
-        this.courseList[0].name = query
-        this.courseList[0].id = -1 * Math.floor(Math.random() * 99999)
-      }
+    if (res.status === 0) {
+      let courseList = res.data.list.map((item:m.Course) => {
+        return { value: item.name }
+      })
+      cb(courseList)
     }
   }
 }
