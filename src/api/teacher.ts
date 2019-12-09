@@ -21,6 +21,13 @@ export const deleteTeacher = (id:number) =>
     method: 'DELETE'
   })
 
+export const batchDeleteTeacher = (ids:number[]) =>
+  request({
+    url: '/teacher/deleteByIds',
+    data: ids,
+    method: 'DELETE'
+  })
+
 export const putTeacher = (id:number, data:m.CreateTeacherForm) =>
   request({
     url: '/teacher' + '/' + id,

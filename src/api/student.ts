@@ -21,6 +21,13 @@ export const deleteStudent = (id:number) =>
     method: 'DELETE'
   })
 
+export const batchDeleteStudent = (ids:number[]) =>
+  request({
+    url: '/student/deleteByIds',
+    data: ids,
+    method: 'DELETE'
+  })
+
 export const putStudent = (id:number, data:m.CreateStudentForm) =>
   request({
     url: '/student' + '/' + id,

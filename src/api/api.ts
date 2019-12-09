@@ -23,16 +23,19 @@ export interface api {
     createStudent(data:m.CreateStudentForm):m.ServerResponse
     deleteStudent(id:number):m.ServerResponse
     putStudent(id:number, data:m.CreateStudentForm):m.ServerResponse
+    batchDeleteStudent(ids:number[]):m.ServerResponse
 
     // Major
     queryMajor(queryOptions:any):m.ServerResponse,
     createMajor(data:m.CreateMajorForm):m.ServerResponse
     deleteMajor(id:number):m.ServerResponse
     putMajor(id:number, data:m.CreateMajorForm):m.ServerResponse
+    batchDeleteMajor(ids:number[]):m.ServerResponse
 
     // Teacher
     queryTeacher(queryOptions:any):m.ServerResponse,
     createTeacher(data:m.CreateTeacherForm):m.ServerResponse
     deleteTeacher(id:number):m.ServerResponse
     putTeacher(id:number, data:m.CreateTeacherForm):m.ServerResponse
+    batchDeleteTeacher(ids:number[]):m.ServerResponse
  }

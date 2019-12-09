@@ -9,22 +9,11 @@
       <el-form-item
         prop="name"
       >
-        <el-select
+        <el-autocomplete
           v-model="queryOptions.name"
-          filterable
-          remote
-          reserve-keyword
+          :fetch-suggestions="queryMajorList"
           placeholder="请输入专业名称"
-          :remote-method="queryMajorList"
-          :loading="loading"
-        >
-          <el-option
-            v-for="item in majorList"
-            :key="item.id"
-            :label="item.name"
-            :value="item.id"
-          />
-        </el-select>
+        />
       </el-form-item>
       <el-form-item
         prop="code"
@@ -51,6 +40,20 @@
         </el-button>
       </el-form-item>
       <el-button
+        type="primary"
+        plain
+        @click="showCheckbox=!showCheckbox"
+      >
+        多选
+      </el-button>
+      <el-button
+        v-if="showCheckbox"
+        type="danger"
+        @click="handleBatchDelete"
+      >
+        批量删除
+      </el-button>
+      <el-button
         @click="showExcelDialog=true"
       >
         批量导入专业
@@ -64,7 +67,13 @@
       fit
       highlight-current-row
       style="width: 100%;"
+      @selection-change="handleSelect"
     >
+      <el-table-column
+        v-if="showCheckbox"
+        type="selection"
+        width="55"
+      />
       <el-table-column
         align="center"
         label="课程名称"
@@ -183,9 +192,9 @@ export default class Major extends Vue {
   loading = true
   major: m.Major = {} as any
   showDialog = false
-  majorList:m.Major[] = []
   editForm:m.CreateMajorForm={} as any
-
+  showCheckbox = false
+  selectMajorId:number[] = []
   showExcelDialog=false
 
   queryOptions = {
@@ -206,7 +215,6 @@ export default class Major extends Vue {
 
   async init() {
     this.requestData()
-    this.queryMajorList('')
   }
 
   handleFilter() {
@@ -296,21 +304,48 @@ export default class Major extends Vue {
     })
   }
 
-  async queryMajorList(query: string) {
+  async queryMajorList(query: string, cb:any) {
+    // cb为搜索后的回调钩子
     const option = {
       page: 1,
       pageSize: 20,
       name: query
     }
     const res = await this.api.queryMajor(option)
-    if (res.status === 0 && res.data.list.length > 0) {
-      this.majorList = res.data.list
-      if (query !== undefined && query !== '') {
-        this.majorList = [Object.assign({}, this.majorList[0]), ...this.majorList]
-        this.majorList[0].name = query
-        this.majorList[0].id = -1 * Math.floor(Math.random() * 99999)
-      }
+    if (res.status === 0) {
+      let majorList = res.data.list.map((item:m.Major) => {
+        return { value: item.name }
+      })
+      cb(majorList)
     }
+  }
+
+  handleSelect(select:m.Major[]) {
+    this.selectMajorId = select.map((item:m.Major) => {
+      return item.id
+    })
+  }
+
+  handleBatchDelete() {
+    if (this.selectMajorId.length < 1) {
+      this.$message({
+        type: 'warning',
+        message: '请先选择要删除项'
+      })
+      return
+    }
+    this.$confirm(`确定要批量删除所选项吗？`, '提示', {
+      type: 'warning'
+    }).then(async() => {
+      const resp = await this.api.batchDeleteMajor(this.selectMajorId)
+      if (resp.status === 0) {
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+        this.requestData()
+      }
+    })
   }
 }
 </script>

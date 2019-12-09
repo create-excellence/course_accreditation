@@ -21,6 +21,13 @@ export const deleteMajor = (id:number) =>
     method: 'DELETE'
   })
 
+export const batchDeleteMajor = (ids:number[]) =>
+  request({
+    url: '/major/deleteByIds',
+    data: ids,
+    method: 'DELETE'
+  })
+
 export const putMajor = (id:number, data:m.CreateMajorForm) =>
   request({
     url: '/major' + '/' + id,

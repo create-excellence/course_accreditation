@@ -236,7 +236,6 @@ export default class Course extends Vue {
   editForm:m.CreateCourseForm={} as any
   showCheckbox = false
   selectCourseId:number[] = []
-
   showExcelDialog=false
 
   queryOptions = {
