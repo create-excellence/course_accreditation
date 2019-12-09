@@ -4,6 +4,7 @@ export * from '@/api/course.ts'
 export * from '@/api/student.ts'
 export * from '@/api/major.ts'
 export * from '@/api/teacher.ts'
+export * from '@/api/semester.ts'
 
 export interface api {
     // User
@@ -38,4 +39,11 @@ export interface api {
     deleteTeacher(id:number):m.ServerResponse
     putTeacher(id:number, data:m.CreateTeacherForm):m.ServerResponse
     batchDeleteTeacher(ids:number[]):m.ServerResponse
+
+     // Semester
+     querySemester(queryOptions:any):m.ServerResponse,
+     createSemester(data:m.CreateSemesterForm):m.ServerResponse
+     deleteSemester(id:number):m.ServerResponse
+     putSemester(id:number, data:m.CreateSemesterForm):m.ServerResponse
+     batchDeleteSemester(ids:number[]):m.ServerResponse
  }

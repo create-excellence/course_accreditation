@@ -96,6 +96,21 @@ export default new Router({
       ]
     },
     {
+      path: '/semester',
+      component: Layout,
+      redirect: '/semester/index',
+      children: [
+        {
+          path: 'index',
+          component: () => import('@/views/semester/index.vue'),
+          meta: {
+            title: 'Semester',
+            icon: 'table'
+          }
+        }
+      ]
+    },
+    {
       path: '/teacher',
       component: Layout,
       redirect: '/teacher/index',

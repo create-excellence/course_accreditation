@@ -48,7 +48,7 @@
       <div v-if="showData">
         <el-button
           icon="el-icon-back"
-          @click="showData = false"
+          @click="handleBack"
         >
           返回
         </el-button>
@@ -129,6 +129,11 @@ export default class extends Vue {
 
   set visible(value) {
     this.$emit('update:show', value)
+  }
+
+  handleBack() {
+    this.pageOption.page = 1
+    this.showData = false
   }
 
   success(res:any) {
