@@ -16,6 +16,7 @@ export interface api {
     createCourse(data:m.CreateCourseForm):m.ServerResponse
     deleteCourse(id:number):m.ServerResponse
     putCourse(id:number, data:m.CreateCourseForm):m.ServerResponse
+    batchDeleteCourse(ids:number[]):m.ServerResponse
 
     // Student
     queryStudent(queryOptions:any):m.ServerResponse,

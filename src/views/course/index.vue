@@ -9,26 +9,10 @@
       <el-form-item
         prop="name"
       >
-        <!-- <el-select
-          v-model="queryOptions.name"
-          filterable
-          remote
-          reserve-keyword
-          placeholder="请输入课程名称"
-          :remote-method="queryCourseList"
-          :loading="loading"
-        >
-          <el-option
-            v-for="item in courseList"
-            :key="item.id"
-            :label="item.name"
-            :value="item.name"
-          />
-        </el-select> -->
         <el-autocomplete
           v-model="queryOptions.name"
           :fetch-suggestions="queryCourseList"
-          placeholder="请输入内容"
+          placeholder="请输入课程名称"
         />
       </el-form-item>
       <el-form-item
@@ -58,6 +42,20 @@
       <el-button
         type="primary"
         plain
+        @click="showCheckbox=!showCheckbox"
+      >
+        多选
+      </el-button>
+      <el-button
+        v-if="showCheckbox"
+        type="danger"
+        @click="handleBatchDelete"
+      >
+        批量删除
+      </el-button>
+      <el-button
+        type="primary"
+        plain
         @click="showExcelDialog=true"
       >
         批量导入课程
@@ -71,7 +69,13 @@
       fit
       highlight-current-row
       style="width: 100%;"
+      @selection-change="handleSelect"
     >
+      <el-table-column
+        v-if="showCheckbox"
+        type="selection"
+        width="55"
+      />
       <el-table-column
         align="center"
         label="课程名称"
@@ -179,11 +183,19 @@
           prop="nature"
           label="课程性质"
         >
-          <el-input
+          <el-select
             v-model="editForm.nature"
-            placeholder="请输入课程性质"
-            maxlength="10"
-          />
+            placeholder="请选择课程性质"
+          >
+            <el-option
+              label="专业必修"
+              value="专业必修"
+            />
+            <el-option
+              label="专业选修"
+              value="专业选修"
+            />
+          </el-select>
         </el-form-item>
       </el-form>
       <div
@@ -222,6 +234,8 @@ export default class Course extends Vue {
   course: m.Course = {} as any
   showDialog = false
   editForm:m.CreateCourseForm={} as any
+  showCheckbox = false
+  selectCourseId:number[] = []
 
   showExcelDialog=false
 
@@ -245,7 +259,6 @@ export default class Course extends Vue {
 
   async init() {
     this.requestData()
-    // this.queryCourseList('')
   }
 
   handleFilter() {
@@ -340,6 +353,7 @@ export default class Course extends Vue {
   }
 
   async queryCourseList(query: string, cb:any) {
+    // cb为搜索后的回调钩子
     const option = {
       page: 1,
       pageSize: 20,
@@ -352,6 +366,33 @@ export default class Course extends Vue {
       })
       cb(courseList)
     }
+  }
+  handleSelect(select:m.Course[]) {
+    this.selectCourseId = select.map((item:m.Course) => {
+      return item.id
+    })
+  }
+
+  handleBatchDelete() {
+    if (this.selectCourseId.length < 1) {
+      this.$message({
+        type: 'warning',
+        message: '请先选择要删除项'
+      })
+      return
+    }
+    this.$confirm(`确定要批量删除所选项吗？`, '提示', {
+      type: 'warning'
+    }).then(async() => {
+      const resp = await this.api.batchDeleteCourse(this.selectCourseId)
+      if (resp.status === 0) {
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+        this.requestData()
+      }
+    })
   }
 }
 </script>

@@ -132,6 +132,7 @@
       <el-table-column
         align="center"
         label="操作"
+        width="200"
       >
         <template slot-scope="scope">
           <el-button
@@ -139,7 +140,7 @@
             @click="handleEdit(scope.row)"
           >
             编辑
-          </el-button><br>
+          </el-button>
           <el-button
             style="marginTop:3px"
             type="danger"
@@ -275,7 +276,7 @@
         </el-form-item>
         <el-form-item
           prop="graduateMajor"
-          label="毕业转移"
+          label="毕业专业"
         >
           <el-input
             v-model="editForm.graduateMajor"

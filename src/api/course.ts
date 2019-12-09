@@ -15,6 +15,13 @@ export const createCourse = (data:m.CreateCourseForm) =>
     data
   })
 
+export const batchDeleteCourse = (ids:number[]) =>
+  request({
+    url: '/course/deleteByIds',
+    data: ids,
+    method: 'DELETE'
+  })
+
 export const deleteCourse = (id:number) =>
   request({
     url: '/course' + '/' + id,
