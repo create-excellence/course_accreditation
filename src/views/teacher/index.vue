@@ -9,22 +9,12 @@
       <el-form-item
         prop="jno"
       >
-        <el-select
+        <el-autocomplete
           v-model="queryOptions.jno"
-          filterable
-          remote
-          reserve-keyword
+          class="inline-input"
+          :fetch-suggestions="queryTeacherList"
           placeholder="请输入工号"
-          :remote-method="queryTeacherList"
-          :loading="loading"
-        >
-          <el-option
-            v-for="item in teacherSearch"
-            :key="item.id"
-            :label="item.jno"
-            :value="item.jno"
-          />
-        </el-select>
+        />
       </el-form-item>
       <el-form-item
         prop="title"
@@ -53,6 +43,20 @@
       <el-button
         type="primary"
         plain
+        @click="showCheckbox=!showCheckbox"
+      >
+        多选
+      </el-button>
+      <el-button
+        v-if="showCheckbox"
+        type="danger"
+        @click="handleBatchDelete"
+      >
+        批量删除
+      </el-button>
+      <el-button
+        type="primary"
+        plain
         @click="showExcelDialog=true"
       >
         批量导入教师
@@ -65,17 +69,23 @@
       fit
       highlight-current-row
       style="width: 100%;"
+      @selection-change="handleSelect"
     >
+      <el-table-column
+        v-if="showCheckbox"
+        type="selection"
+        width="55"
+      />
       <el-table-column
         align="center"
         label="工号"
         prop="jno"
       />
-      <el-table-column
+      <!-- <el-table-column
         align="center"
         label="角色"
         prop="code"
-      />
+      /> -->
       <el-table-column
         align="center"
         label="姓名"
@@ -182,7 +192,7 @@
             maxlength="20"
           />
         </el-form-item>
-        <el-form-item
+        <!-- <el-form-item
           prop="role"
           label="角色"
         >
@@ -199,7 +209,7 @@
               value="teacher"
             />
           </el-select>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item
           prop="name"
           label="姓名"
@@ -321,9 +331,9 @@ export default class Teacher extends Vue {
   loading = true
   teacher: m.Teacher = {} as any
   showDialog = false
-  teacherSearch:m.Teacher[] = []
-  teacherList:m.Teacher[] = []
   editForm:m.CreateTeacherForm={} as any
+  showCheckbox = false
+  selectTeacherId:number[] = []
 
   showExcelDialog=false
 
@@ -336,7 +346,7 @@ export default class Teacher extends Vue {
 
   rules={
     jno: [{ required: true, message: '教师工号不能为空', trigger: 'blur' }],
-    role: [{ required: true, message: '教师角色不能为空', trigger: 'blur' }],
+    // role: [{ required: true, message: '教师角色不能为空', trigger: 'blur' }],
     name: [{ required: true, message: '教师姓名不能为空', trigger: 'blur' }],
     title: [{ required: true, message: '教师职称不能为空', trigger: 'blur' }]
   }
@@ -347,7 +357,6 @@ export default class Teacher extends Vue {
 
   async init() {
     this.requestData()
-    this.queryTeacherList('')
   }
 
   handleFilter() {
@@ -371,7 +380,7 @@ export default class Teacher extends Vue {
 
   resetForm() {
     this.editForm = {
-      role: '',
+      // role: '',
       title: '',
       jno: '',
       name: '',
@@ -384,7 +393,7 @@ export default class Teacher extends Vue {
   handleEdit(teacher: m.Teacher) {
     this.teacher = teacher
     this.editForm = {
-      role: teacher.role,
+      // role: teacher.role,
       name: teacher.name,
       title: teacher.title,
       jno: teacher.jno,
@@ -447,21 +456,49 @@ export default class Teacher extends Vue {
     })
   }
 
-  async queryTeacherList(query: string) {
+  async queryTeacherList(query: string, callback: any) {
     const option = {
       page: 1,
       pageSize: 20,
       jno: query
     }
     const res = await api.queryTeacher(option)
+    let list = [{}]
     if (res.status === 0 && res.data.list.length > 0) {
-      this.teacherSearch = res.data.list
-      if (query !== undefined && query !== '') {
-        this.teacherSearch = [Object.assign({}, this.teacherSearch[0]), ...this.teacherSearch]
-        this.teacherSearch[0].jno = query
-        this.teacherSearch[0].id = -1 * Math.floor(Math.random() * 99999)
-      }
+      list = res.data.list
+      list.forEach((element:any) => {
+        element.value = element.jno
+      })
     }
+    callback(list)
+  }
+
+  handleSelect(select:m.Teacher[]) {
+    this.selectTeacherId = select.map((item:m.Teacher) => {
+      return item.id
+    })
+  }
+
+  handleBatchDelete() {
+    if (this.selectTeacherId.length < 1) {
+      this.$message({
+        type: 'warning',
+        message: '请先选择要删除项'
+      })
+      return
+    }
+    this.$confirm(`确定要批量删除所选项吗？`, '提示', {
+      type: 'warning'
+    }).then(async() => {
+      const resp = await this.api.batchDeleteTeacher(this.selectTeacherId)
+      if (resp.status === 0) {
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+        this.requestData()
+      }
+    })
   }
 }
 </script>

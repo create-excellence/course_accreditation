@@ -59,6 +59,20 @@
       <el-button
         type="primary"
         plain
+        @click="showCheckbox=!showCheckbox"
+      >
+        多选
+      </el-button>
+      <el-button
+        v-if="showCheckbox"
+        type="danger"
+        @click="handleBatchDelete"
+      >
+        批量删除
+      </el-button>
+      <el-button
+        type="primary"
+        plain
         @click="showExcelDialog=true"
       >
         批量导入学生
@@ -72,7 +86,13 @@
       fit
       highlight-current-row
       style="width: 100%;"
+      @selection-change="handleSelect"
     >
+      <el-table-column
+        v-if="showCheckbox"
+        type="selection"
+        width="55"
+      />
       <el-table-column
         align="center"
         label="学生学号"
@@ -328,8 +348,9 @@ export default class Student extends Vue {
   student: m.Student = {} as any
   showDialog = false
   majorList:m.Major[] = []
-  studentList:m.Student[] = []
   editForm:m.CreateStudentForm={} as any
+  showCheckbox = false
+  selectStudentId:number[] = []
 
   showExcelDialog=false
 
@@ -507,5 +528,33 @@ export default class Student extends Vue {
   //     }
   //   }
   // }
+
+  handleSelect(select:m.Student[]) {
+    this.selectStudentId = select.map((item:m.Student) => {
+      return item.id
+    })
+  }
+
+  handleBatchDelete() {
+    if (this.selectStudentId.length < 1) {
+      this.$message({
+        type: 'warning',
+        message: '请先选择要删除项'
+      })
+      return
+    }
+    this.$confirm(`确定要批量删除所选项吗？`, '提示', {
+      type: 'warning'
+    }).then(async() => {
+      const resp = await this.api.batchDeleteStudent(this.selectStudentId)
+      if (resp.status === 0) {
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+        this.requestData()
+      }
+    })
+  }
 }
 </script>
