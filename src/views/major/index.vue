@@ -76,12 +76,12 @@
       />
       <el-table-column
         align="center"
-        label="课程名称"
+        label="专业名称"
         prop="name"
       />
       <el-table-column
         align="center"
-        label="课程代码"
+        label="专业代码"
         prop="code"
       />
       <el-table-column
@@ -137,21 +137,21 @@
       >
         <el-form-item
           prop="name"
-          label="课程名称"
+          label="专业名称"
         >
           <el-input
             v-model="editForm.name"
-            placeholder="请输入课程名称"
+            placeholder="请输入专业名称"
             maxlength="10"
           />
         </el-form-item>
         <el-form-item
           prop="code"
-          label="课程代码"
+          label="专业代码"
         >
           <el-input
             v-model="editForm.code"
-            placeholder="请输入课程代码"
+            placeholder="请输入专业代码"
             maxlength="10"
           />
         </el-form-item>

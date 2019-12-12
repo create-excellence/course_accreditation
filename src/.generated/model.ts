@@ -822,3 +822,54 @@ export interface CourseResp {
   message: string;
 }
 
+/**
+* 
+* @export
+* @interface GraduationDemand
+*/
+export interface GraduationDemand {
+  /**
+   * 毕业要求代码
+   * @type {string}
+   * @memberof GraduationDemand
+   */
+  no: string;
+  /**
+   * 毕业要求描述
+   * @type {string}
+   * @memberof GraduationDemand
+   */
+  content: string;
+  /**
+   * 创建时间
+   * @type {Date}
+   * @memberof GraduationDemand
+   */
+  createTime?: Date;
+  /**
+   * 专业Id
+   * @type {number}
+   * @memberof GraduationDemand
+   */
+  majorId?: number;
+  /**
+   * 专业
+   * @type {string}
+   * @memberof GraduationDemand
+   */
+  major?: string;
+  /**
+   * id
+   * @type {number}
+   * @memberof GraduationDemand
+   */
+  id: number;
+  /**
+   * 更新时间
+   * @type {Date}
+   * @memberof GraduationDemand
+   */
+  updateTime?: Date;
+}
+
+

@@ -139,7 +139,8 @@ export interface CreateCourseTargetForm {
    */
   totalScore?: number;
 
-}/**
+}
+/**
 * 
 * @export
 * @interface CreateGraduationPointForm
@@ -163,6 +164,34 @@ export interface CreateGraduationPointForm {
    * 指标点编号
    * @type {string}
    * @memberof CreateGraduationPointForm
+   */
+  no?: string;
+
+}
+/**
+* 
+* @export
+* @interface CreateGraduationDemandForm
+*/
+export interface CreateGraduationDemandForm {
+  /**
+   * 指标点编号
+   * @type {string}
+   * @memberof CreateGraduationDemandForm
+   */
+  content?: string;
+
+  /**
+   * 专业id
+   * @type {number}
+   * @memberof CreateGraduationDemandForm
+   */
+  majorId?: number;
+
+  /**
+   * 指标点编号
+   * @type {string}
+   * @memberof CreateGraduationDemandForm
    */
   no?: string;
 
