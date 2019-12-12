@@ -141,6 +141,21 @@ export default new Router({
       ]
     },
     {
+      path: '/course_class',
+      component: Layout,
+      redirect: '/course_class/index',
+      children: [
+        {
+          path: 'index',
+          component: () => import('@/views/course_class/index.vue'),
+          meta: {
+            title: 'CourseClass',
+            icon: 'table'
+          }
+        }
+      ]
+    },
+    {
       path: '/form',
       component: Layout,
       children: [

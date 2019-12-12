@@ -6,6 +6,7 @@ export * from '@/api/major.ts'
 export * from '@/api/teacher.ts'
 export * from '@/api/semester.ts'
 export * from '@/api/graduation-demand.ts'
+export * from '@/api/course_class.ts'
 
 export interface api {
     // User
@@ -54,4 +55,11 @@ export interface api {
     deleteGraduationDemand(id:number):m.ServerResponse
     putGraduationDemand(id:number, data:m.CreateGraduationDemandForm):m.ServerResponse
     batchDeleteGraduationDemand(ids:number[]):m.ServerResponse
+
+     // CourseClass
+     queryCourseClass(queryOptions:any):m.ServerResponse,
+     createCourseClass(data:m.CreateCourseClassForm):m.ServerResponse
+     deleteCourseClass(id:number):m.ServerResponse
+     putCourseClass(id:number, data:m.CreateCourseClassForm):m.ServerResponse
+     batchDeleteCourseClass(ids:number[]):m.ServerResponse
 }
