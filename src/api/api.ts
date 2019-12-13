@@ -7,6 +7,8 @@ export * from '@/api/teacher.ts'
 export * from '@/api/semester.ts'
 export * from '@/api/graduation-demand.ts'
 export * from '@/api/course_class.ts'
+export * from '@/api/supporting_course.ts'
+export * from '@/api/graduation_point.ts'
 
 export interface api {
     // User
@@ -56,10 +58,24 @@ export interface api {
     putGraduationDemand(id:number, data:m.CreateGraduationDemandForm):m.ServerResponse
     batchDeleteGraduationDemand(ids:number[]):m.ServerResponse
 
+    // GraduationPoint
+    queryGraduationPoint(queryOptions:any):m.ServerResponse,
+    createGraduationPoint(data:m.CreateGraduationPointForm):m.ServerResponse
+    deleteGraduationPoint(id:number):m.ServerResponse
+    putGraduationPoint(id:number, data:m.CreateGraduationPointForm):m.ServerResponse
+    batchDeleteGraduationPoint(ids:number[]):m.ServerResponse
+
      // CourseClass
      queryCourseClass(queryOptions:any):m.ServerResponse,
      createCourseClass(data:m.CreateCourseClassForm):m.ServerResponse
      deleteCourseClass(id:number):m.ServerResponse
      putCourseClass(id:number, data:m.CreateCourseClassForm):m.ServerResponse
      batchDeleteCourseClass(ids:number[]):m.ServerResponse
+
+      // SupportingCourse
+      querySupportingCourse(queryOptions:any):m.ServerResponse,
+      createSupportingCourse(data:m.CreateSupportingCourseForm):m.ServerResponse
+      deleteSupportingCourse(id:number):m.ServerResponse
+      putSupportingCourse(id:number, data:m.CreateSupportingCourseForm):m.ServerResponse
+      batchDeleteSupportingCourse(ids:number[]):m.ServerResponse
 }

@@ -96,6 +96,21 @@ export default new Router({
       ]
     },
     {
+      path: '/supporting_course',
+      component: Layout,
+      redirect: '/supporting_course/index',
+      children: [
+        {
+          path: 'index',
+          component: () => import('@/views/supporting_course/index.vue'),
+          meta: {
+            title: 'SupportingCourse',
+            icon: 'example'
+          }
+        }
+      ]
+    },
+    {
       path: '/graduation-demand',
       component: Layout,
       redirect: '/graduation-demand/index',

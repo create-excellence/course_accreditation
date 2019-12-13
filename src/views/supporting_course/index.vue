@@ -7,20 +7,19 @@
       @submit.native.prevent="handleFilter"
     >
       <el-form-item
-        prop="name"
+        prop="courseName"
       >
-        <el-autocomplete
-          v-model="queryOptions.name"
-          :fetch-suggestions="queryMajorList"
-          placeholder="请输入专业名称"
+        <el-input
+          v-model="queryOptions.courseName"
+          placeholder="请输入课程名称"
         />
       </el-form-item>
       <el-form-item
-        prop="code"
+        prop="graduationPointContent"
       >
         <el-input
-          v-model="queryOptions.code"
-          placeholder="请输入专业代码"
+          v-model="queryOptions.graduationPointContent"
+          placeholder="请输入指标点内容"
           maxlength="10"
         />
       </el-form-item>
@@ -36,7 +35,7 @@
           icon="el-icon-plus"
           @click="handleCreate"
         >
-          专业
+          支撑课程
         </el-button>
       </el-form-item>
       <el-button
@@ -56,7 +55,7 @@
       <el-button
         @click="showExcelDialog=true"
       >
-        批量导入专业
+        批量导入支撑课程
       </el-button>
     </el-form>
 
@@ -76,13 +75,29 @@
       />
       <el-table-column
         align="center"
-        label="专业名称"
-        prop="name"
+        label="指标点编号"
+        prop="graduationPointNo"
       />
       <el-table-column
         align="center"
-        label="专业代码"
-        prop="code"
+        label="指标点内容"
+        prop="graduationPointContent"
+      />
+      <el-table-column
+        align="center"
+        label="课程名称"
+        prop="courseName"
+      />
+      <el-table-column
+        align="center"
+        label="课程代码"
+        prop="courseCode"
+      />
+
+      <el-table-column
+        align="center"
+        label="权值"
+        prop="weight"
       />
       <el-table-column
         align="center"
@@ -124,7 +139,7 @@
     />
 
     <el-dialog
-      :title="`${major.id ? '编辑' : '添加'}专业`"
+      :title="`${supportingCourse.id ? '编辑' : '添加'}支撑课程`"
       :visible.sync="showDialog"
       @close="showDialog = false"
     >
@@ -136,23 +151,57 @@
         label-position="top"
       >
         <el-form-item
-          prop="name"
-          label="专业名称"
+          prop="courseId"
+          label="课程"
         >
-          <el-input
-            v-model="editForm.name"
-            placeholder="请输入专业名称"
-            maxlength="10"
-          />
+          <el-select
+            v-model="editForm.courseId"
+            filterable
+            remote
+            reserve-keyword
+            placeholder="请选择课程"
+            :remote-method="queryCourseList"
+            :loading="loading"
+          >
+            <el-option
+              v-for="item in courseList"
+              :key="item.id"
+              :label="item.code+item.name"
+              :value="item.id"
+            />
+          </el-select>
         </el-form-item>
         <el-form-item
-          prop="code"
-          label="专业代码"
+          prop="graduationPointId"
+          label="毕业要求指标点"
         >
-          <el-input
-            v-model="editForm.code"
-            placeholder="请输入专业代码"
-            maxlength="10"
+          <el-select
+            v-model="editForm.graduationPointId"
+            filterable
+            remote
+            reserve-keyword
+            placeholder="请选择指标点编号"
+            :remote-method="queryGraduationPointList"
+            :loading="loading"
+          >
+            <el-option
+              v-for="item in graduationPointList"
+              :key="item.id"
+              :label="item.no"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item
+          prop="weight"
+          label="权值"
+        >
+          <el-input-number
+            v-model="editForm.weight"
+            placeholder="请输入权值"
+            :min="0"
+            :max="100"
+            :precision="1"
           />
         </el-form-item>
       </el-form>
@@ -172,7 +221,7 @@
       </div>
     </el-dialog>
     <excel-dialog
-      action="/major/batchSave"
+      action="/supporting-course/batchSave"
       :show.sync="showExcelDialog"
       @requestData="requestData"
     />
@@ -185,27 +234,30 @@ import { ElForm } from 'element-ui/types/form'
 import * as m from '@/api/model'
 
 @Component({})
-export default class Major extends Vue {
-  data:m.Major[] = []
+export default class SupportingCourse extends Vue {
+  data:m.SupportingCourse[] = []
   total = 0
   loading = true
-  major: m.Major = {} as any
+  supportingCourse: m.SupportingCourse = {} as any
   showDialog = false
-  editForm:m.CreateMajorForm={} as any
+  editForm:m.CreateSupportingCourseForm={} as any
   showCheckbox = false
-  selectMajorId:number[] = []
+  selectSupportingCourseId:number[] = []
   showExcelDialog=false
+  courseList:m.Course[] =[]
+  graduationPointList:m.GraduationPoint[]=[]
 
   queryOptions = {
-    name: '',
-    code: '',
+    courseName: '',
+    graduationPointContent: '',
     page: 1,
     pageSize: 20
   }
 
   rules={
-    name: [{ required: true, message: '专业名称不能为空', trigger: 'blur' }],
-    code: [{ required: true, message: '专业代码不能为空', trigger: 'blur' }]
+    graduationPointId: [{ required: true, message: '毕业指标点不能为空', trigger: 'blur' }],
+    courseId: [{ required: true, message: '课程不能为空', trigger: 'blur' }],
+    weight: [{ required: true, message: '权值不能为空', trigger: 'blur' }]
   }
 
   created() {
@@ -214,6 +266,8 @@ export default class Major extends Vue {
 
   async init() {
     this.requestData()
+    this.queryCourseList('')
+    this.queryGraduationPointList('')
   }
 
   handleFilter() {
@@ -223,30 +277,32 @@ export default class Major extends Vue {
 
   async requestData() {
     this.loading = true
-    const res = await this.api.queryMajor(this.queryOptions)
+    const res = await this.api.querySupportingCourse(this.queryOptions)
     this.data = res.data.list
     this.total = res.data.total
     this.loading = false
   }
 
   handleCreate() {
-    this.major = {} as any
+    this.supportingCourse = {} as any
     this.resetForm()
     this.showDialog = true
   }
 
   resetForm() {
     this.editForm = {
-      name: '',
-      code: ''
+      graduationPointId: undefined,
+      courseId: undefined,
+      weight: 0
     }
   }
 
-  handleEdit(major: m.Major) {
-    this.major = major
+  handleEdit(supportingCourse: m.SupportingCourse) {
+    this.supportingCourse = supportingCourse
     this.editForm = {
-      code: major.code,
-      name: major.name
+      graduationPointId: supportingCourse.graduationPointId,
+      courseId: supportingCourse.courseId,
+      weight: supportingCourse.weight
     }
     this.showDialog = true
   }
@@ -254,8 +310,8 @@ export default class Major extends Vue {
   handleSave() {
     (this.$refs['editForm'] as ElForm).validate(async(valid : boolean) => {
       if (valid) {
-        if (this.major.id) {
-          const res = await this.api.putMajor(this.major.id, this.editForm)
+        if (this.supportingCourse.id) {
+          const res = await this.api.putSupportingCourse(this.supportingCourse.id, this.editForm)
           if (res.status === 0) {
             this.resetForm()
             this.showDialog = false
@@ -266,7 +322,7 @@ export default class Major extends Vue {
             this.requestData()
           }
         } else {
-          const res = await this.api.createMajor(this.editForm)
+          const res = await this.api.createSupportingCourse(this.editForm)
           if (res.status === 0) {
             (this.$refs['editForm'] as ElForm).resetFields()
             this.showDialog = false
@@ -283,17 +339,17 @@ export default class Major extends Vue {
     })
   }
 
-  handleDelete(major: m.Major) {
-    this.$confirm(`确定删除${major.name}吗？`, '提示', {
+  handleDelete(supportingCourse: m.SupportingCourse) {
+    this.$confirm(`确定删除这条信息吗？`, '提示', {
       type: 'warning'
     }).then(async() => {
-      const resp = await this.api.deleteMajor(major.id)
+      const resp = await this.api.deleteSupportingCourse(supportingCourse.id)
       if (resp.status === 0) {
         this.$message({
           type: 'success',
           message: '删除成功!'
         })
-        this.data = this.data.filter((e: m.Major) => e.id !== major.id)
+        this.data = this.data.filter((e: m.SupportingCourse) => e.id !== supportingCourse.id)
         if (this.total > 1) {
           this.total--
         } else {
@@ -303,30 +359,38 @@ export default class Major extends Vue {
     })
   }
 
-  async queryMajorList(query: string, cb:any) {
-    // cb为搜索后的回调钩子
+  async queryCourseList(query: string) {
     const option = {
       page: 1,
       pageSize: 20,
       name: query
     }
-    const res = await this.api.queryMajor(option)
+    const res = await this.api.queryCourse(option)
     if (res.status === 0) {
-      let majorList = res.data.list.map((item:m.Major) => {
-        return { value: item.name }
-      })
-      cb(majorList)
+      this.courseList = res.data.list
     }
   }
 
-  handleSelect(select:m.Major[]) {
-    this.selectMajorId = select.map((item:m.Major) => {
+  async queryGraduationPointList(query: string) {
+    const option = {
+      page: 1,
+      pageSize: 20,
+      no: query
+    }
+    const res = await this.api.queryGraduationPoint(option)
+    if (res.status === 0) {
+      this.graduationPointList = res.data.list
+    }
+  }
+
+  handleSelect(select:m.SupportingCourse[]) {
+    this.selectSupportingCourseId = select.map((item:m.SupportingCourse) => {
       return item.id
     })
   }
 
   handleBatchDelete() {
-    if (this.selectMajorId.length < 1) {
+    if (this.selectSupportingCourseId.length < 1) {
       this.$message({
         type: 'warning',
         message: '请先选择要删除项'
@@ -336,7 +400,7 @@ export default class Major extends Vue {
     this.$confirm(`确定要批量删除所选项吗？`, '提示', {
       type: 'warning'
     }).then(async() => {
-      const resp = await this.api.batchDeleteMajor(this.selectMajorId)
+      const resp = await this.api.batchDeleteSupportingCourse(this.selectSupportingCourseId)
       if (resp.status === 0) {
         this.$message({
           type: 'success',

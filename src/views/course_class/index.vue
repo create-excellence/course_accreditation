@@ -114,11 +114,30 @@
         label="课程名称"
       >
         <template slot-scope="scope">
-          <el-tag
+          <span
             v-if="scope.row.course"
           >
             {{ scope.row.course }}
+          </span>
+          <el-tag
+            v-else
+            type="danger"
+          >
+            无
           </el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="jno"
+        align="center"
+        label="执教老师工号"
+      >
+        <template slot-scope="scope">
+          <span
+            v-if="scope.row.jno"
+          >
+            {{ scope.row.jno }}
+          </span>
           <el-tag
             v-else
             type="danger"
@@ -133,11 +152,11 @@
         label="执教老师姓名"
       >
         <template slot-scope="scope">
-          <el-tag
+          <span
             v-if="scope.row.teacher"
           >
             {{ scope.row.teacher }}
-          </el-tag>
+          </span>
           <el-tag
             v-else
             type="danger"
@@ -276,7 +295,7 @@
         </el-form-item>
         <el-form-item
           prop="teacherId"
-          label="执教老师姓名"
+          label="执教老师"
         >
           <el-select
             v-model="editForm.teacherId"
@@ -285,7 +304,7 @@
             <el-option
               v-for="item in teacherList"
               :key="item.id"
-              :label="item.name"
+              :label="item.jno+item.name"
               :value="item.id"
             />
           </el-select>
@@ -295,9 +314,8 @@
           label="开课周次"
         >
           <el-input-number
-            v-model="editForm.startweek"
+            v-model="editForm.startWeek"
             :min="1"
-            :precision="1"
             :step="1"
             :max="25"
           />
@@ -307,9 +325,8 @@
           label="结课周次"
         >
           <el-input-number
-            v-model="editForm.endweek"
+            v-model="editForm.endWeek"
             :min="1"
-            :precision="1"
             :step="1"
             :max="25"
           />
@@ -438,8 +455,8 @@ export default class CourseClass extends Vue {
       semesterId: undefined,
       teacherId: undefined,
       courseId: undefined,
-      startWeek: 1.0,
-      endWeek: 1.0,
+      startWeek: 3,
+      endWeek: 18,
       status: undefined
     }
   }

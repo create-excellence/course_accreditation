@@ -632,6 +632,12 @@ export interface SupportingCourse {
    * @memberof SupportingCourse
    */
   id: number;
+    /**
+   * weight
+   * @type {number}
+   * @memberof SupportingCourse
+   */
+  weight?: number;
   /**
    * 更新时间
    * @type {Date}

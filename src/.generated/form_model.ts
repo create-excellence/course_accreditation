@@ -438,6 +438,12 @@ export interface CreateSupportingCourseForm {
    */
   graduationPointId?: number;
 
+      /**
+   * weight
+   * @type {number}
+   * @memberof SupportingCourse
+   */
+  weight?: number;
 
 }/**
 * 
