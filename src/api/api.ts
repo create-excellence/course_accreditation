@@ -6,9 +6,9 @@ export * from '@/api/major.ts'
 export * from '@/api/teacher.ts'
 export * from '@/api/semester.ts'
 export * from '@/api/graduation-demand.ts'
-export * from '@/api/course_class.ts'
-export * from '@/api/supporting_course.ts'
-export * from '@/api/graduation_point.ts'
+export * from '@/api/course-class'
+export * from '@/api/supporting-course'
+export * from '@/api/graduation-point'
 
 export interface api {
     // User

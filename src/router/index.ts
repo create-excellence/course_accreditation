@@ -96,13 +96,13 @@ export default new Router({
       ]
     },
     {
-      path: '/supporting_course',
+      path: '/supporting-course',
       component: Layout,
-      redirect: '/supporting_course/index',
+      redirect: '/supporting-course/index',
       children: [
         {
           path: 'index',
-          component: () => import('@/views/supporting_course/index.vue'),
+          component: () => import('@/views/supporting-course/index.vue'),
           meta: {
             title: 'SupportingCourse',
             icon: 'example'
@@ -156,13 +156,13 @@ export default new Router({
       ]
     },
     {
-      path: '/course_class',
+      path: '/course-class',
       component: Layout,
-      redirect: '/course_class/index',
+      redirect: '/course-class/index',
       children: [
         {
           path: 'index',
-          component: () => import('@/views/course_class/index.vue'),
+          component: () => import('@/views/course-class/index.vue'),
           meta: {
             title: 'CourseClass',
             icon: 'table'

@@ -27,7 +27,7 @@
           icon="el-icon-plus"
           @click="handleCreate"
         >
-          专业
+          学期
         </el-button>
       </el-form-item>
       <el-button
@@ -47,7 +47,7 @@
       <el-button
         @click="showExcelDialog=true"
       >
-        批量导入专业
+        批量导入学期
       </el-button>
     </el-form>
 

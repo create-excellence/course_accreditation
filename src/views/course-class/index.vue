@@ -95,17 +95,11 @@
         label="学期"
       >
         <template slot-scope="scope">
-          <el-tag
+          <span
             v-if="scope.row.semester"
           >
             {{ scope.row.semester }}
-          </el-tag>
-          <el-tag
-            v-else
-            type="danger"
-          >
-            无
-          </el-tag>
+          </span>
         </template>
       </el-table-column>
       <el-table-column
@@ -119,12 +113,6 @@
           >
             {{ scope.row.course }}
           </span>
-          <el-tag
-            v-else
-            type="danger"
-          >
-            无
-          </el-tag>
         </template>
       </el-table-column>
       <el-table-column
@@ -138,12 +126,6 @@
           >
             {{ scope.row.jno }}
           </span>
-          <el-tag
-            v-else
-            type="danger"
-          >
-            无
-          </el-tag>
         </template>
       </el-table-column>
       <el-table-column
@@ -157,12 +139,6 @@
           >
             {{ scope.row.teacher }}
           </span>
-          <el-tag
-            v-else
-            type="danger"
-          >
-            无
-          </el-tag>
         </template>
       </el-table-column>
       <el-table-column
@@ -267,7 +243,12 @@
         >
           <el-select
             v-model="editForm.semesterId"
+            filterable
+            remote
+            reserve-keyword
             placeholder="请选择学期"
+            :remote-method="querySemesterList"
+            :loading="loading"
           >
             <el-option
               v-for="item in semesterList"
@@ -283,12 +264,17 @@
         >
           <el-select
             v-model="editForm.courseId"
+            filterable
+            remote
+            reserve-keyword
             placeholder="请选择课程"
+            :remote-method="queryCourseList"
+            :loading="loading"
           >
             <el-option
               v-for="item in courseList"
               :key="item.id"
-              :label="item.name"
+              :label="item.code+item.name"
               :value="item.id"
             />
           </el-select>
@@ -299,7 +285,12 @@
         >
           <el-select
             v-model="editForm.teacherId"
+            filterable
+            remote
+            reserve-keyword
             placeholder="请选择执教老师"
+            :remote-method="queryTeacherList"
+            :loading="loading"
           >
             <el-option
               v-for="item in teacherList"
@@ -364,7 +355,7 @@
       </div>
     </el-dialog>
     <excel-dialog
-      action="/course_class/batchSave"
+      action="/course-class/batchSave"
       :show.sync="showExcelDialog"
       @requestData="requestData"
     />
@@ -537,7 +528,6 @@ export default class CourseClass extends Vue {
       this.semesterList = res.data.list
     }
   }
-
   async queryTeacherList(query: string) {
     const option = {
       page: 1,
@@ -547,9 +537,9 @@ export default class CourseClass extends Vue {
     const res = await api.queryTeacher(option)
     if (res.status === 0 && res.data.list.length > 0) {
       this.teacherList = res.data.list
+      console.log(this.teacherList)
     }
   }
-
   async queryCourseList(query: string) {
     const option = {
       page: 1,
