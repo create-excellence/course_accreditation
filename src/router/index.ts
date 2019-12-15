@@ -81,6 +81,21 @@ export default new Router({
       ]
     },
     {
+      path: '/select-course',
+      component: Layout,
+      redirect: '/select-course/index',
+      children: [
+        {
+          path: 'index',
+          component: () => import('@/views/select-course/index.vue'),
+          meta: {
+            title: 'SelectCourse',
+            icon: 'form'
+          }
+        }
+      ]
+    },
+    {
       path: '/major',
       component: Layout,
       redirect: '/major/index',

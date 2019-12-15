@@ -9,6 +9,7 @@ export * from '@/api/graduation-demand.ts'
 export * from '@/api/course-class'
 export * from '@/api/supporting-course'
 export * from '@/api/graduation-point'
+export * from '@/api/selectCourse.ts'
 
 export interface api {
     // User
@@ -78,4 +79,11 @@ export interface api {
       deleteSupportingCourse(id:number):m.ServerResponse
       putSupportingCourse(id:number, data:m.CreateSupportingCourseForm):m.ServerResponse
       batchDeleteSupportingCourse(ids:number[]):m.ServerResponse
+
+    // SelectCourse
+    querySelectCourse(queryOptions:any):m.ServerResponse,
+    createSelectCourse(data:m.CreateSelectCourseForm):m.ServerResponse
+    deleteSelectCourse(id:number):m.ServerResponse
+    putSelectCourse(id:number, data:m.CreateSelectCourseForm):m.ServerResponse
+    batchDeleteSelectCourse(ids:number[]):m.ServerResponse
 }
