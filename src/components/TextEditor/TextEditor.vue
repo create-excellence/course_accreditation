@@ -107,7 +107,6 @@ export default class extends Vue {
     log.debug('selected file:', selectedFile)
     if (selectedFile.size > MAX_IMAGE_SIZE) {
       this.$message.error('图片不能大于500K')
-      
     }
   //   uploadFile(selectedFile, StorageTokenCategory.paper)
   //     .then((resp: any) => {

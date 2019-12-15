@@ -1031,13 +1031,12 @@
   resolved "https://registry.npm.taobao.org/@types/q/download/@types/q-1.5.2.tgz#690a1475b84f2a884fd07cd797c00f5f31356ea8"
   integrity sha1-aQoUdbhPKohP0HzXl8APXzE1bqg=
 
-"@types/quill@^2.0.3":
-  version "2.0.3"
-  resolved "https://registry.npm.taobao.org/@types/quill/download/@types/quill-2.0.3.tgz#bddb7d0951c277de6bf006faa29b39bfa3941ebb"
-  integrity sha1-vdt9CVHCd95r8Ab6ops5v6OUHrs=
+"@types/quill@1.3.9":
+  version "1.3.9"
+  resolved "https://registry.npm.taobao.org/@types/quill/download/@types/quill-1.3.9.tgz#d0080b99635be99fbfea39140d592116a4aea679"
+  integrity sha1-0AgLmWNb6Z+/6jkUDVkhFqSupnk=
   dependencies:
     parchment "^1.1.2"
-    quill-delta "^4.0.1"
 
 "@types/stack-utils@^1.0.1":
   version "1.0.1"
@@ -9465,7 +9464,7 @@ quill-delta@^3.6.2:
     extend "^3.0.2"
     fast-diff "1.1.2"
 
-quill-delta@^4.0.1, quill-delta@^4.2.1:
+quill-delta@^4.2.1:
   version "4.2.1"
   resolved "https://registry.npm.taobao.org/quill-delta/download/quill-delta-4.2.1.tgz#ad4f191cdf3be5079c5dc3991b9603a5cc0db69a"
   integrity sha1-rU8ZHN875QecXcOZG5YDpcwNtpo=
