@@ -36,31 +36,58 @@ service.interceptors.response.use(
     // code == 50005: username or password is incorrect
     // You can change this part for your own usage.
     const res = response.data
-    if (res.status !== 0) {
-      Message({
-        message: res.msg || 'Error',
-        type: 'error',
-        duration: 5 * 1000
-      })
-      if (
-        res.status === 50008 ||
-        res.status === 50012 ||
-        res.status === 50014
-      ) {
-        MessageBox.confirm(
-          'You have been logged out, try to login again.',
-          'Log out',
-          {
-            confirmButtonText: 'Relogin',
-            cancelButtonText: 'Cancel',
-            type: 'warning'
-          }
-        ).then(() => {
-          UserModule.ResetToken()
-          location.reload() // To prevent bugs from vue-router
-        })
+    if (res.code !== 0) {
+      const res = response.data
+
+      switch (res.code) {
+        case 400:
+          Message({
+            message: res.code + ':' + res.message,
+            type: 'error',
+            duration: 5 * 1000
+          })
+          break
+        case 401:
+          UserModule.LogOut()
+          break
+        case 403:
+          MessageBox.alert(`code=403: ${res.message}`, '警告')
+          break
+        case 409:
+          MessageBox.alert(`操作错误: SQL完整性约束违反异常`, '错误')
+          break
+        case 500:
+          MessageBox.alert(`服务器错误: ${res.message}`, '警告')
+          break
+        default:
+          MessageBox.alert(`错误:code=${res.code},response=${res.message}`, '错误')
       }
-      return Promise.reject(new Error(res.msg || 'Error'))
+      return Promise.reject(new Error(res.message || 'Error'))
+
+      // Message({
+      //   message: res.message || 'Error',
+      //   type: 'error',
+      //   duration: 5 * 1000
+      // })
+      // if (
+      //   res.code === 50008 ||
+      //   res.code === 50012 ||
+      //   res.code === 50014
+      // ) {
+      //   MessageBox.confirm(
+      //     'You have been logged out, try to login again.',
+      //     'Log out',
+      //     {
+      //       confirmButtonText: 'Relogin',
+      //       cancelButtonText: 'Cancel',
+      //       type: 'warning'
+      //     }
+      //   ).then(() => {
+      //     UserModule.ResetToken()
+      //     location.reload() // To prevent bugs from vue-router
+      //   })
+      // }
+      // return Promise.reject(new Error(res.message || 'Error'))
     } else {
       return response.data
     }

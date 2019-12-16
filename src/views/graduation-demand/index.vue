@@ -88,7 +88,7 @@
         label="描述"
       >
         <template slot-scope="scope">
-          <text-view :value="scope.row.content" />
+          <text-view :value="scope.row.content|string2delta" />
         </template>
       </el-table-column>
       <el-table-column
