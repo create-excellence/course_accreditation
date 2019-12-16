@@ -53,8 +53,14 @@ service.interceptors.response.use(
         case 403:
           MessageBox.alert(`code=403: ${res.message}`, '警告')
           break
+        case 406:
+          MessageBox.alert(`操作失败: ${res.message}`, '错误')
+          break
         case 409:
-          MessageBox.alert(`操作错误: SQL完整性约束违反异常`, '错误')
+          MessageBox.alert(`冲突错误: ${res.message}`, '警告')
+          break
+        case 417:
+          MessageBox.alert(`操作失败: 违反SQL完整性约束`, '错误')
           break
         case 500:
           MessageBox.alert(`服务器错误: ${res.message}`, '警告')
