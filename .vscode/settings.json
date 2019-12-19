@@ -48,5 +48,8 @@
   "[css]": {
     "editor.formatOnSave": true
   },
-  "editor.fontSize": 17
+  "editor.fontSize": 17,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
 }

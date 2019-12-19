@@ -10,6 +10,7 @@ import store from '@/store'
 import router from '@/router'
 import '@/icons/components'
 import '@/permission'
+import * as filters from '@/filters'
 import Pagination from '@/components/Pagination/index.vue'
 import UploadExcel from '@/components/UploadExcel/index.vue'
 import TextEditor from '@/components/TextEditor/TextEditor.vue'
@@ -33,6 +34,11 @@ declare module 'vue/types/vue' {
     api: api.api
   }
 }
+
+// Register global filter functions
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, (filters as { [key: string ]: Function })[key])
+})
 
 new Vue({
   router,
