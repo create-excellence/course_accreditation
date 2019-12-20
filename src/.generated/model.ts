@@ -507,7 +507,7 @@ export interface ServerResponse {
    * @type {number}
    * @memberof ServerResponse
    */
-  status: number;
+  code: number;
   /**
    * 
    * @type {boolean}

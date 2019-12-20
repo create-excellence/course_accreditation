@@ -338,7 +338,6 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { ElForm } from 'element-ui/types/form'
 import * as m from '@/api/model'
-import * as api from '@/api/api'
 
 @Component({})
 export default class Student extends Vue {
@@ -436,7 +435,7 @@ export default class Student extends Vue {
       if (valid) {
         if (this.student.id) {
           const res = await this.api.putStudent(this.student.id, this.editForm)
-          if (res.status === 0) {
+          if (res.code === 0) {
             this.resetForm()
             this.showDialog = false
             this.$message({
@@ -447,7 +446,7 @@ export default class Student extends Vue {
           }
         } else {
           const res = await this.api.createStudent(this.editForm)
-          if (res.status === 0) {
+          if (res.code === 0) {
             (this.$refs['editForm'] as ElForm).resetFields()
             this.showDialog = false
             this.$message({
@@ -467,8 +466,8 @@ export default class Student extends Vue {
     this.$confirm(`确定删除${student.name}吗？`, '提示', {
       type: 'warning'
     }).then(async() => {
-      const resp = await this.api.deleteStudent(student.id!)
-      if (resp.status === 0) {
+      const res = await this.api.deleteStudent(student.id!)
+      if (res.code === 0) {
         this.$message({
           type: 'success',
           message: '删除成功!'
@@ -489,8 +488,8 @@ export default class Student extends Vue {
       pageSize: 20,
       name: query
     }
-    const res = await api.queryMajor(option)
-    if (res.status === 0 && res.data.list.length > 0) {
+    const res = await this.api.queryMajor(option)
+    if (res.code === 0 && res.data.list.length > 0) {
       this.majorList = res.data.list
     }
   }
@@ -501,9 +500,9 @@ export default class Student extends Vue {
       pageSize: 20,
       sno: query
     }
-    const res = await api.queryStudent(option)
+    const res = await this.api.queryStudent(option)
     let list = [{}]
-    if (res.status === 0 && res.data.list.length > 0) {
+    if (res.code === 0 && res.data.list.length > 0) {
       list = res.data.list
       list.forEach((element:any) => {
         element.value = element.sno
@@ -519,7 +518,7 @@ export default class Student extends Vue {
   //     sno: query
   //   }
   //   const res = await api.queryStudent(option)
-  //   if (res.status === 0 && res.data.list.length > 0) {
+  //   if (res.code === 0 && res.data.list.length > 0) {
   //     this.studentSearch = res.data.list
   //     if (query !== undefined && query !== '') {
   //       this.studentSearch = [Object.assign({}, this.studentSearch[0]), ...this.studentSearch]
@@ -546,8 +545,8 @@ export default class Student extends Vue {
     this.$confirm(`确定要批量删除所选项吗？`, '提示', {
       type: 'warning'
     }).then(async() => {
-      const resp = await this.api.batchDeleteStudent(this.selectStudentId)
-      if (resp.status === 0) {
+      const res = await this.api.batchDeleteStudent(this.selectStudentId)
+      if (res.code === 0) {
         this.$message({
           type: 'success',
           message: '删除成功!'

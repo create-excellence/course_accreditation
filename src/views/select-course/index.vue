@@ -305,7 +305,7 @@ export default class SelectCourse extends Vue {
       if (valid) {
         if (this.selectCourse.id) {
           const res = await this.api.putSelectCourse(this.selectCourse.id, this.editForm)
-          if (res.status === 0) {
+          if (res.code === 0) {
             this.resetForm()
             this.showDialog = false
             this.$message({
@@ -316,7 +316,7 @@ export default class SelectCourse extends Vue {
           }
         } else {
           const res = await this.api.createSelectCourse(this.editForm)
-          if (res.status === 0) {
+          if (res.code === 0) {
             (this.$refs['editForm'] as ElForm).resetFields()
             this.showDialog = false
             this.$message({
@@ -336,8 +336,8 @@ export default class SelectCourse extends Vue {
     this.$confirm(`确定删除这条信息吗？`, '提示', {
       type: 'warning'
     }).then(async() => {
-      const resp = await this.api.deleteSelectCourse(selectCourse.id)
-      if (resp.status === 0) {
+      const res = await this.api.deleteSelectCourse(selectCourse.id)
+      if (res.code === 0) {
         this.$message({
           type: 'success',
           message: '删除成功!'
@@ -359,7 +359,7 @@ export default class SelectCourse extends Vue {
       name: query
     }
     const res = await this.api.queryStudent(option)
-    if (res.status === 0) {
+    if (res.code === 0) {
       this.studentList = res.data.list
     }
   }
@@ -371,7 +371,7 @@ export default class SelectCourse extends Vue {
       no: query
     }
     const res = await this.api.queryCourseClass(option)
-    if (res.status === 0) {
+    if (res.code === 0) {
       this.courseClassList = res.data.list
     }
   }
@@ -393,8 +393,8 @@ export default class SelectCourse extends Vue {
     this.$confirm(`确定要批量删除所选项吗？`, '提示', {
       type: 'warning'
     }).then(async() => {
-      const resp = await this.api.batchDeleteSelectCourse(this.selectCourseId)
-      if (resp.status === 0) {
+      const res = await this.api.batchDeleteSelectCourse(this.selectCourseId)
+      if (res.code === 0) {
         this.$message({
           type: 'success',
           message: '删除成功!'

@@ -308,7 +308,7 @@ export default class Course extends Vue {
       if (valid) {
         if (this.course.id) {
           const res = await this.api.putCourse(this.course.id, this.editForm)
-          if (res.status === 0) {
+          if (res.code === 0) {
             this.resetForm()
             this.showDialog = false
             this.$message({
@@ -319,7 +319,7 @@ export default class Course extends Vue {
           }
         } else {
           const res = await this.api.createCourse(this.editForm)
-          if (res.status === 0) {
+          if (res.code === 0) {
             (this.$refs['editForm'] as ElForm).resetFields()
             this.showDialog = false
             this.$message({
@@ -339,8 +339,8 @@ export default class Course extends Vue {
     this.$confirm(`确定删除${course.name}吗？`, '提示', {
       type: 'warning'
     }).then(async() => {
-      const resp = await this.api.deleteCourse(course.id)
-      if (resp.status === 0) {
+      const res = await this.api.deleteCourse(course.id)
+      if (res.code === 0) {
         this.$message({
           type: 'success',
           message: '删除成功!'
@@ -363,7 +363,7 @@ export default class Course extends Vue {
       name: query
     }
     const res = await this.api.queryCourse(option)
-    if (res.status === 0) {
+    if (res.code === 0) {
       let courseList = res.data.list.map((item:m.Course) => {
         return { value: item.name }
       })
@@ -387,8 +387,8 @@ export default class Course extends Vue {
     this.$confirm(`确定要批量删除所选项吗？`, '提示', {
       type: 'warning'
     }).then(async() => {
-      const resp = await this.api.batchDeleteCourse(this.selectCourseId)
-      if (resp.status === 0) {
+      const res = await this.api.batchDeleteCourse(this.selectCourseId)
+      if (res.code === 0) {
         this.$message({
           type: 'success',
           message: '删除成功!'

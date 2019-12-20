@@ -245,7 +245,7 @@ export default class Semester extends Vue {
       if (valid) {
         if (this.semester.id) {
           const res = await this.api.putSemester(this.semester.id, this.editForm)
-          if (res.status === 0) {
+          if (res.code === 0) {
             this.resetForm()
             this.showDialog = false
             this.$message({
@@ -256,7 +256,7 @@ export default class Semester extends Vue {
           }
         } else {
           const res = await this.api.createSemester(this.editForm)
-          if (res.status === 0) {
+          if (res.code === 0) {
             (this.$refs['editForm'] as ElForm).resetFields()
             this.showDialog = false
             this.$message({
@@ -276,8 +276,8 @@ export default class Semester extends Vue {
     this.$confirm(`确定删除${semester.name}吗？`, '提示', {
       type: 'warning'
     }).then(async() => {
-      const resp = await this.api.deleteSemester(semester.id)
-      if (resp.status === 0) {
+      const res = await this.api.deleteSemester(semester.id)
+      if (res.code === 0) {
         this.$message({
           type: 'success',
           message: '删除成功!'
@@ -300,7 +300,7 @@ export default class Semester extends Vue {
       name: query
     }
     const res = await this.api.querySemester(option)
-    if (res.status === 0) {
+    if (res.code === 0) {
       let semesterList = res.data.list.map((item:m.Semester) => {
         return { value: item.name }
       })
@@ -325,8 +325,8 @@ export default class Semester extends Vue {
     this.$confirm(`确定要批量删除所选项吗？`, '提示', {
       type: 'warning'
     }).then(async() => {
-      const resp = await this.api.batchDeleteSemester(this.selectSemesterId)
-      if (resp.status === 0) {
+      const res = await this.api.batchDeleteSemester(this.selectSemesterId)
+      if (res.code === 0) {
         this.$message({
           type: 'success',
           message: '删除成功!'

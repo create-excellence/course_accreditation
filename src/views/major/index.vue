@@ -256,7 +256,7 @@ export default class Major extends Vue {
       if (valid) {
         if (this.major.id) {
           const res = await this.api.putMajor(this.major.id, this.editForm)
-          if (res.status === 0) {
+          if (res.code === 0) {
             this.resetForm()
             this.showDialog = false
             this.$message({
@@ -267,7 +267,7 @@ export default class Major extends Vue {
           }
         } else {
           const res = await this.api.createMajor(this.editForm)
-          if (res.status === 0) {
+          if (res.code === 0) {
             (this.$refs['editForm'] as ElForm).resetFields()
             this.showDialog = false
             this.$message({
@@ -287,8 +287,8 @@ export default class Major extends Vue {
     this.$confirm(`确定删除${major.name}吗？`, '提示', {
       type: 'warning'
     }).then(async() => {
-      const resp = await this.api.deleteMajor(major.id)
-      if (resp.status === 0) {
+      const res = await this.api.deleteMajor(major.id)
+      if (res.code === 0) {
         this.$message({
           type: 'success',
           message: '删除成功!'
@@ -311,7 +311,7 @@ export default class Major extends Vue {
       name: query
     }
     const res = await this.api.queryMajor(option)
-    if (res.status === 0) {
+    if (res.code === 0) {
       let majorList = res.data.list.map((item:m.Major) => {
         return { value: item.name }
       })
@@ -336,8 +336,8 @@ export default class Major extends Vue {
     this.$confirm(`确定要批量删除所选项吗？`, '提示', {
       type: 'warning'
     }).then(async() => {
-      const resp = await this.api.batchDeleteMajor(this.selectMajorId)
-      if (resp.status === 0) {
+      const res = await this.api.batchDeleteMajor(this.selectMajorId)
+      if (res.code === 0) {
         this.$message({
           type: 'success',
           message: '删除成功!'

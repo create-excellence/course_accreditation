@@ -312,7 +312,7 @@ export default class SupportingCourse extends Vue {
       if (valid) {
         if (this.supportingCourse.id) {
           const res = await this.api.putSupportingCourse(this.supportingCourse.id, this.editForm)
-          if (res.status === 0) {
+          if (res.code === 0) {
             this.resetForm()
             this.showDialog = false
             this.$message({
@@ -323,7 +323,7 @@ export default class SupportingCourse extends Vue {
           }
         } else {
           const res = await this.api.createSupportingCourse(this.editForm)
-          if (res.status === 0) {
+          if (res.code === 0) {
             (this.$refs['editForm'] as ElForm).resetFields()
             this.showDialog = false
             this.$message({
@@ -343,8 +343,8 @@ export default class SupportingCourse extends Vue {
     this.$confirm(`确定删除这条信息吗？`, '提示', {
       type: 'warning'
     }).then(async() => {
-      const resp = await this.api.deleteSupportingCourse(supportingCourse.id)
-      if (resp.status === 0) {
+      const res = await this.api.deleteSupportingCourse(supportingCourse.id)
+      if (res.code === 0) {
         this.$message({
           type: 'success',
           message: '删除成功!'
@@ -366,7 +366,7 @@ export default class SupportingCourse extends Vue {
       name: query
     }
     const res = await this.api.queryCourse(option)
-    if (res.status === 0) {
+    if (res.code === 0) {
       this.courseList = res.data.list
     }
   }
@@ -378,7 +378,7 @@ export default class SupportingCourse extends Vue {
       no: query
     }
     const res = await this.api.queryGraduationPoint(option)
-    if (res.status === 0) {
+    if (res.code === 0) {
       this.graduationPointList = res.data.list
     }
   }
@@ -400,8 +400,8 @@ export default class SupportingCourse extends Vue {
     this.$confirm(`确定要批量删除所选项吗？`, '提示', {
       type: 'warning'
     }).then(async() => {
-      const resp = await this.api.batchDeleteSupportingCourse(this.selectSupportingCourseId)
-      if (resp.status === 0) {
+      const res = await this.api.batchDeleteSupportingCourse(this.selectSupportingCourseId)
+      if (res.code === 0) {
         this.$message({
           type: 'success',
           message: '删除成功!'

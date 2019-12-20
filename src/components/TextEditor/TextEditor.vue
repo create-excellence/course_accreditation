@@ -109,9 +109,9 @@ export default class extends Vue {
       this.$message.error('图片不能大于500K')
     }
   //   uploadFile(selectedFile, StorageTokenCategory.paper)
-  //     .then((resp: any) => {
-  //       log.info('Upload image success ', resp)
-  //       this.appendImage(resp.url)
+  //     .then((res: any) => {
+  //       log.info('Upload image success ', res)
+  //       this.appendImage(res.url)
   //     })
   //     .catch((reason: any) => {
   //       this.$message.error(extractRejectText(reason))

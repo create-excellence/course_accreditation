@@ -147,6 +147,21 @@ export default new Router({
       ]
     },
     {
+      path: '/graduation-point',
+      component: Layout,
+      redirect: '/graduation-point/index',
+      children: [
+        {
+          path: 'index',
+          component: () => import('@/views/graduation-point/index.vue'),
+          meta: {
+            title: 'GraduationPoint',
+            icon: 'example'
+          }
+        }
+      ]
+    },
+    {
       path: '/semester',
       component: Layout,
       redirect: '/semester/index',

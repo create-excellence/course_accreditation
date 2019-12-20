@@ -322,8 +322,6 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { ElForm } from 'element-ui/types/form'
 import * as m from '@/api/model'
-import * as api from '@/api/api'
-
 @Component({})
 export default class Teacher extends Vue {
   data:m.Teacher[] = []
@@ -409,7 +407,7 @@ export default class Teacher extends Vue {
       if (valid) {
         if (this.teacher.id) {
           const res = await this.api.putTeacher(this.teacher.id, this.editForm)
-          if (res.status === 0) {
+          if (res.code === 0) {
             this.resetForm()
             this.showDialog = false
             this.$message({
@@ -420,7 +418,7 @@ export default class Teacher extends Vue {
           }
         } else {
           const res = await this.api.createTeacher(this.editForm)
-          if (res.status === 0) {
+          if (res.code === 0) {
             (this.$refs['editForm'] as ElForm).resetFields()
             this.showDialog = false
             this.$message({
@@ -440,8 +438,8 @@ export default class Teacher extends Vue {
     this.$confirm(`确定删除${teacher.name}吗？`, '提示', {
       type: 'warning'
     }).then(async() => {
-      const resp = await this.api.deleteTeacher(teacher.id)
-      if (resp.status === 0) {
+      const res = await this.api.deleteTeacher(teacher.id)
+      if (res.code === 0) {
         this.$message({
           type: 'success',
           message: '删除成功!'
@@ -462,9 +460,9 @@ export default class Teacher extends Vue {
       pageSize: 20,
       jno: query
     }
-    const res = await api.queryTeacher(option)
+    const res = await this.api.queryTeacher(option)
     let list = [{}]
-    if (res.status === 0 && res.data.list.length > 0) {
+    if (res.code === 0 && res.data.list.length > 0) {
       list = res.data.list
       list.forEach((element:any) => {
         element.value = element.jno
@@ -490,8 +488,8 @@ export default class Teacher extends Vue {
     this.$confirm(`确定要批量删除所选项吗？`, '提示', {
       type: 'warning'
     }).then(async() => {
-      const resp = await this.api.batchDeleteTeacher(this.selectTeacherId)
-      if (resp.status === 0) {
+      const res = await this.api.batchDeleteTeacher(this.selectTeacherId)
+      if (res.code === 0) {
         this.$message({
           type: 'success',
           message: '删除成功!'

@@ -119,6 +119,12 @@
         <template slot-scope="scope">
           <el-button
             size="mini"
+            type="primary"
+          >
+            查看指标点
+          </el-button>
+          <el-button
+            size="mini"
             @click="handleEdit(scope.row)"
           >
             编辑
@@ -304,7 +310,7 @@ export default class GraduationDemand extends Vue {
       if (valid) {
         if (this.graduationDemand.id) {
           const res = await this.api.putGraduationDemand(this.graduationDemand.id, this.editForm)
-          if (res.status === 0) {
+          if (res.code === 0) {
             this.resetForm()
             this.showDialog = false
             this.$message({
@@ -315,7 +321,7 @@ export default class GraduationDemand extends Vue {
           }
         } else {
           const res = await this.api.createGraduationDemand(this.editForm)
-          if (res.status === 0) {
+          if (res.code === 0) {
             (this.$refs['editForm'] as ElForm).resetFields()
             this.showDialog = false
             this.$message({
@@ -335,8 +341,8 @@ export default class GraduationDemand extends Vue {
     this.$confirm(`确定删除${graduationDemand.no}吗？`, '提示', {
       type: 'warning'
     }).then(async() => {
-      const resp = await this.api.deleteGraduationDemand(graduationDemand.id)
-      if (resp.status === 0) {
+      const res = await this.api.deleteGraduationDemand(graduationDemand.id)
+      if (res.code === 0) {
         this.$message({
           type: 'success',
           message: '删除成功!'
@@ -359,7 +365,7 @@ export default class GraduationDemand extends Vue {
       name: query
     }
     const res = await this.api.queryMajor(option)
-    if (res.status === 0) {
+    if (res.code === 0) {
       let majorList = res.data.list.map((item:m.Major) => {
         return { value: item.name }
       })
@@ -374,7 +380,7 @@ export default class GraduationDemand extends Vue {
       sno: query
     }
     const res = await this.api.queryMajor(option)
-    if (res.status === 0 && res.data.list.length > 0) {
+    if (res.code === 0 && res.data.list.length > 0) {
       this.majorList = res.data.list
     }
   }
@@ -396,8 +402,8 @@ export default class GraduationDemand extends Vue {
     this.$confirm(`确定要批量删除所选项吗？`, '提示', {
       type: 'warning'
     }).then(async() => {
-      const resp = await this.api.batchDeleteGraduationDemand(this.selectGraduationDemandId)
-      if (resp.status === 0) {
+      const res = await this.api.batchDeleteGraduationDemand(this.selectGraduationDemandId)
+      if (res.code === 0) {
         this.$message({
           type: 'success',
           message: '删除成功!'
