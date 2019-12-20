@@ -1,5 +1,5 @@
 const path = require('path')
-const name = 'Vue Typescript Admin'
+const name = 'Course Accreditation System'
 
 module.exports = {
   publicPath: process.env.NODE_ENV === 'production' ? '/vue-typescript-admin-template/' : '/', // TODO: Remember to change this to fit your need

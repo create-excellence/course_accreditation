@@ -1,5 +1,8 @@
 <template>
-  <div class="app-container">
+  <div
+    style="padding-bottom:100px"
+    class="app-container"
+  >
     <el-form
       ref="searchForm"
       :inline="true"
@@ -129,6 +132,7 @@
     </el-table>
     <pagination
       v-show="total > 0"
+      style="position:fixed; bottom:0px;"
       :total="total"
       :page.sync="queryOptions.page"
       :limit.sync="queryOptions.pageSize"

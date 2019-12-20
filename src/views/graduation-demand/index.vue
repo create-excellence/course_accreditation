@@ -1,11 +1,30 @@
 <template>
-  <div class="app-container">
+  <div
+    style="padding-bottom:100px"
+    class="app-container"
+  >
     <el-form
       ref="searchForm"
       :inline="true"
       :model="queryOptions"
       @submit.native.prevent="handleFilter"
     >
+      <el-button
+        plain
+        type="primary"
+        @click="showCheckbox=!showCheckbox"
+      >
+        多选
+      </el-button>
+      <el-button
+        plain
+        type="primary"
+        icon="el-icon-plus"
+        style="margin-right:32px"
+        @click="handleCreate"
+      >
+        毕业要求
+      </el-button>
       <el-form-item
         prop="no"
       >
@@ -32,31 +51,18 @@
         >
           搜索
         </el-button>
-        <el-button
-          type="primary"
-          icon="el-icon-plus"
-          @click="handleCreate"
-        >
-          毕业要求
-        </el-button>
       </el-form-item>
       <el-button
-        type="primary"
-        plain
-        @click="showCheckbox=!showCheckbox"
-      >
-        多选
-      </el-button>
-      <el-button
         v-if="showCheckbox"
+        style="float:right"
         type="danger"
         @click="handleBatchDelete"
       >
         批量删除
       </el-button>
       <el-button
+        style="margin-right:10px; float:right"
         type="primary"
-        plain
         @click="showExcelDialog=true"
       >
         批量导入毕业要求
@@ -129,6 +135,7 @@
     </el-table>
     <pagination
       v-show="total > 0"
+      style="position:fixed; bottom:0px;"
       :total="total"
       :page.sync="queryOptions.page"
       :limit.sync="queryOptions.pageSize"
