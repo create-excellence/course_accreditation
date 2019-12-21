@@ -134,14 +134,33 @@ export default new Router({
     {
       path: '/graduation-demand',
       component: Layout,
-      redirect: '/graduation-demand/index',
       children: [
         {
-          path: 'index',
+          path: '/graduation-demand',
           component: () => import('@/views/graduation-demand/index.vue'),
           meta: {
             title: 'GraduationDemand',
             icon: 'example'
+          }
+        },
+        {
+          path: '/graduation-demand/:graduationDemandId(\\d+)/graduation-point',
+          component: () => import('@/views/graduation-point/show.vue'),
+          meta: {
+            title: 'GraduationPointShow',
+            noCache: true,
+            activeMenu: '/graduation-demand',
+            hidden: true
+          }
+        },
+        {
+          path: '/graduation-demand/:graduationDemandId(\\d+)/graduation-point/:graduationPointId(\\d+)/supporting-course',
+          component: () => import('@/views/supporting-course/show.vue'),
+          meta: {
+            title: 'SupportingCourseShow',
+            noCache: true,
+            activeMenu: '/graduation-demand',
+            hidden: true
           }
         }
       ]

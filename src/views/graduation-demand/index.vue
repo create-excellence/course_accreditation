@@ -30,7 +30,7 @@
       >
         <el-input
           v-model="queryOptions.no"
-          placeholder="请输入毕业要求代码"
+          placeholder="请输入毕业要求编号"
           maxlength="10"
         />
       </el-form-item>
@@ -85,7 +85,7 @@
       />
       <el-table-column
         align="center"
-        label="毕业要求代码"
+        label="毕业要求编号"
         prop="no"
       />
       <el-table-column
@@ -120,6 +120,7 @@
           <el-button
             size="mini"
             type="primary"
+            @click="$router.push(`/graduation-demand/${scope.row.id}/graduation-point`)"
           >
             查看指标点
           </el-button>
@@ -162,11 +163,11 @@
       >
         <el-form-item
           prop="no"
-          label="毕业要求代码"
+          label="毕业要求编号"
         >
           <el-input
             v-model="editForm.no"
-            placeholder="请输入毕业要求代码"
+            placeholder="请输入毕业要求编号"
             maxlength="10"
           />
         </el-form-item>

@@ -8,6 +8,13 @@ export const queryGraduationPoint = (queryOptions:any) =>
     method: 'GET'
   })
 
+export const getGraduationPoint = (id:number) =>
+  request({
+    url: '/graduation-point',
+    params: { id: id },
+    method: 'GET'
+  })
+
 export const createGraduationPoint = (data:m.CreateGraduationPointForm) =>
   request({
     url: '/graduation-point',

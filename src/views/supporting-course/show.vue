@@ -7,19 +7,18 @@
       @submit.native.prevent="handleFilter"
     >
       <el-form-item
-        prop="no"
+        prop="courseName"
       >
         <el-input
-          v-model="queryOptions.no"
-          placeholder="请输入指标点编号"
-          maxlength="10"
+          v-model="queryOptions.courseName"
+          placeholder="请输入课程名称"
         />
       </el-form-item>
       <el-form-item
-        prop="content"
+        prop="graduationPointContent"
       >
         <el-input
-          v-model="queryOptions.content"
+          v-model="queryOptions.graduationPointContent"
           placeholder="请输入指标点内容"
           maxlength="10"
         />
@@ -36,7 +35,7 @@
           icon="el-icon-plus"
           @click="handleCreate"
         >
-          指标点
+          支撑课程
         </el-button>
       </el-form-item>
       <el-button
@@ -72,17 +71,28 @@
       <el-table-column
         align="center"
         label="指标点编号"
-        prop="no"
-      />
-      <el-table-column
-        align="center"
-        label="毕业要求编号"
-        prop="graduationDemandNo"
+        prop="graduationPointNo"
       />
       <el-table-column
         align="center"
         label="指标点内容"
-        prop="content"
+        prop="graduationPointContent"
+      />
+      <el-table-column
+        align="center"
+        label="课程名称"
+        prop="courseName"
+      />
+      <el-table-column
+        align="center"
+        label="课程代码"
+        prop="courseCode"
+      />
+
+      <el-table-column
+        align="center"
+        label="权值"
+        prop="weight"
       />
       <el-table-column
         align="center"
@@ -99,13 +109,6 @@
         label="操作"
       >
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="primary"
-            @click="$router.push(`/graduation-demand/${queryOptions.graduationDemandId}/graduation-point/${scope.row.id}/supporting-course`)"
-          >
-            查看支撑课程
-          </el-button>
           <el-button
             size="mini"
             @click="handleEdit(scope.row)"
@@ -131,7 +134,7 @@
     />
 
     <el-dialog
-      :title="`${graduationPoint.id ? '编辑' : '添加'}指标点`"
+      :title="`${supportingCourse.id ? '编辑' : '添加'}支撑课程`"
       :visible.sync="showDialog"
       @close="showDialog = false"
     >
@@ -143,25 +146,36 @@
         label-position="top"
       >
         <el-form-item
-          prop="no"
-          label="指标点编号"
-        >
-          <el-input
-            v-model="editForm.no"
-            placeholder="请输入指标点编号"
-            maxlength="10"
-          />
-        </el-form-item>
-        <el-form-item
-          prop="graduationDemandId"
-          label="毕业要求编号"
+          prop="courseId"
+          label="课程"
         >
           <el-select
-            v-model="editForm.graduationDemandId"
-            placeholder="请选择毕业要求编号"
+            v-model="editForm.courseId"
+            filterable
+            remote
+            reserve-keyword
+            placeholder="请选择课程"
+            :remote-method="queryCourseList"
+            :loading="loading"
           >
             <el-option
-              v-for="item in graduationDemandList"
+              v-for="item in courseList"
+              :key="item.id"
+              :label="item.code+item.name"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item
+          prop="graduationPointId"
+          label="毕业要求指标点"
+        >
+          <el-select
+            v-model="editForm.graduationPointId"
+            placeholder="请选择指标点编号"
+          >
+            <el-option
+              v-for="item in graduationPointList"
               :key="item.id"
               :label="item.no"
               :value="item.id"
@@ -169,13 +183,15 @@
           </el-select>
         </el-form-item>
         <el-form-item
-          prop="content"
-          label="指标点内容"
+          prop="weight"
+          label="权值"
         >
-          <el-input
-            v-model="editForm.content"
-            placeholder="请输入指标点内容"
-            maxlength="10"
+          <el-input-number
+            v-model="editForm.weight"
+            placeholder="请输入权值"
+            :min="0"
+            :max="100"
+            :precision="1"
           />
         </el-form-item>
       </el-form>
@@ -203,29 +219,31 @@ import { ElForm } from 'element-ui/types/form'
 import * as m from '@/api/model'
 
 @Component({})
-export default class GraduationPoint extends Vue {
-  data:m.GraduationPoint[] = []
+export default class SupportingCourse extends Vue {
+  data:m.SupportingCourse[] = []
   total = 0
   loading = true
-  graduationPoint: m.GraduationPoint = {} as any
+  supportingCourse: m.SupportingCourse = {} as any
   showDialog = false
-  editForm:m.CreateGraduationPointForm={} as any
+  editForm:m.CreateSupportingCourseForm={} as any
   showCheckbox = false
-  selectGraduationPointId:number[] = []
+  selectSupportingCourseId:number[] = []
   showExcelDialog=false
-  graduationDemandList: m.GraduationDemand[] = []
+  courseList:m.Course[] =[]
+  graduationPointList:m.GraduationPoint[]=[]
 
   queryOptions = {
-    no: '',
-    content: '',
-    graduationDemandId: -1,
+    courseName: '',
+    graduationPointContent: '',
+    graduationPointId: -1,
     page: 1,
     pageSize: 20
   }
 
   rules={
-    name: [{ required: true, message: '指标点名称不能为空', trigger: 'blur' }],
-    code: [{ required: true, message: '指标点代码不能为空', trigger: 'blur' }]
+    graduationPointId: [{ required: true, message: '毕业指标点不能为空', trigger: 'blur' }],
+    courseId: [{ required: true, message: '课程不能为空', trigger: 'blur' }],
+    weight: [{ required: true, message: '权值不能为空', trigger: 'blur' }]
   }
 
   created() {
@@ -233,14 +251,14 @@ export default class GraduationPoint extends Vue {
   }
 
   async init() {
-    let graduationDemandId = Number(this.$route.params.graduationDemandId)
-    this.queryOptions.graduationDemandId = graduationDemandId
-    let res = await this.api.getGraduationDemand(graduationDemandId)
-    if (res.code === 0) {
-      this.graduationDemandList.push(res.data)
-    }
-
+    let graduationPointId = Number(this.$route.params.graduationPointId)
+    this.queryOptions.graduationPointId = graduationPointId
     this.requestData()
+    this.queryCourseList('')
+    let res = await this.api.getGraduationPoint(graduationPointId)
+    if (res.success) {
+      this.graduationPointList.push(res.data)
+    }
   }
 
   handleFilter() {
@@ -250,32 +268,32 @@ export default class GraduationPoint extends Vue {
 
   async requestData() {
     this.loading = true
-    const res = await this.api.queryGraduationPoint(this.queryOptions)
+    const res = await this.api.querySupportingCourse(this.queryOptions)
     this.data = res.data.list
     this.total = res.data.total
     this.loading = false
   }
 
   handleCreate() {
-    this.graduationPoint = {} as any
+    this.supportingCourse = {} as any
     this.resetForm()
     this.showDialog = true
   }
 
   resetForm() {
     this.editForm = {
-      no: '',
-      graduationDemandId: this.queryOptions.graduationDemandId,
-      content: ''
+      graduationPointId: this.queryOptions.graduationPointId,
+      courseId: undefined,
+      weight: 0
     }
   }
 
-  handleEdit(graduationPoint: m.GraduationPoint) {
-    this.graduationPoint = graduationPoint
+  handleEdit(supportingCourse: m.SupportingCourse) {
+    this.supportingCourse = supportingCourse
     this.editForm = {
-      no: graduationPoint.no,
-      graduationDemandId: graduationPoint.graduationDemandId,
-      content: graduationPoint.content
+      graduationPointId: supportingCourse.graduationPointId,
+      courseId: supportingCourse.courseId,
+      weight: supportingCourse.weight
     }
     this.showDialog = true
   }
@@ -283,8 +301,8 @@ export default class GraduationPoint extends Vue {
   handleSave() {
     (this.$refs['editForm'] as ElForm).validate(async(valid : boolean) => {
       if (valid) {
-        if (this.graduationPoint.id) {
-          const res = await this.api.putGraduationPoint(this.graduationPoint.id, this.editForm)
+        if (this.supportingCourse.id) {
+          const res = await this.api.putSupportingCourse(this.supportingCourse.id, this.editForm)
           if (res.code === 0) {
             this.resetForm()
             this.showDialog = false
@@ -295,7 +313,7 @@ export default class GraduationPoint extends Vue {
             this.requestData()
           }
         } else {
-          const res = await this.api.createGraduationPoint(this.editForm)
+          const res = await this.api.createSupportingCourse(this.editForm)
           if (res.code === 0) {
             (this.$refs['editForm'] as ElForm).resetFields()
             this.showDialog = false
@@ -312,17 +330,17 @@ export default class GraduationPoint extends Vue {
     })
   }
 
-  handleDelete(graduationPoint: m.GraduationPoint) {
-    this.$confirm(`确定删除改指标点吗？`, '提示', {
+  handleDelete(supportingCourse: m.SupportingCourse) {
+    this.$confirm(`确定删除这条信息吗？`, '提示', {
       type: 'warning'
     }).then(async() => {
-      const res = await this.api.deleteGraduationPoint(graduationPoint.id)
+      const res = await this.api.deleteSupportingCourse(supportingCourse.id)
       if (res.code === 0) {
         this.$message({
           type: 'success',
           message: '删除成功!'
         })
-        this.data = this.data.filter((e: m.GraduationPoint) => e.id !== graduationPoint.id)
+        this.data = this.data.filter((e: m.SupportingCourse) => e.id !== supportingCourse.id)
         if (this.total > 1) {
           this.total--
         } else {
@@ -332,14 +350,26 @@ export default class GraduationPoint extends Vue {
     })
   }
 
-  handleSelect(select:m.GraduationPoint[]) {
-    this.selectGraduationPointId = select.map((item:m.GraduationPoint) => {
+  async queryCourseList(query: string) {
+    const option = {
+      page: 1,
+      pageSize: 20,
+      name: query
+    }
+    const res = await this.api.queryCourse(option)
+    if (res.code === 0) {
+      this.courseList = res.data.list
+    }
+  }
+
+  handleSelect(select:m.SupportingCourse[]) {
+    this.selectSupportingCourseId = select.map((item:m.SupportingCourse) => {
       return item.id
     })
   }
 
   handleBatchDelete() {
-    if (this.selectGraduationPointId.length < 1) {
+    if (this.selectSupportingCourseId.length < 1) {
       this.$message({
         type: 'warning',
         message: '请先选择要删除项'
@@ -349,7 +379,7 @@ export default class GraduationPoint extends Vue {
     this.$confirm(`确定要批量删除所选项吗？`, '提示', {
       type: 'warning'
     }).then(async() => {
-      const res = await this.api.batchDeleteGraduationPoint(this.selectGraduationPointId)
+      const res = await this.api.batchDeleteSupportingCourse(this.selectSupportingCourseId)
       if (res.code === 0) {
         this.$message({
           type: 'success',

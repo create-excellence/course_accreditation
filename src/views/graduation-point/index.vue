@@ -342,7 +342,6 @@ export default class GraduationPoint extends Vue {
     const res = await this.api.queryGraduationDemand(option)
     if (res.code === 0) {
       this.graduationDemandList = res.data.list
-      console.log(this.graduationDemandList)
     }
   }
 

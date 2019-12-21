@@ -53,14 +53,16 @@ export interface api {
     batchDeleteSemester(ids:number[]):m.ServerResponse
 
     // GraduationDemand
-    queryGraduationDemand(queryOptions:any):m.ServerResponse,
+    queryGraduationDemand(queryOptions:any):m.ServerResponse
+    getGraduationDemand(id:number):m.ServerResponse
     createGraduationDemand(data:m.CreateGraduationDemandForm):m.ServerResponse
     deleteGraduationDemand(id:number):m.ServerResponse
     putGraduationDemand(id:number, data:m.CreateGraduationDemandForm):m.ServerResponse
     batchDeleteGraduationDemand(ids:number[]):m.ServerResponse
 
     // GraduationPoint
-    queryGraduationPoint(queryOptions:any):m.ServerResponse,
+    queryGraduationPoint(queryOptions:any):m.ServerResponse
+    getGraduationPoint(id:number):m.ServerResponse
     createGraduationPoint(data:m.CreateGraduationPointForm):m.ServerResponse
     deleteGraduationPoint(id:number):m.ServerResponse
     putGraduationPoint(id:number, data:m.CreateGraduationPointForm):m.ServerResponse
