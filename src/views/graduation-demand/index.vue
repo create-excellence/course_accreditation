@@ -120,10 +120,11 @@
           <el-button
             size="mini"
             type="primary"
+            style="margin-bottom: 10px"
             @click="$router.push(`/graduation-demand/${scope.row.id}/graduation-point`)"
           >
             查看指标点
-          </el-button>
+          </el-button><br>
           <el-button
             size="mini"
             @click="handleEdit(scope.row)"
@@ -318,6 +319,7 @@ export default class GraduationDemand extends Vue {
               type: 'success',
               message: '修改成功!'
             })
+            console.log('2222')
             this.requestData()
           }
         } else {

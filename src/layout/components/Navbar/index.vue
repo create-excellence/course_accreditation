@@ -30,7 +30,7 @@
           </router-link>
           <a
             target="_blank"
-            href="https://github.com/armour/vue-typescript-admin-template/"
+            href="https://github.com/create-excellence/course_accreditation"
           >
             <el-dropdown-item>
               Github
