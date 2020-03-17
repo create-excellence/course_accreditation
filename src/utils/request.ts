@@ -51,22 +51,47 @@ service.interceptors.response.use(
           UserModule.LogOut()
           break
         case 403:
-          MessageBox.alert(`code=403: ${res.message}`, '警告')
+          Message({
+            message: `code=403: ${res.message}`,
+            type: 'warning',
+            duration: 5 * 1000
+          })
+          // MessageBox.alert(`code=403: ${res.message}`, '警告')
           break
         case 406:
-          MessageBox.alert(`操作失败: ${res.message}`, '错误')
+          Message({
+            message: `操作失败: ${res.message}`,
+            type: 'error',
+            duration: 5 * 1000
+          })
+          // MessageBox.alert(`操作失败: ${res.message}`, '错误')
           break
         case 409:
-          MessageBox.alert(`冲突错误: ${res.message}`, '警告')
+          Message({
+            message: `冲突错误: ${res.message}`,
+            type: 'warning',
+            duration: 5 * 1000
+          })
+          // MessageBox.alert(`冲突错误: ${res.message}`, '警告')
           break
         case 417:
           MessageBox.alert(`操作失败: 违反SQL完整性约束`, '错误')
           break
         case 500:
-          MessageBox.alert(`服务器错误: ${res.message}`, '警告')
+          Message({
+            message: `服务器错误: ${res.message}`,
+            type: 'warning',
+            duration: 5 * 1000
+          })
+          // MessageBox.alert(`服务器错误: ${res.message}`, '警告')
           break
         default:
-          MessageBox.alert(`错误:code=${res.code},response=${res.message}`, '错误')
+          Message({
+            message: `错误:code=${res.code},response=${res.message}`,
+            type: 'error',
+            duration: 5 * 1000
+          })
+          // MessageBox.alert(`错误:code=${res.code},response=${res.message}`, '错误')
       }
       return Promise.reject(new Error(res.message || 'Error'))
 

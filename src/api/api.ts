@@ -68,12 +68,12 @@ export interface api {
     putGraduationPoint(id:number, data:m.CreateGraduationPointForm):m.ServerResponse
     batchDeleteGraduationPoint(ids:number[]):m.ServerResponse
 
-     // CourseClass
-     queryCourseClass(queryOptions:any):m.ServerResponse,
-     createCourseClass(data:m.CreateCourseClassForm):m.ServerResponse
-     deleteCourseClass(id:number):m.ServerResponse
-     putCourseClass(id:number, data:m.CreateCourseClassForm):m.ServerResponse
-     batchDeleteCourseClass(ids:number[]):m.ServerResponse
+    // CourseClass
+    queryCourseClass(queryOptions:any):m.ServerResponse,
+    createCourseClass(data:m.CreateCourseClassForm):m.ServerResponse
+    deleteCourseClass(id:number):m.ServerResponse
+    putCourseClass(id:number, data:m.CreateCourseClassForm):m.ServerResponse
+    batchDeleteCourseClass(ids:number[]):m.ServerResponse
 
       // SupportingCourse
       querySupportingCourse(queryOptions:any):m.ServerResponse,
@@ -84,6 +84,7 @@ export interface api {
 
     // SelectCourse
     querySelectCourse(queryOptions:any):m.ServerResponse,
+    queryStudentSelectCourse(queryOptions:any):m.ServerResponse,
     createSelectCourse(data:m.CreateSelectCourseForm):m.ServerResponse
     deleteSelectCourse(id:number):m.ServerResponse
     putSelectCourse(id:number, data:m.CreateSelectCourseForm):m.ServerResponse

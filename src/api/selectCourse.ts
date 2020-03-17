@@ -8,6 +8,13 @@ export const querySelectCourse = (queryOptions:any) =>
     method: 'GET'
   })
 
+export const queryStudentSelectCourse = (queryOptions:any) =>
+  request({
+    url: '/select-course/list-student',
+    params: queryOptions,
+    method: 'GET'
+  })
+
 export const createSelectCourse = (data:m.CreateSelectCourseForm) =>
   request({
     url: '/select-course',

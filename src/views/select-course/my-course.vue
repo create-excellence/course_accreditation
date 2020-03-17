@@ -189,7 +189,6 @@ export default class SelectCourse extends Vue {
   queryOptions = {
     no: '',
     course: '',
-    student: '',
     teacher: '',
     semester: '',
     page: 1,
@@ -216,7 +215,7 @@ export default class SelectCourse extends Vue {
 
   async requestData() {
     this.loading = true
-    const res = await this.api.querySelectCourse(this.queryOptions)
+    const res = await this.api.queryStudentSelectCourse(this.queryOptions)
     this.data = res.data.list
     this.total = res.data.total
     this.loading = false
