@@ -71,8 +71,7 @@ export const routes: RouteConfig[] = [
         component: () => import('@/views/student/index.vue'),
         meta: {
           title: 'Student',
-          icon: 'example',
-          roles: ['student']
+          icon: 'example'
         }
       }
     ]
@@ -110,8 +109,8 @@ export const routes: RouteConfig[] = [
         }
       },
       {
-        path: 'student',
-        component: () => import('@/views/select-course/student.vue'),
+        path: 'select',
+        component: () => import('@/views/select-course/select.vue'),
         meta: {
           title: 'StudentSelectCourse',
           icon: 'form'

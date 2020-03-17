@@ -1,16 +1,23 @@
 import request from '@/utils/request'
 import * as m from '@/api/model'
 
-export const querySelectCourse = (queryOptions:any) =>
+export const queryStudentSelectCourse = (queryOptions:any) =>
   request({
-    url: '/select-course/list',
+    url: '/select-course/list-student',
     params: queryOptions,
     method: 'GET'
   })
 
-export const queryStudentSelectCourse = (queryOptions:any) =>
+export const queryCourseByStudent = (queryOptions:any) =>
   request({
-    url: '/select-course/list-student',
+    url: '/select-course/select',
+    params: queryOptions,
+    method: 'GET'
+  })
+
+export const querySelectCourse = (queryOptions:any) =>
+  request({
+    url: '/select-course/list',
     params: queryOptions,
     method: 'GET'
   })

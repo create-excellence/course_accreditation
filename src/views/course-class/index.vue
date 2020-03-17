@@ -536,7 +536,6 @@ export default class CourseClass extends Vue {
     const res = await this.api.queryTeacher(option)
     if (res.code === 0 && res.data.list.length > 0) {
       this.teacherList = res.data.list
-      console.log(this.teacherList)
     }
   }
   async queryCourseList(query: string) {

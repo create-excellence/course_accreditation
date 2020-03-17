@@ -6,9 +6,7 @@
       :rules="rules"
       label-position="top"
     >
-      <!-- 学生不允许修改 -->
       <el-form-item
-        v-if="permission"
         prop="studentId"
         label="学生"
       >
@@ -67,16 +65,16 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import { UserModule } from '@/store/modules/user'
 import { ElForm } from 'element-ui/types/form'
 import * as m from '@/api/model'
+// import { UserModule } from '@/store/modules/user'
 
 @Component({})
 export default class extends Vue {
   @Prop({ default: () => {} }) private selectCourse!: m.SelectCourse
   @Prop({ default: () => {} }) private dialogClose!: Function
   loading = true
-  permission: boolean = false
+  // permission: boolean = false
   editForm: m.CreateSelectCourseForm = {} as any
   studentList:m.Student[] =[]
   courseClassList:m.CourseClass[]=[]
@@ -95,11 +93,11 @@ export default class extends Vue {
   }
 
   async init() {
-    let roles = UserModule.roles
-    // 用户不是学生
-    if (roles.indexOf('student') === -1) {
-      this.permission = true
-    }
+    // let roles = UserModule.roles
+    // // 用户不是学生
+    // if (roles.indexOf('student') === -1) {
+    //   this.permission = true
+    // }
     this.requestData()
     this.queryStudentList('')
     this.queryCourseClassList('')

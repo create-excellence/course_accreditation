@@ -84,7 +84,8 @@ export interface api {
 
     // SelectCourse
     querySelectCourse(queryOptions:any):m.ServerResponse,
-    queryStudentSelectCourse(queryOptions:any):m.ServerResponse,
+    queryStudentSelectCourse(queryOptions:any):m.ServerResponse
+    queryCourseByStudent(queryOptions:any):m.ServerResponse
     createSelectCourse(data:m.CreateSelectCourseForm):m.ServerResponse
     deleteSelectCourse(id:number):m.ServerResponse
     putSelectCourse(id:number, data:m.CreateSelectCourseForm):m.ServerResponse

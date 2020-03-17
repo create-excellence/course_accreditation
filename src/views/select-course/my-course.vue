@@ -21,33 +21,7 @@
         >
           搜索
         </el-button>
-        <el-button
-          type="primary"
-          icon="el-icon-plus"
-          @click="handleCreate"
-        >
-          添加选课
-        </el-button>
       </el-form-item>
-      <el-button
-        type="primary"
-        plain
-        @click="showCheckbox=!showCheckbox"
-      >
-        多选
-      </el-button>
-      <el-button
-        v-if="showCheckbox"
-        type="danger"
-        @click="handleBatchDelete"
-      >
-        批量删除
-      </el-button>
-      <el-button
-        @click="showExcelDialog=true"
-      >
-        批量导入选课
-      </el-button>
     </el-form>
 
     <el-table
@@ -59,11 +33,6 @@
       style="width: 100%;"
       @selection-change="handleSelect"
     >
-      <el-table-column
-        v-if="showCheckbox"
-        type="selection"
-        width="55"
-      />
       <el-table-column
         align="center"
         label="学生编号"
@@ -180,7 +149,6 @@ export default class SelectCourse extends Vue {
   selectCourse: m.SelectCourse = {} as any
   showDialog = false
   editForm:m.CreateSelectCourseForm={} as any
-  showCheckbox = false
   selectCourseId:number[] = []
   showExcelDialog=false
   studentList:m.Student[] =[]
