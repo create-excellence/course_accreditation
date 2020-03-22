@@ -55,7 +55,7 @@ export const routes: RouteConfig[] = [
         path: 'dashboard',
         component: () => import(/* webpackChunkName: "dashboard" */ '@/views/dashboard/index.vue'),
         meta: {
-          title: 'Dashboard',
+          title: '首页',
           icon: 'dashboard'
         }
       }
@@ -70,8 +70,8 @@ export const routes: RouteConfig[] = [
         path: 'index',
         component: () => import('@/views/student/index.vue'),
         meta: {
-          title: 'Student',
-          icon: 'example'
+          title: '学生管理',
+          icon: 'student'
         }
       }
     ]
@@ -79,14 +79,26 @@ export const routes: RouteConfig[] = [
   {
     path: '/course',
     component: Layout,
-    redirect: '/course/index',
+    meta: {
+      title: '课程管理',
+      icon: 'course'
+    },
     children: [
       {
-        path: 'index',
+        path: '/course',
         component: () => import('@/views/course/index.vue'),
         meta: {
-          title: 'Course',
-          icon: 'example'
+          title: '课程管理',
+          icon: 'course',
+          breadcrumb: false
+        }
+      },
+      {
+        path: '/course/:courseId(\\d+)/course-class',
+        component: () => import('@/views/course/show.vue'),
+        meta: {
+          title: '开课班级',
+          hidden: true
         }
       }
     ]
@@ -96,8 +108,8 @@ export const routes: RouteConfig[] = [
     component: Layout,
     redirect: '/select-course/index',
     meta: {
-      title: 'SelectCourse',
-      icon: 'nested'
+      title: '选课管理',
+      icon: 'select-course'
     },
     children: [
       {
@@ -137,8 +149,64 @@ export const routes: RouteConfig[] = [
         path: 'index',
         component: () => import('@/views/major/index.vue'),
         meta: {
-          title: 'Major',
-          icon: 'table'
+          title: '专业管理',
+          icon: 'major'
+        }
+      }
+    ]
+  },
+
+  {
+    path: '/graduation-demand',
+    component: Layout,
+    meta: {
+      title: '毕业要求管理',
+      icon: 'graduation-demand'
+    },
+    children: [
+      {
+        path: '/graduation-demand',
+        component: () => import('@/views/graduation-demand/index.vue'),
+        meta: {
+          title: '毕业要求管理',
+          icon: 'graduation-demand',
+          breadcrumb: false
+        }
+      },
+      {
+        path: '/graduation-demand/:graduationDemandId(\\d+)/graduation-point',
+        component: () => import('@/views/graduation-point/show.vue'),
+        meta: {
+          title: '毕业指标点',
+          noCache: true,
+          activeMenu: '/graduation-demand',
+          hidden: true
+        },
+        children: [ {
+          path: '/graduation-demand/:graduationDemandId(\\d+)/graduation-point/:graduationPointId(\\d+)/supporting-course',
+          component: () => import('@/views/supporting-course/show.vue'),
+          meta: {
+            title: '支撑课程管理',
+            noCache: true,
+            activeMenu: '/graduation-demand',
+            hidden: true
+          }
+        }]
+      }
+
+    ]
+  },
+  {
+    path: '/graduation-point',
+    component: Layout,
+    redirect: '/graduation-point/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/graduation-point/index.vue'),
+        meta: {
+          title: '毕业要求指标点',
+          icon: 'graduation-point'
         }
       }
     ]
@@ -152,57 +220,8 @@ export const routes: RouteConfig[] = [
         path: 'index',
         component: () => import('@/views/supporting-course/index.vue'),
         meta: {
-          title: 'SupportingCourse',
-          icon: 'example'
-        }
-      }
-    ]
-  },
-  {
-    path: '/graduation-demand',
-    component: Layout,
-    children: [
-      {
-        path: '/graduation-demand',
-        component: () => import('@/views/graduation-demand/index.vue'),
-        meta: {
-          title: 'GraduationDemand',
-          icon: 'example'
-        }
-      },
-      {
-        path: '/graduation-demand/:graduationDemandId(\\d+)/graduation-point',
-        component: () => import('@/views/graduation-point/show.vue'),
-        meta: {
-          title: 'GraduationPointShow',
-          noCache: true,
-          activeMenu: '/graduation-demand',
-          hidden: true
-        }
-      },
-      {
-        path: '/graduation-demand/:graduationDemandId(\\d+)/graduation-point/:graduationPointId(\\d+)/supporting-course',
-        component: () => import('@/views/supporting-course/show.vue'),
-        meta: {
-          title: 'SupportingCourseShow',
-          noCache: true,
-          activeMenu: '/graduation-demand',
-          hidden: true
-        }
-      }
-    ]
-  },
-  {
-    path: '/graduation-point',
-    component: Layout,
-    redirect: '/graduation-point/index',
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/graduation-point/index.vue'),
-        meta: {
-          title: 'GraduationPoint',
-          icon: 'example'
+          title: '支持课程管理',
+          icon: 'supporting-course'
         }
       }
     ]
@@ -216,8 +235,8 @@ export const routes: RouteConfig[] = [
         path: 'index',
         component: () => import('@/views/semester/index.vue'),
         meta: {
-          title: 'Semester',
-          icon: 'table'
+          title: '学期管理',
+          icon: 'semester'
         }
       }
     ]
@@ -231,8 +250,8 @@ export const routes: RouteConfig[] = [
         path: 'index',
         component: () => import('@/views/teacher/index.vue'),
         meta: {
-          title: 'Teacher',
-          icon: 'table'
+          title: '老师管理',
+          icon: 'teacher'
         }
       }
     ]
@@ -246,91 +265,12 @@ export const routes: RouteConfig[] = [
         path: 'index',
         component: () => import('@/views/course-class/index.vue'),
         meta: {
-          title: 'CourseClass',
-          icon: 'table'
+          title: '开课班级管理',
+          icon: 'course-class'
         }
       }
     ]
   },
-  // {
-  //   path: '/form',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       component: () => import(/* webpackChunkName: "form" */ '@/views/form/index.vue'),
-  //       meta: {
-  //         title: 'Form',
-  //         icon: 'form'
-  //       }
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: '/nested',
-  //   component: Layout,
-  //   redirect: '/nested/menu1',
-  //   meta: {
-  //     title: 'Nested',
-  //     icon: 'nested'
-  //   },
-  //   children: [
-  //     {
-  //       path: 'menu1',
-  //       component: () => import(/* webpackChunkName: "menu1" */ '@/views/nested/menu1/index.vue'),
-  //       redirect: '/nested/menu1/menu1-1',
-  //       meta: { title: 'Menu1' },
-  //       children: [
-  //         {
-  //           path: 'menu1-1',
-  //           component: () => import(/* webpackChunkName: "menu1-1" */ '@/views/nested/menu1/menu1-1/index.vue'),
-  //           meta: { title: 'Menu1-1' }
-  //         },
-  //         {
-  //           path: 'menu1-2',
-  //           component: () => import(/* webpackChunkName: "menu1-2" */ '@/views/nested/menu1/menu1-2/index.vue'),
-  //           redirect: '/nested/menu1/menu1-2/menu1-2-1',
-  //           meta: { title: 'Menu1-2' },
-  //           children: [
-  //             {
-  //               path: 'menu1-2-1',
-  //               component: () => import(/* webpackChunkName: "menu1-2-1" */ '@/views/nested/menu1/menu1-2/menu1-2-1/index.vue'),
-  //               meta: { title: 'Menu1-2-1' }
-  //             },
-  //             {
-  //               path: 'menu1-2-2',
-  //               component: () => import(/* webpackChunkName: "menu1-2-2" */ '@/views/nested/menu1/menu1-2/menu1-2-2/index.vue'),
-  //               meta: { title: 'Menu1-2-2' }
-  //             }
-  //           ]
-  //         },
-  //         {
-  //           path: 'menu1-3',
-  //           component: () => import(/* webpackChunkName: "menu1-3" */ '@/views/nested/menu1/menu1-3/index.vue'),
-  //           meta: { title: 'Menu1-3' }
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       path: 'menu2',
-  //       component: () => import(/* webpackChunkName: "menu2" */ '@/views/nested/menu2/index.vue'),
-  //       meta: { title: 'Menu2' }
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: 'external-link',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'https://github.com/Armour/vue-typescript-admin-template',
-  //       meta: {
-  //         title: 'External Link',
-  //         icon: 'link'
-  //       }
-  //     }
-  //   ]
-  // },
   {
     path: '*',
     redirect: '/404',

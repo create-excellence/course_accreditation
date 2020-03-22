@@ -56,13 +56,6 @@
       >
         批量删除
       </el-button>
-      <el-button
-        type="primary"
-        plain
-        @click="showExcelDialog=true"
-      >
-        批量导入课程
-      </el-button>
     </el-form>
 
     <el-table
@@ -93,13 +86,11 @@
         align="center"
         prop="credit"
         label="学分"
-        width="100"
       />
       <el-table-column
         align="center"
         prop="nature"
         label="课程性质"
-        width="100"
       />
       <el-table-column
         align="center"
@@ -116,14 +107,6 @@
         label="操作"
       >
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="primary"
-            style="margin-bottom: 10px"
-            @click="$router.push(`/course/${scope.row.id}/course-class`)"
-          >
-            查看开课班级
-          </el-button>
           <el-button
             size="mini"
             @click="handleEdit(scope.row)"
@@ -227,11 +210,6 @@
         </el-button>
       </div>
     </el-dialog>
-    <excel-dialog
-      action="/course/batchSave"
-      :show.sync="showExcelDialog"
-      @requestData="requestData"
-    />
   </div>
 </template>
 
@@ -250,11 +228,11 @@ export default class Course extends Vue {
   editForm:m.CreateCourseForm={} as any
   showCheckbox = false
   selectCourseId:number[] = []
-  showExcelDialog=false
 
   queryOptions = {
     name: '',
     code: '',
+    courseId: -1,
     page: 1,
     pageSize: 20
   }
@@ -271,6 +249,8 @@ export default class Course extends Vue {
   }
 
   async init() {
+    let courseId = Number(this.$route.params.courseId)
+    this.queryOptions.courseId = courseId
     this.requestData()
   }
 

@@ -1,229 +1,226 @@
 <template>
-  <div
-    style="padding-bottom:100px"
-    class="app-container"
-  >
-    <el-form
-      ref="searchForm"
-      :inline="true"
-      :model="queryOptions"
-      @submit.native.prevent="handleFilter"
-    >
-      <el-button
-        plain
-        type="primary"
-        @click="showCheckbox=!showCheckbox"
-      >
-        多选
-      </el-button>
-      <el-button
-        plain
-        type="primary"
-        icon="el-icon-plus"
-        style="margin-right:32px"
-        @click="handleCreate"
-      >
-        毕业要求
-      </el-button>
-      <el-form-item
-        prop="no"
-      >
-        <el-input
-          v-model="queryOptions.no"
-          placeholder="请输入毕业要求编号"
-          maxlength="10"
-        />
-      </el-form-item>
-      <el-form-item
-        prop="major"
-      >
-        <el-autocomplete
-          v-model="queryOptions.major"
-          class="inline-input"
-          :fetch-suggestions="queryMajorList"
-          placeholder="请输入专业名称"
-        />
-      </el-form-item>
-      <el-form-item>
-        <el-button
-          icon="el-icon-search"
-          @click="handleFilter"
-        >
-          搜索
-        </el-button>
-      </el-form-item>
-      <el-button
-        v-if="showCheckbox"
-        style="float:right"
-        type="danger"
-        @click="handleBatchDelete"
-      >
-        批量删除
-      </el-button>
-      <el-button
-        style="margin-right:10px; float:right"
-        type="primary"
-        @click="showExcelDialog=true"
-      >
-        批量导入毕业要求
-      </el-button>
-    </el-form>
-
-    <el-table
-      v-loading="loading"
-      :data="data"
-      border
-      fit
-      highlight-current-row
-      style="width: 100%;"
-      @selection-change="handleSelect"
-    >
-      <el-table-column
-        v-if="showCheckbox"
-        type="selection"
-        width="55"
-      />
-      <el-table-column
-        align="center"
-        label="毕业要求编号"
-        prop="no"
-      />
-      <el-table-column
-        align="center"
-        prop="content"
-        label="描述"
-      >
-        <template slot-scope="scope">
-          <text-view :value="scope.row.content|string2delta" />
-        </template>
-      </el-table-column>
-      <el-table-column
-        align="center"
-        prop="major"
-        label="专业"
-      />
-      <el-table-column
-        align="center"
-        prop="createTime"
-        label="添加时间"
-      />
-      <el-table-column
-        align="center"
-        prop="updateTime"
-        label="更新时间"
-      />
-      <el-table-column
-        align="center"
-        label="操作"
-      >
-        <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="primary"
-            style="margin-bottom: 10px"
-            @click="$router.push(`/graduation-demand/${scope.row.id}/graduation-point`)"
-          >
-            查看指标点
-          </el-button><br>
-          <el-button
-            size="mini"
-            @click="handleEdit(scope.row)"
-          >
-            编辑
-          </el-button>
-          <el-button
-            type="danger"
-            size="mini"
-            @click="handleDelete(scope.row)"
-          >
-            删除
-          </el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-    <pagination
-      v-show="total > 0"
-      style="position:fixed; bottom:0px;"
-      :total="total"
-      :page.sync="queryOptions.page"
-      :limit.sync="queryOptions.pageSize"
-      @pagination="requestData"
-    />
-
-    <el-dialog
-      :title="`${graduationDemand.id ? '编辑' : '添加'}毕业要求`"
-      :visible.sync="showDialog"
-      @close="showDialog = false"
+  <div>
+    <div
+      style="padding-bottom:100px"
+      class="app-container"
     >
       <el-form
-        v-if="showDialog"
-        ref="editForm"
-        :model="editForm"
-        :rules="rules"
-        label-position="top"
+        ref="searchForm"
+        :inline="true"
+        :model="queryOptions"
+        @submit.native.prevent="handleFilter"
       >
         <el-form-item
           prop="no"
-          label="毕业要求编号"
         >
           <el-input
-            v-model="editForm.no"
+            v-model="queryOptions.no"
             placeholder="请输入毕业要求编号"
             maxlength="10"
           />
         </el-form-item>
         <el-form-item
-          prop="majorId"
-          label="专业"
+          prop="major"
         >
-          <el-select
-            v-model="editForm.majorId"
-            filterable
-            remote
-            reserve-keyword
-            placeholder="请选择专业"
-            :remote-method="queryMajorSelectList"
-            :loading="loading"
-          >
-            <el-option
-              v-for="item in majorList"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item
-          label="毕业要求描述"
-          prop="content"
-        >
-          <text-editor
-            ref="title"
-            v-model="editForm.content"
-            placeholder="请输入毕业要求描述"
+          <el-autocomplete
+            v-model="queryOptions.major"
+            class="inline-input"
+            :fetch-suggestions="queryMajorList"
+            placeholder="请输入专业名称"
           />
         </el-form-item>
-      </el-form>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button @click="showDialog = false">
-          取 消
-        </el-button>
+        <el-form-item>
+          <el-button
+            icon="el-icon-search"
+            @click="handleFilter"
+          >
+            搜索
+          </el-button>
+          <el-button
+            plain
+            type="primary"
+            @click="showCheckbox=!showCheckbox"
+          >
+            多选
+          </el-button>
+          <el-button
+            v-if="showCheckbox"
+            type="danger"
+            @click="handleBatchDelete"
+          >
+            批量删除
+          </el-button>
+          <el-button
+            type="primary"
+            icon="el-icon-plus"
+            @click="handleCreate"
+          >
+            毕业要求
+          </el-button>
+        </el-form-item>
+
         <el-button
-          type="primary"
-          @click="handleSave"
+          @click="showExcelDialog=true"
         >
-          确 定
+          批量导入毕业要求
         </el-button>
-      </div>
-    </el-dialog>
-    <excel-dialog
-      action="/graduationDemand/batchSave"
-      :show.sync="showExcelDialog"
-      @requestData="requestData"
-    />
+      </el-form>
+
+      <el-table
+        v-loading="loading"
+        :data="data"
+        border
+        fit
+        highlight-current-row
+        style="width: 100%;"
+        @selection-change="handleSelect"
+      >
+        <el-table-column
+          v-if="showCheckbox"
+          type="selection"
+          width="55"
+        />
+        <el-table-column
+          align="center"
+          label="毕业要求编号"
+          prop="no"
+        />
+        <el-table-column
+          align="center"
+          prop="content"
+          label="描述"
+        >
+          <template slot-scope="scope">
+            <text-view :value="scope.row.content|string2delta" />
+          </template>
+        </el-table-column>
+        <el-table-column
+          align="center"
+          prop="major"
+          label="专业"
+        />
+        <el-table-column
+          align="center"
+          prop="createTime"
+          label="添加时间"
+        />
+        <el-table-column
+          align="center"
+          prop="updateTime"
+          label="更新时间"
+        />
+        <el-table-column
+          align="center"
+          label="操作"
+        >
+          <template slot-scope="scope">
+            <el-button
+              size="mini"
+              type="primary"
+              style="margin-bottom: 10px"
+              @click="$router.push(`/graduation-demand/${scope.row.id}/graduation-point`)"
+            >
+              查看指标点
+            </el-button>
+            <el-button
+              size="mini"
+              @click="handleEdit(scope.row)"
+            >
+              编辑
+            </el-button>
+            <el-button
+              type="danger"
+              size="mini"
+              @click="handleDelete(scope.row)"
+            >
+              删除
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <pagination
+        v-show="total > 0"
+        :total="total"
+        :page.sync="queryOptions.page"
+        :limit.sync="queryOptions.pageSize"
+        @pagination="requestData"
+      />
+
+      <el-dialog
+        :title="`${graduationDemand.id ? '编辑' : '添加'}毕业要求`"
+        :visible.sync="showDialog"
+        @close="showDialog = false"
+      >
+        <el-form
+          v-if="showDialog"
+          ref="editForm"
+          :model="editForm"
+          :rules="rules"
+          label-position="top"
+        >
+          <el-form-item
+            prop="no"
+            label="毕业要求编号"
+          >
+            <el-input
+              v-model="editForm.no"
+              placeholder="请输入毕业要求编号"
+              maxlength="10"
+            />
+          </el-form-item>
+          <el-form-item
+            prop="majorId"
+            label="专业"
+          >
+            <el-select
+              v-model="editForm.majorId"
+              filterable
+              remote
+              reserve-keyword
+              placeholder="请选择专业"
+              :remote-method="queryMajorSelectList"
+              :loading="loading"
+            >
+              <el-option
+                v-for="item in majorList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item>
+          <el-form-item
+            label="毕业要求描述"
+            prop="content"
+          >
+            <text-editor
+              ref="title"
+              v-model="editForm.content"
+              placeholder="请输入毕业要求描述"
+            />
+          </el-form-item>
+        </el-form>
+        <div
+          slot="footer"
+          class="dialog-footer"
+        >
+          <el-button @click="showDialog = false">
+            取 消
+          </el-button>
+          <el-button
+            type="primary"
+            @click="handleSave"
+          >
+            确 定
+          </el-button>
+        </div>
+      </el-dialog>
+      <excel-dialog
+        action="/graduationDemand/batchSave"
+        :show.sync="showExcelDialog"
+        @requestData="requestData"
+      />
+    </div>
   </div>
 </template>
 
