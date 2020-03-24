@@ -242,6 +242,30 @@ export const routes: RouteConfig[] = [
     ]
   },
   {
+    path: '/questionnaire',
+    component: Layout,
+    children: [
+      {
+        path: '/questionnaire',
+        component: () => import('@/views/questionnaire/index.vue'),
+        meta: {
+          title: '问卷',
+          icon: 'example'
+        }
+      },
+      {
+        path: '/questionnaire/:questionnaireId(\\d+)/course-target',
+        component: () => import('@/views/course-target/show.vue'),
+        meta: {
+          title: 'CourseTargetShow',
+          noCache: true,
+          activeMenu: '/graduation-demand',
+          hidden: true
+        }
+      }
+    ]
+  },
+  {
     path: '/teacher',
     component: Layout,
     redirect: '/teacher/index',

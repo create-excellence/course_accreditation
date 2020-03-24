@@ -203,6 +203,12 @@ export interface CourseTarget {
    * @memberof CourseTarget
    */
   updateTime?: Date;
+  /**
+   * 数组
+   * @type {List}
+   * @memberof CourseTarget
+   */
+  optionsList?: [];
 }
 
 /**
@@ -879,3 +885,28 @@ export interface GraduationDemand {
 }
 
 
+/**
+* 
+* @export
+* @interface OptionsList
+*/
+export interface OptionsList {
+  /**
+   * 选项
+   * @type {string}
+   * @memberof OptionsList
+   */
+  prefix: string;
+  /**
+   * 内容
+   * @type {string}
+   * @memberof OptionsList
+   */
+  content: string;
+  /**
+   * 分数
+   * @type {string}
+   * @memberof OptionsList
+   */
+  score?: string;
+}

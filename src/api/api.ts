@@ -10,6 +10,8 @@ export * from '@/api/course-class'
 export * from '@/api/supporting-course'
 export * from '@/api/graduation-point'
 export * from '@/api/selectCourse.ts'
+export * from '@/api/questionnaire.ts'
+export * from '@/api/courseTarget.ts'
 
 export interface api {
     // User
@@ -90,4 +92,20 @@ export interface api {
     deleteSelectCourse(id:number):m.ServerResponse
     putSelectCourse(id:number, data:m.CreateSelectCourseForm):m.ServerResponse
     batchDeleteSelectCourse(ids:number[]):m.ServerResponse
+
+    // Questionnaire
+    queryQuestionnaire(queryOptions:any):m.ServerResponse
+    getQuestionnaire(id:number):m.ServerResponse
+    createQuestionnaire(data:m.CreateQuestionnaireForm):m.ServerResponse
+    deleteQuestionnaire(id:number):m.ServerResponse
+    putQuestionnaire(id:number, data:m.CreateQuestionnaireForm):m.ServerResponse
+    batchDeleteQuestionnaire(ids:number[]):m.ServerResponse
+
+    // CourseTarget
+    queryCourseTarget(queryOptions:any):m.ServerResponse
+    getCourseTargetPoint(id:number):m.ServerResponse
+    createCourseTarget(data:m.CreateCourseTargetForm):m.ServerResponse
+    deleteCourseTarget(id:number):m.ServerResponse
+    putCourseTarget(id:number, data:m.CreateCourseTargetForm):m.ServerResponse
+    batchDeleteCourseTarget(ids:number[]):m.ServerResponse
 }

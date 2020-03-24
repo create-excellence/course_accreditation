@@ -1,5 +1,6 @@
 import { string2delta } from '@/utils/quill'
 import Vue from 'vue'
+import * as m from '@/api/model'
 export const formatTerm = (term: number) => {
   const termStr = term + ''
   const endYear = parseInt(termStr.substr(0, 4))
@@ -35,6 +36,17 @@ export const formatSubjectCategory = (status: number) => {
     case 5:
       return '计算'
   }
+}
+
+export const formatOptionList = (optionsLists: m.OptionsList[]) => {
+  if (!optionsLists) {
+    return ''
+  }
+  let optionList:string = ''
+  for (let item of optionsLists) {
+    optionList = optionList + item.prefix + '.' + item.content + '\n'
+  }
+  return optionList
 }
 
 export const formatSubjectAnswer = (answer: string) => {
