@@ -208,7 +208,7 @@ export interface CourseTarget {
    * @type {List}
    * @memberof CourseTarget
    */
-  optionsList?: [];
+  optionsList?: OptionsList[];
 }
 
 /**

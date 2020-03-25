@@ -183,7 +183,7 @@
             <el-col :span="4">
               <label>选项</label>
             </el-col>
-            <el-col :span="16">
+            <el-col :span="12">
               <label>内容</label>
             </el-col>
             <el-col :span="4">
@@ -192,17 +192,22 @@
           </el-row>
           <el-row>
             <el-form-item
-              v-for="item in optionsList"
+              v-for="(item,index) in optionsList"
               :key="item.prefix"
             >
               <el-col :span="4">
                 <el-input v-model="item.prefix" />
               </el-col>
-              <el-col :span="16">
+              <el-col :span="12">
                 <el-input v-model="item.content" />
               </el-col>
               <el-col :span="4">
                 <el-input v-model="item.score" />
+              </el-col>
+              <el-col :span="4">
+                <el-button @click="deleteOptions(index)">
+                  删除选项
+                </el-button>
               </el-col>
             </el-form-item>
           </el-row>
@@ -211,26 +216,7 @@
           <el-button @click="addOptions">
             增加选项
           </el-button>
-          <el-button @click="deleteOptions">
-            删除选项
-          </el-button>
         </div>
-        <el-form-item
-          prop="questionnaireId"
-          label="问卷序号"
-        >
-          <el-select
-            v-model="editForm.questionnaireId"
-            placeholder="请选择问卷序号"
-          >
-            <el-option
-              v-for="item in questionnaireList"
-              :key="item.id"
-              :label="item.no"
-              :value="item.id"
-            />
-          </el-select>
-        </el-form-item>
         <el-form-item
           prop="pointId"
           label="指标点"
@@ -501,9 +487,8 @@ export default class CourseTarget extends Vue {
     let newLastPrefix = String.fromCharCode(last.prefix.charCodeAt() + 1)
     optionsList.push({ prefix: newLastPrefix, content: '', score: '' })
   }
-  deleteOptions() {
-    let optionsList = this.optionsList
-    optionsList.pop()
+  deleteOptions(index) {
+    this.optionsList.splice(index, 1)
   }
 
   handleBatchDelete() {
