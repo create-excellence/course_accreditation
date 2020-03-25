@@ -3,7 +3,7 @@ import * as m from '@/api/model'
 export const getUserInfo = () =>
   request({
     url: '/system/getUserInfo',
-    method: 'post'
+    method: 'get'
   })
 
 export const login = (data: m.LoginForm) =>
@@ -17,4 +17,11 @@ export const logout = () =>
   request({
     url: '/users/logout',
     method: 'post'
+  })
+
+export const updateUserInfo = (data:m.CreateTeacherForm) =>
+  request({
+    url: '/system/updateUserInfo',
+    method: 'put',
+    data
   })
