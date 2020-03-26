@@ -269,23 +269,27 @@
       :visible.sync="showPreview"
       @close="showPreview = false"
     >
-      <div>
-        <span
-          v-for="item in data"
-          :key="item.id"
-        >
-          <span>{{ item.sequence }}.{{ item.title }}({{ item.totalScore }}分)</span>
-          <div>
+      <div
+        v-for="item in data"
+        :key="item.id"
+      >
+        <span style="font-size:27px;">{{ item.sequence }}、{{ item.title }}({{ item.totalScore }}分)</span>
+        <div>
+          <el-row>
             <span
               v-for="option in item.optionsList"
               :key="option.prefix"
             >
-              <span>{{ option.prefix }}.{{ option.content }}
-              </span>
+              <el-col
+                :span="12"
+                style="font-size:20px;"
+              >
+                {{ option.prefix }}、{{ option.content }}
+              </el-col>
             </span>
-          </div>
-          <el-divider />
-        </span>
+          </el-row>
+        </div>
+        <el-divider />
       </div>
     </el-dialog>
   </div>
@@ -314,7 +318,6 @@ export default class CourseTarget extends Vue {
   questionnaireList: m.Questionnaire[] = []
   graduationPointList: m.GraduationPoint[] = []
   optionsList :m.OptionsList[]= []
-  radio = 0
   newOptionsList :m.OptionsList[]=
   [{ prefix: 'a', content: '', score: '' },
     { prefix: 'b', content: '', score: '' },
@@ -487,6 +490,7 @@ export default class CourseTarget extends Vue {
     let newLastPrefix = String.fromCharCode(last.prefix.charCodeAt() + 1)
     optionsList.push({ prefix: newLastPrefix, content: '', score: '' })
   }
+
   deleteOptions(index) {
     this.optionsList.splice(index, 1)
   }
@@ -513,4 +517,5 @@ export default class CourseTarget extends Vue {
     })
   }
 }
+
 </script>

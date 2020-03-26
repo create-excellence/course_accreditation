@@ -306,7 +306,7 @@ export const routes: RouteConfig[] = [
         path: '/questionnaire/:questionnaireId(\\d+)/course-target',
         component: () => import('@/views/course-target/show.vue'),
         meta: {
-          title: 'CourseTargetShow',
+          title: '题目编辑',
           noCache: true,
           activeMenu: '/graduation-demand',
           hidden: true
