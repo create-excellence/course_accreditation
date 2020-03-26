@@ -156,6 +156,22 @@ export const routes: RouteConfig[] = [
     ]
   },
   {
+    path: '/teacher-person-info',
+    component: Layout,
+    redirect: '/teacher-person-info/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/teacher-person-info/index.vue'),
+        meta: {
+          title: '个人信息',
+          icon: 'course-class',
+          roles: ['teacher']
+        }
+      }
+    ]
+  },
+  {
     path: '/student-info',
     component: Layout,
     redirect: '/student/info',
@@ -165,8 +181,8 @@ export const routes: RouteConfig[] = [
         component: () => import('@/views/student-info/index.vue'),
         meta: {
           title: '个人信息',
-          icon: 'student'
-          // roles: ['student']
+          icon: 'student',
+          roles: ['student']
         }
       }
     ]
@@ -323,21 +339,6 @@ export const routes: RouteConfig[] = [
         component: () => import('@/views/course-class/index.vue'),
         meta: {
           title: '开课班级管理',
-          icon: 'course-class'
-        }
-      }
-    ]
-  },
-  {
-    path: '/teacher-person-info',
-    component: Layout,
-    redirect: '/teacher-person-info/index',
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/teacher-person-info/index.vue'),
-        meta: {
-          title: '个人信息',
           icon: 'course-class'
         }
       }

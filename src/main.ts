@@ -15,7 +15,9 @@ import Pagination from '@/components/Pagination/index.vue'
 import UploadExcel from '@/components/UploadExcel/index.vue'
 import TextEditor from '@/components/TextEditor/TextEditor.vue'
 import TextView from '@/components/TextEditor/TextView.vue'
+import VueParticles from 'vue-particles'
 
+Vue.use(VueParticles)
 Vue.use(ElementUI)
 Vue.use(SvgIcon, {
   tagName: 'svg-icon',

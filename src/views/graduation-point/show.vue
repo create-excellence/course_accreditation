@@ -105,12 +105,13 @@
         >
           <template slot-scope="scope">
             <el-button
+              style="margin-bottom: 10px"
               size="mini"
               type="primary"
               @click="$router.push(`/graduation-demand/${queryOptions.graduationDemandId}/graduation-point/${scope.row.id}/supporting-course`)"
             >
               查看支撑课程
-            </el-button>
+            </el-button><br>
             <el-button
               size="mini"
               @click="handleEdit(scope.row)"

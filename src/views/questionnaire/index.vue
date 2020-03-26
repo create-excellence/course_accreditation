@@ -123,12 +123,13 @@
       >
         <template slot-scope="scope">
           <el-button
+            style="margin-bottom: 10px"
             size="mini"
             type="primary"
             @click="$router.push(`/questionnaire/${scope.row.id}/course-target`)"
           >
             查看问卷
-          </el-button>
+          </el-button><br>
           <el-button
             size="mini"
             @click="handleEdit(scope.row)"

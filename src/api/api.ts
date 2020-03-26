@@ -29,6 +29,8 @@ export interface api {
 
     // Student
     queryStudent(queryOptions:any):m.ServerResponse,
+    getStudentInfo():m.ServerResponse
+    updateStudentInfo(data:m.CreateStudentForm):m.ServerResponse
     createStudent(data:m.CreateStudentForm):m.ServerResponse
     deleteStudent(id:number):m.ServerResponse
     putStudent(id:number, data:m.CreateStudentForm):m.ServerResponse

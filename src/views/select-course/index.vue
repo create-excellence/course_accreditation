@@ -124,8 +124,9 @@
             @click="handleEdit(scope.row)"
           >
             编辑
-          </el-button>
+          </el-button><br>
           <el-button
+            style="margin-top:10px"
             type="danger"
             size="mini"
             @click="handleDelete(scope.row)"

@@ -374,7 +374,7 @@ export default class Student extends Vue {
   rules={
     name: [{ required: true, message: '学生姓名不能为空', trigger: 'blur' }],
     sno: [{ required: true, message: '学生学号不能为空', trigger: 'blur' }],
-    grade: [{ required: true, message: '学生学号不能为空', trigger: 'blur' }],
+    grade: [{ required: true, message: '学生年级不能为空', trigger: 'blur' }],
     majorId: [{ required: true, message: '学生专业不能为空', trigger: 'blur' }]
   }
 

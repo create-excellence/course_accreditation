@@ -1,7 +1,9 @@
 <template>
-  <div style="margin-left: 40%; margin-top: 50px">
+  <!-- <div class="student-container" style="margin-left: 40%; margin-top: 50px"> -->
+  <div class="student-container">
     <el-form
       ref="editForm"
+      class="student-form"
       :model="editForm"
       :rules="rules"
       label-position="top"
@@ -182,3 +184,20 @@ export default class extends Vue {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.student-container {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+
+  .password-form {
+    position: relative;
+    width: 520px;
+    max-width: 100%;
+    padding: 160px 35px 0;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+}
+</style>

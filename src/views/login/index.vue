@@ -1,5 +1,22 @@
 <template>
   <div class="login-container">
+    <vue-particles
+      color="#fff"
+      :particle-opacity="0.7"
+      :particles-number="60"
+      shape-type="circle"
+      :particle-size="4"
+      lines-color="#fff"
+      :lines-width="1"
+      :line-linked="true"
+      :line-opacity="0.4"
+      :lines-distance="150"
+      :move-speed="2"
+      :hover-effect="true"
+      hover-mode="grab"
+      :click-effect="true"
+      click-mode="push"
+    />
     <el-form
       ref="loginForm"
       :model="loginForm"
@@ -10,7 +27,7 @@
     >
       <div class="title-container">
         <h3 class="title">
-          Login Form
+          课程认证系统
         </h3>
       </div>
 
@@ -58,7 +75,7 @@
         style="width:100%; margin-bottom:30px;"
         @click.native.prevent="handleLogin"
       >
-        Sign in
+        登录
       </el-button>
 
       <div style="position:relative">
@@ -148,6 +165,7 @@ export default class extends Vue {
           .then(() => {
             console.log('login success')
           })
+        console.log('push')
         this.$router.push({
           path: this.redirect || '/',
           query: this.otherQuery
@@ -219,6 +237,13 @@ export default class extends Vue {
 </style>
 
 <style lang="scss" scoped>
+  // vue-particles有一个id为默认为particles-js，可以根据这个id来设置样式。设置之后就可以显示了
+  #particles-js{
+    width: 100%;
+    height: calc(100% - 100px);
+    position: absolute;
+  }
+
 .login-container {
   height: 100%;
   width: 100%;

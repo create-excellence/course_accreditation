@@ -1,6 +1,19 @@
 import request from '@/utils/request'
 import * as m from '@/api/model'
 
+export const getStudentInfo = () =>
+  request({
+    url: '/student/info',
+    method: 'GET'
+  })
+
+export const updateStudentInfo = (data:m.CreateStudentForm) =>
+  request({
+    url: '/student/updateInfo',
+    method: 'POST',
+    data
+  })
+
 export const queryStudent = (queryOptions:any) =>
   request({
     url: '/student/list',

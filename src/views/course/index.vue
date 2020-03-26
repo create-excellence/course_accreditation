@@ -123,7 +123,7 @@
             @click="$router.push(`/course/${scope.row.id}/course-class`)"
           >
             查看开课班级
-          </el-button>
+          </el-button><br>
           <el-button
             size="mini"
             @click="handleEdit(scope.row)"

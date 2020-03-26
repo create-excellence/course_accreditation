@@ -17,6 +17,7 @@
         <el-input
           ref="oldPassword"
           v-model="passwordForm.oldPassword"
+          maxlength="25"
           :type="passwordType"
           placeholder="请输入旧密码"
           name="oldPassword"
@@ -35,6 +36,7 @@
         <el-input
           ref="newPassword"
           v-model="passwordForm.newPassword"
+          maxlength="25"
           :type="passwordType"
           placeholder="请输入新密码"
           name="newPassword"
@@ -53,6 +55,7 @@
         <el-input
           ref="rePassword"
           v-model="passwordForm.rePassword"
+          maxlength="25"
           :type="passwordType"
           placeholder="再次输入确认密码"
           name="rePassword"
