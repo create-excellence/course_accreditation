@@ -25,6 +25,7 @@ Vue.use(SvgIcon, {
   defaultHeight: '1em'
 })
 Vue.prototype.api = api
+Vue.prototype.baseUrl = 'http://localhost:8888/v1'
 Vue.component('pagination', Pagination)
 Vue.component('excel-dialog', UploadExcel)
 Vue.component('text-editor', TextEditor)
@@ -33,7 +34,8 @@ Vue.config.productionTip = false
 
 declare module 'vue/types/vue' {
   interface Vue {
-    api: api.api
+    api: api.api,
+    baseUrl:'http://localhost:8888/v1'
   }
 }
 

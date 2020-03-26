@@ -5,6 +5,7 @@
         <el-header>
           <span> 基本信息</span>
           <el-button
+            v-if="!showChange"
             style="float:right;margin-top:13px;"
             type="primary"
             size="small"
@@ -15,12 +16,25 @@
         </el-header>
         <el-main>
           <div v-if="!showChange">
-            <svg-icon name="user" /> 姓名: {{ data.name }}<br><br><br>
-            <svg-icon name="sex" /> 性别: {{ data.sex }}<br><br><br>
-            <svg-icon name="birth" /> 生日: {{ data.birth }}<br><br><br>
-            <svg-icon name="title" /> 职称: {{ data.title }}<br><br><br>
-            <svg-icon name="school" /> 毕业学校: {{ data.graduateSchool }}<br><br><br>
-            <svg-icon name="major" /> 毕业专业: {{ data.graduateMajor }}<br><br><br>
+            <div class="avatar">
+              <el-avatar
+                :size="100"
+                :src="data.avatar"
+              /> <br><br>
+            </div>
+
+            <svg-icon name="user" /> 姓名: {{ data.name }}
+            <el-divider />
+            <svg-icon name="sex" /> 性别: {{ data.sex }}
+            <el-divider />
+            <svg-icon name="birth" /> 生日: {{ data.birth }}
+            <el-divider />
+            <svg-icon name="title" /> 职称: {{ data.title }}
+            <el-divider />
+            <svg-icon name="school" /> 毕业学校: {{ data.graduateSchool }}
+            <el-divider />
+            <svg-icon name="major" /> 毕业专业: {{ data.graduateMajor }}
+            <el-divider />
           </div>
           <el-form
             v-else
@@ -29,8 +43,28 @@
             :rules="rules"
             label-position="left"
             label-width="80px"
-            width="50%"
           >
+            <div class="avatar">
+              <el-avatar
+                :size="100"
+                :src="editForm.avatar"
+              /><br><br>
+              <el-upload
+                :action="baseUrl+'/system/uploadAvatar'"
+                :headers="headers"
+                :show-file-list="false"
+                :on-success="handleSuccess"
+              >
+                <el-button
+                  size="small"
+                  type="primary"
+                >
+                  上传头像
+                </el-button>
+              </el-upload>
+              <br>  <br>
+            </div>
+
             <el-form-item
               prop="name"
               label="姓名"
@@ -117,6 +151,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { ElForm } from 'element-ui/types/form'
 import * as m from '@/api/model'
+import { UserModule } from '@/store/modules/user'
 
 @Component({})
 export default class TeacherPersonInfo extends Vue {
@@ -125,6 +160,7 @@ export default class TeacherPersonInfo extends Vue {
   loading = true
   showChange = false
   editForm:m.CreateTeacherForm={} as any
+  headers={} as any
 
   rules={
     name: [{ required: true, message: '指标点名称不能为空', trigger: 'blur' }]
@@ -135,6 +171,9 @@ export default class TeacherPersonInfo extends Vue {
   }
 
   async init() {
+    if (UserModule.token) {
+      this.headers['Authentication'] = UserModule.token
+    }
     this.requestData()
   }
 
@@ -154,7 +193,16 @@ export default class TeacherPersonInfo extends Vue {
       birth: data.birth,
       title: data.title,
       graduateSchool: data.graduateSchool,
-      graduateMajor: data.graduateMajor
+      graduateMajor: data.graduateMajor,
+      avatar: data.avatar
+    }
+  }
+
+  handleSuccess(res) {
+    if (res.code === 0) {
+      console.log(1)
+      this.editForm.avatar = this.baseUrl + '/img/' + res.data
+      console.log(this.editForm.avatar)
     }
   }
 
@@ -169,19 +217,24 @@ export default class TeacherPersonInfo extends Vue {
 </script>
 
 <style lang="scss" scoped>
+
+.avatar{
+  text-align: center;
+}
+
 .el-container {
   width:650px;
-  height:450px;
+  height:650px;
   margin: -200px 0 0 -250px;
   position: absolute;
-  top: 40%;
+  top: 30%;
   left: 40%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
 }
 
 .form{
-  width:750px;
-  height:550px;
+  width:650px;
+  height:730px;
 }
   .el-header {
     background-color: rgb(220, 226, 233);

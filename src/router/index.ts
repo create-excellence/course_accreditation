@@ -159,13 +159,27 @@ export const routes: RouteConfig[] = [
     path: '/teacher-person-info',
     component: Layout,
     redirect: '/teacher-person-info/index',
+    meta: {
+      title: '个人中心',
+      icon: 'person-center',
+      roles: ['teacher']
+    },
     children: [
       {
         path: 'index',
         component: () => import('@/views/teacher-person-info/index.vue'),
         meta: {
-          title: '个人信息',
-          icon: 'course-class',
+          title: '基本信息',
+          icon: 'person-info',
+          roles: ['teacher']
+        }
+      },
+      {
+        path: 'change-password',
+        component: () => import('@/views/change-password/index.vue'),
+        meta: {
+          title: '修改密码',
+          icon: 'password',
           roles: ['teacher']
         }
       }

@@ -13,7 +13,7 @@
           <el-upload
             class="upload-demo"
             drag
-            :action="'http://localhost:8888/v1'+action"
+            :action="baseUrl+action"
             :show-file-list="false"
             :on-success="success"
             :headers="headers"
