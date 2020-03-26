@@ -108,7 +108,7 @@ export const routes: RouteConfig[] = [
     component: Layout,
     redirect: '/select-course/index',
     meta: {
-      title: '选课管理',
+      title: '选课',
       icon: 'select-course'
     },
     children: [
@@ -116,7 +116,7 @@ export const routes: RouteConfig[] = [
         path: 'index',
         component: () => import('@/views/select-course/index.vue'),
         meta: {
-          title: 'SelectCourse',
+          title: '选课管理',
           icon: 'form'
         }
       },
@@ -124,7 +124,7 @@ export const routes: RouteConfig[] = [
         path: 'select',
         component: () => import('@/views/select-course/select.vue'),
         meta: {
-          title: 'StudentSelectCourse',
+          title: '学生选课',
           icon: 'form'
           // roles: ['student']
         }
@@ -133,7 +133,7 @@ export const routes: RouteConfig[] = [
         path: 'my-course',
         component: () => import('@/views/select-course/my-course.vue'),
         meta: {
-          title: 'MyCourse',
+          title: '我的选课',
           icon: 'form'
           // roles: ['student']
         }
@@ -155,7 +155,40 @@ export const routes: RouteConfig[] = [
       }
     ]
   },
-
+  {
+    path: '/student-info',
+    component: Layout,
+    redirect: '/student/info',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/student-info/index.vue'),
+        meta: {
+          title: '个人信息',
+          icon: 'student'
+          // roles: ['student']
+        }
+      }
+    ]
+  },
+  {
+    path: '/change-password',
+    component: Layout,
+    redirect: '/change-password',
+    meta: {
+      hidden: true
+    },
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/change-password/index.vue'),
+        meta: {
+          title: '修改密码',
+          icon: 'student'
+        }
+      }
+    ]
+  },
   {
     path: '/graduation-demand',
     component: Layout,

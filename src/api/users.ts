@@ -3,12 +3,19 @@ import * as m from '@/api/model'
 export const getUserInfo = () =>
   request({
     url: '/system/getUserInfo',
-    method: 'post'
+    method: 'get'
   })
 
 export const login = (data: m.LoginForm) =>
   request({
     url: '/system/login',
+    method: 'post',
+    data
+  })
+
+export const changePassword = (data: m.ChangePasswordForm) =>
+  request({
+    url: '/system/changePassword',
     method: 'post',
     data
   })

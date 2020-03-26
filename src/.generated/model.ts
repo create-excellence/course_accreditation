@@ -278,6 +278,26 @@ export interface LoginForm {
 /**
 * 
 * @export
+* @interface ChangePasswordForm
+*/
+export interface ChangePasswordForm {
+  /**
+   * 旧密码
+   * @type {string}
+   * @memberof ChangePasswordForm
+   */
+  oldPassword?: string;
+  /**
+   * 新密码
+   * @type {string}
+   * @memberof ChangePasswordForm
+   */
+  newPassword?: string;
+}
+
+/**
+* 
+* @export
 * @interface Major
 */
 export interface Major {

@@ -25,7 +25,7 @@
         <el-dropdown-menu slot="dropdown">
           <router-link to="/">
             <el-dropdown-item>
-              Home
+              主页
             </el-dropdown-item>
           </router-link>
           <a
@@ -38,17 +38,17 @@
           </a>
           <a
             target="_blank"
-            href="https://armour.github.io/vue-typescript-admin-docs/"
+            @click.prevent="handlePassword()"
           >
             <el-dropdown-item>
-              Docs
+              修改密码
             </el-dropdown-item>
           </a>
           <el-dropdown-item divided>
             <span
               style="display:block;"
               @click="logout"
-            >LogOut</span>
+            >登出</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -81,6 +81,10 @@ export default class extends Vue {
 
   get avatar() {
     return UserModule.avatar
+  }
+
+  private handlePassword() {
+    this.$router.push(`/change-password`)
   }
 
   private toggleSideBar() {

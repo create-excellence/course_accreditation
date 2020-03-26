@@ -6,7 +6,7 @@ import {
   getModule
 } from 'vuex-module-decorators'
 import * as m from '@/api/model'
-import { login, logout, getUserInfo } from '@/api/users'
+import { login, logout, getUserInfo, changePassword } from '@/api/users'
 import { getToken, setToken, removeToken } from '@/utils/cookies'
 import store from '@/store'
 
@@ -49,6 +49,17 @@ class User extends VuexModule implements IUserState {
   @Mutation
   private SET_ROLES(roles: string[]) {
     this.roles = roles
+  }
+
+  @Action
+  public async ChangePassword(data: m.ChangePasswordForm) {
+    let { oldPassword, newPassword } = data
+    oldPassword = oldPassword ? oldPassword.trim() : undefined
+    newPassword = newPassword ? newPassword.trim() : undefined
+    await changePassword({
+      oldPassword: oldPassword,
+      newPassword: newPassword
+    })
   }
 
   @Action

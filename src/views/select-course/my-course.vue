@@ -33,7 +33,7 @@
       style="width: 100%;"
       @selection-change="handleSelect"
     >
-      <el-table-column
+      <!-- <el-table-column
         align="center"
         label="学生编号"
         prop="sno"
@@ -42,7 +42,7 @@
         align="center"
         label="学生姓名"
         prop="student"
-      />
+      /> -->
       <el-table-column
         align="center"
         label="课程序号"
@@ -78,28 +78,28 @@
         prop="createTime"
         label="添加时间"
       />
-      <el-table-column
+      <!-- <el-table-column
         align="center"
         prop="updateTime"
         label="更新时间"
-      />
+      /> -->
       <el-table-column
         align="center"
         label="操作"
       >
         <template slot-scope="scope">
-          <el-button
+          <!-- <el-button
             size="mini"
             @click="handleEdit(scope.row)"
           >
             编辑
-          </el-button>
+          </el-button> -->
           <el-button
             type="danger"
             size="mini"
             @click="handleDelete(scope.row)"
           >
-            删除
+            退课
           </el-button>
         </template>
       </el-table-column>
