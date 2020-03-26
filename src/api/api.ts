@@ -18,6 +18,7 @@ export interface api {
     getUserInfo():m.ServerResponse,
     login(data: m.LoginForm):m.ServerResponse,
     logout():m.ServerResponse,
+    updateUserInfo(data: m.CreateTeacherForm):m.ServerResponse,
 
     // Course
     queryCourse(queryOptions:any):m.ServerResponse,

@@ -95,7 +95,7 @@ export const routes: RouteConfig[] = [
       },
       {
         path: '/course/:courseId(\\d+)/course-class',
-        component: () => import('@/views/course/show.vue'),
+        component: () => import('@/views/course-class/show.vue'),
         meta: {
           title: '开课班级',
           hidden: true
@@ -201,7 +201,7 @@ export const routes: RouteConfig[] = [
         path: '/graduation-demand',
         component: () => import('@/views/graduation-demand/index.vue'),
         meta: {
-          title: '毕业要求管理',
+          title: '毕业要求',
           icon: 'graduation-demand',
           breadcrumb: false
         }
@@ -219,7 +219,7 @@ export const routes: RouteConfig[] = [
           path: '/graduation-demand/:graduationDemandId(\\d+)/graduation-point/:graduationPointId(\\d+)/supporting-course',
           component: () => import('@/views/supporting-course/show.vue'),
           meta: {
-            title: '支撑课程管理',
+            title: '支撑课程',
             noCache: true,
             activeMenu: '/graduation-demand',
             hidden: true
@@ -253,7 +253,7 @@ export const routes: RouteConfig[] = [
         path: 'index',
         component: () => import('@/views/supporting-course/index.vue'),
         meta: {
-          title: '支持课程管理',
+          title: '支撑课程管理',
           icon: 'supporting-course'
         }
       }
@@ -323,6 +323,21 @@ export const routes: RouteConfig[] = [
         component: () => import('@/views/course-class/index.vue'),
         meta: {
           title: '开课班级管理',
+          icon: 'course-class'
+        }
+      }
+    ]
+  },
+  {
+    path: '/teacher-person-info',
+    component: Layout,
+    redirect: '/teacher-person-info/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/teacher-person-info/index.vue'),
+        meta: {
+          title: '个人信息',
           icon: 'course-class'
         }
       }

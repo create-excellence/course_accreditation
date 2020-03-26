@@ -25,3 +25,10 @@ export const logout = () =>
     url: '/users/logout',
     method: 'post'
   })
+
+export const updateUserInfo = (data:m.CreateTeacherForm) =>
+  request({
+    url: '/system/updateUserInfo',
+    method: 'put',
+    data
+  })
