@@ -134,10 +134,6 @@
       :limit.sync="queryOptions.pageSize"
       @pagination="requestData"
     />
-<<<<<<< HEAD
-
-=======
->>>>>>> abe9ae523e4941c2d635ba4c056bd106450eb0ca
     <div v-if="showDialog">
       <el-dialog
         :title="`${courseTarget.id ? '编辑' : '添加'}题目`"
@@ -190,17 +186,10 @@
               </el-col>
               <el-col :span="12">
                 <label>内容</label>
-<<<<<<< HEAD
               </el-col>
               <el-col :span="4">
                 <label>分值</label>
               </el-col>
-=======
-              </el-col>
-              <el-col :span="4">
-                <label>分值</label>
-              </el-col>
->>>>>>> abe9ae523e4941c2d635ba4c056bd106450eb0ca
             </el-row>
             <el-row>
               <el-form-item
@@ -232,7 +221,6 @@
           <el-form-item
             prop="pointId"
             label="指标点"
-<<<<<<< HEAD
           >
             <el-select
               v-model="editForm.pointId"
@@ -255,30 +243,6 @@
             prop="describes"
             label="描述"
           >
-=======
-          >
-            <el-select
-              v-model="editForm.pointId"
-              filterable
-              remote
-              reserve-keyword
-              placeholder="请选择指标点"
-              :remote-method="queryGraduationPointList"
-              :loading="loading"
-            >
-              <el-option
-                v-for="item in graduationPointList"
-                :key="item.id"
-                :label="item.no"
-                :value="item.id"
-              />
-            </el-select>
-          </el-form-item>
-          <el-form-item
-            prop="describes"
-            label="描述"
-          >
->>>>>>> abe9ae523e4941c2d635ba4c056bd106450eb0ca
             <el-input
               v-model="editForm.describes"
               placeholder="请输入描述"
@@ -369,10 +333,6 @@ export default class CourseTarget extends Vue {
   questionnaireList: m.Questionnaire[] = []
   graduationPointList: m.GraduationPoint[] = []
   optionsList :m.OptionsList[]= []
-  newOptionsList :m.OptionsList[]=
-  [{ prefix: 'a', content: '', score: '' },
-    { prefix: 'b', content: '', score: '' },
-    { prefix: 'c', content: '', score: '' }]
   name : String = ''
 
   queryOptions = {
@@ -453,7 +413,10 @@ export default class CourseTarget extends Vue {
   }
 
   handleCreate() {
-    this.optionsList = this.newOptionsList
+    let optionsList = [{ prefix: 'a', content: '', score: '' },
+      { prefix: 'b', content: '', score: '' },
+      { prefix: 'c', content: '', score: '' }]
+    this.optionsList = optionsList
     this.courseTarget = {} as any
     this.resetForm()
     this.showDialog = true
@@ -468,15 +431,9 @@ export default class CourseTarget extends Vue {
   }
 
   handleEdit(courseTarget: m.CourseTarget) {
-    console.log('this.optionsList start')
-    console.log(courseTarget.optionsList)
-    console.log(this.optionsList)
-    this.courseTarget = courseTarget
-    if (courseTarget.optionsList !== undefined) {
-      this.optionsList = courseTarget.optionsList
+    if (courseTarget.options !== undefined) {
+      this.optionsList = JSON.parse(courseTarget.options)
     }
-    console.log(this.optionsList)
-    console.log('this.optionsList end')
     this.editForm = {
       title: courseTarget.title,
       pointId: courseTarget.pointId,
@@ -486,7 +443,6 @@ export default class CourseTarget extends Vue {
       totalScore: courseTarget.totalScore,
       describes: courseTarget.describes
     }
-    this.editForm.options = courseTarget.options
     this.showDialog = true
   }
 
@@ -553,8 +509,12 @@ export default class CourseTarget extends Vue {
   addOptions() {
     let optionsList = this.optionsList
     let last = optionsList[optionsList.length - 1]
-    let newLastPrefix = String.fromCharCode(last.prefix.charCodeAt() + 1)
-    optionsList.push({ prefix: newLastPrefix, content: '', score: '' })
+    if (last) {
+      let newLastPrefix = String.fromCharCode(last.prefix.charCodeAt(0) + 1)
+      optionsList.push({ prefix: newLastPrefix, content: '', score: '' })
+    } else {
+      optionsList.push({ prefix: 'a', content: '', score: '' })
+    }
   }
 
   deleteOptions(index) {
