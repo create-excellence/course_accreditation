@@ -154,6 +154,41 @@ export const routes: RouteConfig[] = [
         }
       }
     ]
+  }, {
+    path: '/course-evaluation',
+    component: Layout,
+    redirect: '/course-evaluation/my-course',
+    name: 'test',
+    meta: {
+      title: '课程评价',
+      icon: 'major',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'my-course',
+        component: () => import('@/views/course-evaluation/my-course.vue'),
+        meta: {
+          title: '我的课程',
+          icon: 'course'
+        }
+      },
+      {
+        path: 'my-course/:courseClassId(\\d+)/student',
+        component: () => import('@/views/course-evaluation/class-student.vue'),
+        meta: {
+          title: '查看学生',
+          hidden: true,
+          activeMenu: '/course-evaluation/my-course'
+        }
+      }, {
+        path: 'course-evaluation',
+        component: () => import('@/views/course-evaluation/my-course.vue'),
+        meta: {
+          title: '发布课程评价',
+          icon: 'course'
+        }
+      }]
   },
   {
     path: '/teacher-person-info',
@@ -231,7 +266,7 @@ export const routes: RouteConfig[] = [
         path: '/graduation-demand',
         component: () => import('@/views/graduation-demand/index.vue'),
         meta: {
-          title: '毕业要求',
+          title: '毕业要求管理',
           icon: 'graduation-demand',
           breadcrumb: false
         }
@@ -250,7 +285,6 @@ export const routes: RouteConfig[] = [
           component: () => import('@/views/supporting-course/show.vue'),
           meta: {
             title: '支撑课程',
-            noCache: true,
             activeMenu: '/graduation-demand',
             hidden: true
           }
@@ -263,13 +297,28 @@ export const routes: RouteConfig[] = [
     path: '/graduation-point',
     component: Layout,
     redirect: '/graduation-point/index',
+    meta: {
+      title: '毕业要求指标点管理',
+      icon: 'graduation-point'
+    },
     children: [
       {
         path: 'index',
         component: () => import('@/views/graduation-point/index.vue'),
         meta: {
-          title: '毕业要求指标点',
-          icon: 'graduation-point'
+          title: '毕业要求指标点管理',
+          icon: 'graduation-point',
+          breadcrumb: false
+        }
+      },
+      {
+        path: '/graduation-point/:graduationPointId(\\d+)/supporting-course',
+        component: () => import('@/views/supporting-course/show.vue'),
+        meta: {
+          title: '支撑课程',
+          noCache: true,
+          activeMenu: '/graduation-point',
+          hidden: true
         }
       }
     ]

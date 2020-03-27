@@ -9,22 +9,6 @@
       :model="queryOptions"
       @submit.native.prevent="handleFilter"
     >
-      <el-button
-        plain
-        type="primary"
-        @click="showCheckbox=!showCheckbox"
-      >
-        多选
-      </el-button>
-      <el-button
-        plain
-        type="primary"
-        icon="el-icon-plus"
-        style="margin-right:32px"
-        @click="handleCreate"
-      >
-        问卷
-      </el-button>
       <el-form-item
         prop="name"
       >
@@ -51,17 +35,31 @@
         >
           搜索
         </el-button>
+        <el-button
+          plain
+          type="primary"
+          icon="el-icon-plus"
+          @click="handleCreate"
+        >
+          问卷
+        </el-button>
+        <el-button
+          plain
+          type="primary"
+          @click="showCheckbox=!showCheckbox"
+        >
+          多选
+        </el-button>
       </el-form-item>
       <el-button
         v-if="showCheckbox"
-        style="float:right"
         type="danger"
         @click="handleBatchDelete"
       >
         批量删除
       </el-button>
       <el-button
-        style="margin-right:10px; float:right"
+
         type="primary"
         @click="showExcelDialog=true"
       >
@@ -129,7 +127,7 @@
             @click="$router.push(`/questionnaire/${scope.row.id}/course-target`)"
           >
             查看问卷
-          </el-button><br>
+          </el-button>
           <el-button
             size="mini"
             @click="handleEdit(scope.row)"

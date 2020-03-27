@@ -111,7 +111,7 @@
               @click="$router.push(`/graduation-demand/${queryOptions.graduationDemandId}/graduation-point/${scope.row.id}/supporting-course`)"
             >
               查看支撑课程
-            </el-button><br>
+            </el-button>
             <el-button
               size="mini"
               @click="handleEdit(scope.row)"

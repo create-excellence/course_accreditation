@@ -29,6 +29,7 @@ export interface api {
 
     // Student
     queryStudent(queryOptions:any):m.ServerResponse,
+    queryStudentByCourseClassId(queryOptions:any):m.ServerResponse,
     getStudentInfo():m.ServerResponse
     updateStudentInfo(data:m.CreateStudentForm):m.ServerResponse
     createStudent(data:m.CreateStudentForm):m.ServerResponse
@@ -80,12 +81,12 @@ export interface api {
     putCourseClass(id:number, data:m.CreateCourseClassForm):m.ServerResponse
     batchDeleteCourseClass(ids:number[]):m.ServerResponse
 
-      // SupportingCourse
-      querySupportingCourse(queryOptions:any):m.ServerResponse,
-      createSupportingCourse(data:m.CreateSupportingCourseForm):m.ServerResponse
-      deleteSupportingCourse(id:number):m.ServerResponse
-      putSupportingCourse(id:number, data:m.CreateSupportingCourseForm):m.ServerResponse
-      batchDeleteSupportingCourse(ids:number[]):m.ServerResponse
+    // SupportingCourse
+    querySupportingCourse(queryOptions:any):m.ServerResponse,
+    createSupportingCourse(data:m.CreateSupportingCourseForm):m.ServerResponse
+    deleteSupportingCourse(id:number):m.ServerResponse
+    putSupportingCourse(id:number, data:m.CreateSupportingCourseForm):m.ServerResponse
+    batchDeleteSupportingCourse(ids:number[]):m.ServerResponse
 
     // SelectCourse
     querySelectCourse(queryOptions:any):m.ServerResponse,
