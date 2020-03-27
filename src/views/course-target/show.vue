@@ -134,7 +134,10 @@
       :limit.sync="queryOptions.pageSize"
       @pagination="requestData"
     />
+<<<<<<< HEAD
 
+=======
+>>>>>>> abe9ae523e4941c2d635ba4c056bd106450eb0ca
     <div v-if="showDialog">
       <el-dialog
         :title="`${courseTarget.id ? '编辑' : '添加'}题目`"
@@ -187,10 +190,17 @@
               </el-col>
               <el-col :span="12">
                 <label>内容</label>
+<<<<<<< HEAD
               </el-col>
               <el-col :span="4">
                 <label>分值</label>
               </el-col>
+=======
+              </el-col>
+              <el-col :span="4">
+                <label>分值</label>
+              </el-col>
+>>>>>>> abe9ae523e4941c2d635ba4c056bd106450eb0ca
             </el-row>
             <el-row>
               <el-form-item
@@ -222,6 +232,7 @@
           <el-form-item
             prop="pointId"
             label="指标点"
+<<<<<<< HEAD
           >
             <el-select
               v-model="editForm.pointId"
@@ -244,6 +255,30 @@
             prop="describes"
             label="描述"
           >
+=======
+          >
+            <el-select
+              v-model="editForm.pointId"
+              filterable
+              remote
+              reserve-keyword
+              placeholder="请选择指标点"
+              :remote-method="queryGraduationPointList"
+              :loading="loading"
+            >
+              <el-option
+                v-for="item in graduationPointList"
+                :key="item.id"
+                :label="item.no"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item>
+          <el-form-item
+            prop="describes"
+            label="描述"
+          >
+>>>>>>> abe9ae523e4941c2d635ba4c056bd106450eb0ca
             <el-input
               v-model="editForm.describes"
               placeholder="请输入描述"
@@ -273,10 +308,22 @@
       @close="showPreview = false"
     >
       <div
+        style="height: 75px;
+                width: 300px;
+                margin: auto;"
+      >
+        <span style="font-size:30px;">{{ name }}【自我评价】</span>
+      </div>
+      <el-divider />
+      <div
         v-for="item in data"
         :key="item.id"
       >
-        <span style="font-size:27px;">{{ item.sequence }}、{{ item.title }}({{ item.totalScore }}分)</span>
+        <div
+          style="height: 40px;"
+        >
+          <span style="font-size:27px;">{{ item.sequence }}、{{ item.title }}({{ item.totalScore }}分)</span>
+        </div>
         <div>
           <el-row>
             <span
@@ -326,6 +373,7 @@ export default class CourseTarget extends Vue {
   [{ prefix: 'a', content: '', score: '' },
     { prefix: 'b', content: '', score: '' },
     { prefix: 'c', content: '', score: '' }]
+  name : String = ''
 
   queryOptions = {
     title: '',
@@ -356,6 +404,9 @@ export default class CourseTarget extends Vue {
     this.queryGraduationPointSelectList('')
     if (res.code === 0) {
       this.questionnaireList.push(res.data)
+    }
+    if (this.questionnaireList[0].name !== undefined) {
+      this.name = this.questionnaireList[0].name
     }
     this.requestData()
   }

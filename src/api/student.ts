@@ -21,6 +21,13 @@ export const queryStudent = (queryOptions:any) =>
     method: 'GET'
   })
 
+export const queryStudentByCourseClassId = (queryOptions:any) =>
+  request({
+    url: '/student/getStudentByClass',
+    params: queryOptions,
+    method: 'GET'
+  })
+
 export const createStudent = (data:m.CreateStudentForm) =>
   request({
     url: '/student',

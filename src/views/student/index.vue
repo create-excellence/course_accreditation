@@ -15,22 +15,6 @@
           :fetch-suggestions="queryStudentList"
           placeholder="请输入学生学号"
         />
-        <!-- <el-select
-          v-model="queryOptions.sno"
-          filterable
-          remote
-          reserve-keyword
-          placeholder="请输入学生学号"
-          :remote-method="queryStudentList"
-          :loading="loading"
-        >
-          <el-option
-            v-for="item in studentSearch"
-            :key="item.id"
-            :label="item.sno"
-            :value="item.sno"
-          />
-        </el-select> -->
       </el-form-item>
       <el-form-item
         prop="name"
