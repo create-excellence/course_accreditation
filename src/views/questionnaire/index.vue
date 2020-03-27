@@ -95,7 +95,7 @@
       />
       <el-table-column
         align="center"
-        prop="courseClassId"
+        prop="no"
         label="班级"
       />
       <el-table-column
