@@ -63,6 +63,7 @@
     </el-form>
 
     <el-table
+      :key="tableChange"
       v-loading="loading"
       :data="data"
       border
@@ -134,136 +135,138 @@
       @pagination="requestData"
     />
 
-    <el-dialog
-      :title="`${courseTarget.id ? '编辑' : '添加'}题目`"
-      :visible.sync="showDialog"
-      @close="showDialog = false"
-    >
-      <el-form
-        v-if="showDialog"
-        ref="editForm"
-        :model="editForm"
-        :rules="rules"
-        label-position="top"
+    <div v-if="showDialog">
+      <el-dialog
+        :title="`${courseTarget.id ? '编辑' : '添加'}题目`"
+        :visible.sync="showDialog"
+        @close="showDialog = false"
       >
-        <el-form-item
-          prop="sequence"
-          label="序号"
+        <el-form
+          v-if="showDialog"
+          ref="editForm"
+          :model="editForm"
+          :rules="rules"
+          label-position="top"
         >
-          <el-input
-            v-model="editForm.sequence"
-            placeholder="请输入序号"
-            maxlength="10"
-          />
-        </el-form-item>
-        <el-form-item
-          prop="title"
-          label="题目"
-        >
-          <el-input
-            v-model="editForm.title"
-            placeholder="请输入题目"
-            maxlength="10"
-          />
-        </el-form-item>
-        <el-form-item
-          prop="totalScore"
-          label="总分"
-        >
-          <el-input
-            v-model="editForm.totalScore"
-            placeholder="请输入总分"
-            maxlength="10"
-          />
-        </el-form-item>
-        <el-form-item
-          prop="optionsList"
-        >
-          <el-row>
-            <el-col :span="4">
-              <label>选项</label>
-            </el-col>
-            <el-col :span="12">
-              <label>内容</label>
-            </el-col>
-            <el-col :span="4">
-              <label>分值</label>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-form-item
-              v-for="(item,index) in optionsList"
-              :key="item.prefix"
-            >
+          <el-form-item
+            prop="sequence"
+            label="序号"
+          >
+            <el-input
+              v-model="editForm.sequence"
+              placeholder="请输入序号"
+              maxlength="10"
+            />
+          </el-form-item>
+          <el-form-item
+            prop="title"
+            label="题目"
+          >
+            <el-input
+              v-model="editForm.title"
+              placeholder="请输入题目"
+              maxlength="10"
+            />
+          </el-form-item>
+          <el-form-item
+            prop="totalScore"
+            label="总分"
+          >
+            <el-input
+              v-model="editForm.totalScore"
+              placeholder="请输入总分"
+              maxlength="10"
+            />
+          </el-form-item>
+          <el-form-item
+            prop="optionsList"
+          >
+            <el-row>
               <el-col :span="4">
-                <el-input v-model="item.prefix" />
+                <label>选项</label>
               </el-col>
               <el-col :span="12">
-                <el-input v-model="item.content" />
+                <label>内容</label>
               </el-col>
               <el-col :span="4">
-                <el-input v-model="item.score" />
+                <label>分值</label>
               </el-col>
-              <el-col :span="4">
-                <el-button @click="deleteOptions(index)">
-                  删除选项
-                </el-button>
-              </el-col>
-            </el-form-item>
-          </el-row>
-        </el-form-item>
-        <div>
-          <el-button @click="addOptions">
-            增加选项
+            </el-row>
+            <el-row>
+              <el-form-item
+                v-for="(item,index) in optionsList"
+                :key="item.prefix"
+              >
+                <el-col :span="4">
+                  <el-input v-model="item.prefix" />
+                </el-col>
+                <el-col :span="12">
+                  <el-input v-model="item.content" />
+                </el-col>
+                <el-col :span="4">
+                  <el-input v-model="item.score" />
+                </el-col>
+                <el-col :span="4">
+                  <el-button @click="deleteOptions(index)">
+                    删除选项
+                  </el-button>
+                </el-col>
+              </el-form-item>
+            </el-row>
+          </el-form-item>
+          <div>
+            <el-button @click="addOptions">
+              增加选项
+            </el-button>
+          </div>
+          <el-form-item
+            prop="pointId"
+            label="指标点"
+          >
+            <el-select
+              v-model="editForm.pointId"
+              filterable
+              remote
+              reserve-keyword
+              placeholder="请选择指标点"
+              :remote-method="queryGraduationPointList"
+              :loading="loading"
+            >
+              <el-option
+                v-for="item in graduationPointList"
+                :key="item.id"
+                :label="item.no"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item>
+          <el-form-item
+            prop="describes"
+            label="描述"
+          >
+            <el-input
+              v-model="editForm.describes"
+              placeholder="请输入描述"
+              maxlength="10"
+            />
+          </el-form-item>
+        </el-form>
+        <div
+          slot="footer"
+          class="dialog-footer"
+        >
+          <el-button @click="showDialog = false">
+            取 消
+          </el-button>
+          <el-button
+            type="primary"
+            @click="handleSave"
+          >
+            确 定
           </el-button>
         </div>
-        <el-form-item
-          prop="pointId"
-          label="指标点"
-        >
-          <el-select
-            v-model="editForm.pointId"
-            filterable
-            remote
-            reserve-keyword
-            placeholder="请选择指标点"
-            :remote-method="queryGraduationPointList"
-            :loading="loading"
-          >
-            <el-option
-              v-for="item in graduationPointList"
-              :key="item.id"
-              :label="item.no"
-              :value="item.id"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item
-          prop="describes"
-          label="描述"
-        >
-          <el-input
-            v-model="editForm.describes"
-            placeholder="请输入描述"
-            maxlength="10"
-          />
-        </el-form-item>
-      </el-form>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button @click="showDialog = false">
-          取 消
-        </el-button>
-        <el-button
-          type="primary"
-          @click="handleSave"
-        >
-          确 定
-        </el-button>
-      </div>
-    </el-dialog>
+      </el-dialog>
+    </div>
     <el-dialog
       title="预览"
       :visible.sync="showPreview"
@@ -296,7 +299,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import { ElForm } from 'element-ui/types/form'
 // eslint-disable-next-line import/no-duplicates
 import * as m from '@/api/model'
@@ -311,6 +314,7 @@ export default class CourseTarget extends Vue {
   loading = true
   courseTarget: m.CourseTarget = {} as any
   showDialog = false
+  tableChange = true
   editForm:m.CreateCourseTargetForm={} as any
   showCheckbox = false
   selectCourseTargetId:number[] = []
@@ -338,6 +342,11 @@ export default class CourseTarget extends Vue {
 
   created() {
     this.init()
+  }
+
+  @Watch('data')
+  watchData() {
+    this.tableChange = !this.tableChange
   }
 
   async init() {
@@ -408,10 +417,15 @@ export default class CourseTarget extends Vue {
   }
 
   handleEdit(courseTarget: m.CourseTarget) {
+    console.log('this.optionsList start')
+    console.log(courseTarget.optionsList)
+    console.log(this.optionsList)
     this.courseTarget = courseTarget
     if (courseTarget.optionsList !== undefined) {
       this.optionsList = courseTarget.optionsList
     }
+    console.log(this.optionsList)
+    console.log('this.optionsList end')
     this.editForm = {
       title: courseTarget.title,
       pointId: courseTarget.pointId,
@@ -421,6 +435,7 @@ export default class CourseTarget extends Vue {
       totalScore: courseTarget.totalScore,
       describes: courseTarget.describes
     }
+    this.editForm.options = courseTarget.options
     this.showDialog = true
   }
 

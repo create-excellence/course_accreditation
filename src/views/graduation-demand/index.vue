@@ -67,6 +67,7 @@
       </el-form>
 
       <el-table
+        :key="tableChange"
         v-loading="loading"
         :data="data"
         border
@@ -121,7 +122,7 @@
               @click="$router.push(`/graduation-demand/${scope.row.id}/graduation-point`)"
             >
               查看指标点
-            </el-button>
+            </el-button><br>
             <el-button
               size="mini"
               @click="handleEdit(scope.row)"
@@ -225,7 +226,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import { ElForm } from 'element-ui/types/form'
 import * as m from '@/api/model'
 import { Quill } from 'quill'
@@ -240,6 +241,7 @@ export default class GraduationDemand extends Vue {
   editForm:m.CreateGraduationDemandForm={} as any
   graduationDemand: m.GraduationDemand = {} as any
   showDialog = false
+  tableChange = true
   showCheckbox = false
   selectGraduationDemandId:number[] = []
   showExcelDialog=false
@@ -265,6 +267,11 @@ export default class GraduationDemand extends Vue {
   async init() {
     this.requestData()
     this.queryMajorSelectList('')
+  }
+
+  @Watch('data')
+  watchData() {
+    this.tableChange = !this.tableChange
   }
 
   handleFilter() {
@@ -316,7 +323,6 @@ export default class GraduationDemand extends Vue {
               type: 'success',
               message: '修改成功!'
             })
-            console.log('2222')
             this.requestData()
           }
         } else {

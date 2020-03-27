@@ -70,6 +70,7 @@
     </el-form>
 
     <el-table
+      :key="tableChange"
       v-loading="loading"
       :data="data"
       border
@@ -243,7 +244,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import { ElForm } from 'element-ui/types/form'
 import * as m from '@/api/model'
 import { Quill } from 'quill'
@@ -255,6 +256,7 @@ export default class Questionnaire extends Vue {
   data:m.Questionnaire[] = []
   total = 0
   loading = true
+  tableChange = true
   editForm:m.CreateQuestionnaireForm={} as any
   questionnaire: m.Questionnaire = {} as any
   showDialog = false
@@ -282,6 +284,11 @@ export default class Questionnaire extends Vue {
   async init() {
     this.requestData()
     this.queryCourseClassSelectList('')
+  }
+
+  @Watch('data')
+  watchData() {
+    this.tableChange = !this.tableChange
   }
 
   handleFilter() {

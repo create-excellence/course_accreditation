@@ -105,6 +105,7 @@ export default class extends Vue {
     this.queryCourseClassList('')
     if (this.selectCourse) {
       this.editForm = {
+
         studentId: this.selectCourse.studentId,
         courseClassId: this.selectCourse.courseClassId
       }
