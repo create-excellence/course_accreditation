@@ -163,7 +163,7 @@ export default class TeacherPersonInfo extends Vue {
   headers={} as any
 
   rules={
-    name: [{ required: true, message: '指标点名称不能为空', trigger: 'blur' }]
+    name: [{ required: true, message: '姓名不能为空', trigger: 'blur' }]
   }
 
   created() {

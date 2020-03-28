@@ -118,11 +118,10 @@
             <el-button
               size="mini"
               type="primary"
-              style="margin-bottom: 10px"
               @click="$router.push(`/graduation-demand/${scope.row.id}/graduation-point`)"
             >
               查看指标点
-            </el-button><br>
+            </el-button>
             <el-button
               size="mini"
               @click="handleEdit(scope.row)"

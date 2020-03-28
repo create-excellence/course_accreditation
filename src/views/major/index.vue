@@ -267,6 +267,7 @@ export default class Major extends Vue {
           }
         } else {
           const res = await this.api.createMajor(this.editForm)
+          console.log(res)
           if (res.code === 0) {
             (this.$refs['editForm'] as ElForm).resetFields()
             this.showDialog = false

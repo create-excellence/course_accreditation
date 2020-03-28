@@ -16,9 +16,11 @@ import UploadExcel from '@/components/UploadExcel/index.vue'
 import TextEditor from '@/components/TextEditor/TextEditor.vue'
 import TextView from '@/components/TextEditor/TextView.vue'
 import VueParticles from 'vue-particles'
+import loadMore from './components/LoadMore/index.js'
 
 Vue.use(VueParticles)
 Vue.use(ElementUI)
+Vue.use(loadMore)
 Vue.use(SvgIcon, {
   tagName: 'svg-icon',
   defaultWidth: '1em',

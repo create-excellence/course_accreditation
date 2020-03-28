@@ -71,7 +71,6 @@
       :key="tableChange"
       v-loading="loading"
       :data="data"
-      border
       fit
       highlight-current-row
       style="width: 100%;"
@@ -192,7 +191,7 @@
             <el-option
               v-for="item in courseClassList"
               :key="item.id"
-              :label="item.no"
+              :label="item.no+item.course"
               :value="item.id"
             />
           </el-select>
@@ -296,7 +295,7 @@ export default class Questionnaire extends Vue {
 
   async requestData() {
     this.loading = true
-    const res = await this.api.queryQuestionnaire(this.queryOptions)
+    const res = await this.api.getMyQuestionnaire(this.queryOptions)
     this.data = res.data.list
     this.total = res.data.total
     this.loading = false

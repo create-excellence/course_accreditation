@@ -8,6 +8,13 @@ export const queryCourseClass = (queryOptions:any) =>
     method: 'GET'
   })
 
+export const getMyCourse = (queryOptions:any) =>
+  request({
+    url: '/course-class/getMyCourse',
+    params: queryOptions,
+    method: 'GET'
+  })
+
 export const createCourseClass = (data:m.CreateCourseClassForm) =>
   request({
     url: '/course-class',

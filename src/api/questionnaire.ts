@@ -15,6 +15,13 @@ export const getQuestionnaire = (id:number) =>
     method: 'GET'
   })
 
+export const getMyQuestionnaire = (queryOptions:any) =>
+  request({
+    url: '/questionnaire/getMyQuestionnaire',
+    params: queryOptions,
+    method: 'GET'
+  })
+
 export const createQuestionnaire = (data:m.CreateQuestionnaireForm) =>
   request({
     url: '/questionnaire',

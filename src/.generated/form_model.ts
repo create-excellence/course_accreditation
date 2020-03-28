@@ -523,3 +523,51 @@ export interface CreateTeacherForm {
 
 }
 
+/**
+* 
+* @export
+* @interface CreateCourseEvaluationForm
+*/
+export interface CreateCourseEvaluationForm {
+  /**
+   * 描述
+   * @type {string}
+   * @memberof CreateCourseEvaluationForm
+   */
+  describes?: string;
+
+  /**
+   * 问卷Id
+   * @type {number}
+   * @memberof CreateCourseEvaluationForm
+   */
+  questionnaireId?: number;
+  /**
+   * 开课班级Id
+   * @type {number}
+   * @memberof CreateCourseEvaluationForm
+   */
+  courseClassId?: number;
+
+
+  /**
+   * 结束时间
+   * @type {Date}
+   * @memberof CreateCourseEvaluationForm
+   */
+  endTime?: Date;
+  /**
+   * 开始时间
+   * @type {Date}
+   * @memberof CreateCourseEvaluationForm
+   */
+  startTime?: Date;
+  /**
+   * 姓名
+   * @type {string}
+   * @memberof CreateCourseEvaluationForm
+   */
+  name?: string;
+
+
+}

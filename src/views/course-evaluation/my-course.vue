@@ -11,9 +11,11 @@
       >
         <el-select
           v-model="queryOptions.semesterId"
+          v-loadmore="handleLoadMore"
           size="medium"
           style="width:80%"
           placeholder="请选择学期"
+          @change="requestData"
         >
           <el-option
             v-for="item in semesterList"
@@ -128,6 +130,11 @@ export default class CourseClass extends Vue {
     pageSize: 20
   }
 
+  querySemesterOption = {
+    page: 1,
+    pageSize: 10
+  }
+
   created() {
     this.init()
   }
@@ -139,22 +146,27 @@ export default class CourseClass extends Vue {
 
   async requestData() {
     this.loading = true
-    const res = await this.api.queryCourseClass(this.queryOptions)
+    const res = await this.api.getMyCourse(this.queryOptions)
     this.data = res.data.list
     this.total = res.data.total
     this.loading = false
   }
 
   async querySemesterList() {
-    const option = {
-      page: 1,
-      pageSize: 10
-    }
-    const res = await this.api.querySemester(option)
+    const res = await this.api.querySemester(this.querySemesterOption)
     if (res.code === 0 && res.data.list.length > 0) {
-      this.semesterList = res.data.list
-      this.queryOptions.semesterId = res.data.list[0].id
+      if (this.semesterList.length > 0) {
+        this.semesterList = this.semesterList.concat(res.data.list)
+      } else {
+        this.semesterList = res.data.list
+        this.queryOptions.semesterId = res.data.list[0].id
+      }
     }
+  }
+
+  async handleLoadMore() {
+    this.querySemesterOption.page++
+    this.querySemesterList()
   }
 }
 </script>

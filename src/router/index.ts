@@ -183,7 +183,7 @@ export const routes: RouteConfig[] = [
         }
       }, {
         path: 'course-evaluation',
-        component: () => import('@/views/course-evaluation/my-course.vue'),
+        component: () => import('@/views/course-evaluation/release-evaluation.vue'),
         meta: {
           title: '发布课程评价',
           icon: 'course'

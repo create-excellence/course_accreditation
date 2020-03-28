@@ -12,6 +12,7 @@ export * from '@/api/graduation-point'
 export * from '@/api/selectCourse.ts'
 export * from '@/api/questionnaire.ts'
 export * from '@/api/courseTarget.ts'
+export * from '@/api/course-evaluation.ts'
 
 export interface api {
     // User
@@ -76,6 +77,7 @@ export interface api {
 
     // CourseClass
     queryCourseClass(queryOptions:any):m.ServerResponse,
+    getMyCourse(queryOptions:any):m.ServerResponse,
     createCourseClass(data:m.CreateCourseClassForm):m.ServerResponse
     deleteCourseClass(id:number):m.ServerResponse
     putCourseClass(id:number, data:m.CreateCourseClassForm):m.ServerResponse
@@ -99,6 +101,7 @@ export interface api {
 
     // Questionnaire
     queryQuestionnaire(queryOptions:any):m.ServerResponse
+    getMyQuestionnaire(queryOptions:any):m.ServerResponse
     getQuestionnaire(id:number):m.ServerResponse
     createQuestionnaire(data:m.CreateQuestionnaireForm):m.ServerResponse
     deleteQuestionnaire(id:number):m.ServerResponse
@@ -112,4 +115,9 @@ export interface api {
     deleteCourseTarget(id:number):m.ServerResponse
     putCourseTarget(id:number, data:m.CreateCourseTargetForm):m.ServerResponse
     batchDeleteCourseTarget(ids:number[]):m.ServerResponse
+
+    //  CourseEvaluation
+    queryCourseEvaluation(queryOptions:any):m.ServerResponse
+    createCourseEvaluation(data:m.CreateCourseEvaluationForm):m.ServerResponse
+
 }
