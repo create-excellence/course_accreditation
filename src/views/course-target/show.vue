@@ -136,7 +136,7 @@
     />
     <div v-if="showDialog">
       <el-dialog
-        :title="`${courseTarget.id ? '编辑' : '添加'}题目`"
+        :title="`${courseTarget.id ? '编辑' : '添加'}问卷`"
         :visible.sync="showDialog"
         @close="showDialog = false"
       >
@@ -288,20 +288,20 @@
         >
           <span style="font-size:27px;">{{ item.sequence }}、{{ item.title }}({{ item.totalScore }}分)</span>
         </div>
-        <div>
-          <el-row>
+        <div
+          v-for="option in item.optionsList"
+          :key="option.prefix"
+        >
+          <el-radio
+            v-model="item.optionsScore"
+            :label="option.prefix"
+            size="medium"
+            style="font-size:30px;"
+          >
             <span
-              v-for="option in item.optionsList"
-              :key="option.prefix"
-            >
-              <el-col
-                :span="12"
-                style="font-size:20px;"
-              >
-                {{ option.prefix }}、{{ option.content }}
-              </el-col>
-            </span>
-          </el-row>
+              style="font-size:20px;"
+            >{{ option.prefix }}、{{ option.content }}</span>
+          </el-radio>
         </div>
         <el-divider />
       </div>
