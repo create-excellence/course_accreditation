@@ -12,7 +12,7 @@
         <el-input
           v-model="queryOptions.semester"
           placeholder="学期"
-          maxlength="10"
+          maxlength="20"
         />
       </el-form-item>
       <el-form-item
@@ -30,7 +30,7 @@
         <el-input
           v-model="queryOptions.course"
           placeholder="课程名称"
-          maxlength="10"
+          maxlength="20"
         />
       </el-form-item>
       <el-form-item>

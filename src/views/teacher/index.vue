@@ -22,7 +22,7 @@
         <el-input
           v-model="queryOptions.title"
           placeholder="职称"
-          maxlength="10"
+          maxlength="20"
         />
       </el-form-item>
       <el-form-item>
@@ -281,7 +281,7 @@
           <el-input
             v-model="editForm.graduateSchool"
             placeholder="请输入毕业学校"
-            maxlength="10"
+            maxlength="20"
           />
         </el-form-item>
         <el-form-item
@@ -291,7 +291,7 @@
           <el-input
             v-model="editForm.graduateMajor"
             placeholder="请输入毕业专业"
-            maxlength="10"
+            maxlength="20"
           />
         </el-form-item>
       </el-form>

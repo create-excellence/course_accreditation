@@ -12,6 +12,7 @@
         <el-input
           v-model="queryOptions.courseName"
           placeholder="请输入课程名称"
+          maxlength="10"
         />
       </el-form-item>
       <el-form-item
@@ -20,7 +21,7 @@
         <el-input
           v-model="queryOptions.graduationPointContent"
           placeholder="请输入指标点内容"
-          maxlength="10"
+          maxlength="20"
         />
       </el-form-item>
       <el-form-item>

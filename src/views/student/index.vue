@@ -221,7 +221,7 @@
           <el-input
             v-model="editForm.sno"
             placeholder="请输入学生学号"
-            maxlength="10"
+            maxlength="20"
           />
         </el-form-item>
         <el-form-item

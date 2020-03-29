@@ -217,7 +217,7 @@ export default class ReleaseEvaluation extends Vue {
     if (res.code === 0) {
       this.$message({
         type: 'success',
-        message: res.message
+        message: res.msg
       })
       this.resetForm()
     }

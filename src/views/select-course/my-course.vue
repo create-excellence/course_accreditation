@@ -11,6 +11,7 @@
       >
         <el-input
           v-model="queryOptions.course"
+          maxlength="20"
           placeholder="请输入课程名称"
         />
       </el-form-item>
