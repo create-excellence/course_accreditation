@@ -172,6 +172,13 @@ export const routes: RouteConfig[] = [
           title: '发布课程评价',
           icon: 'course'
         }
+      }, {
+        path: 'my-evaluation',
+        component: () => import('@/views/course-evaluation/my-evaluation.vue'),
+        meta: {
+          title: '已发布课程评价',
+          icon: 'course'
+        }
       }]
   },
   {

@@ -4,26 +4,59 @@
       ref="searchForm"
       :inline="true"
       :model="queryOptions"
+      size="small"
+      @submit.native.prevent="handleFilter"
     >
       <el-form-item
-        label="学期"
-        style="margin-left: 20px"
+        style="margin-right:-30px"
       >
         <el-select
-          v-model="queryOptions.semesterId"
-          v-loadmore="handleLoadMore"
-          size="medium"
-          style="width:80%"
-          placeholder="请选择学期"
-          @change="requestData"
+          v-model="queryOptions.status"
+          @change="handleFilter"
         >
           <el-option
-            v-for="item in semesterList"
+            v-for="item in statusOption"
             :key="item.value"
-            :label="item.name"
-            :value="item.id"
+            :label="item.label"
+            :value="item.value"
           />
         </el-select>
+      </el-form-item>
+      <el-form-item
+        style="margin-right:-30px"
+      >
+        <el-select
+          v-model="queryOptions.timeOrder"
+          @change="handleFilter"
+        >
+          <el-option
+            v-for="item in timeOption"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-input
+          v-model="queryOptions.name"
+          placeholder="请输入课程评价名称"
+          maxlength="10"
+        />
+      </el-form-item>
+      <el-form-item>
+        <el-button
+          icon="el-icon-search"
+          @click="handleFilter"
+        >
+          搜索
+        </el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-plus"
+        >
+          开课信息
+        </el-button>
       </el-form-item>
     </el-form>
     <el-table
@@ -31,47 +64,74 @@
       :data="data"
       fit
       highlight-current-row
-      style="width: 80%;"
+      style="width: 100%;"
     >
       <el-table-column
         align="center"
-        label="课程序号"
-        prop="no"
+        label="名称"
+        prop="name"
       />
       <el-table-column
         align="center"
-        label="课程代码"
-        prop="courseCode"
-      />
-      <el-table-column
+        label="班级"
         prop="course"
+      />
+      <el-table-column
         align="center"
-        label="课程名称"
+        label="描述"
+        width="300px"
+        show-overflow-tooltip
+        prop="describes"
+      />
+      <el-table-column
+        align="center"
+        label="状态"
+        prop="status"
+        width="100px"
       >
         <template slot-scope="scope">
-          <span
-            v-if="scope.row.course"
+          <el-button
+            v-if="scope.row.status===0"
+            prop="status"
+            type="warning"
+            size="mini"
+            plain
           >
-            {{ scope.row.course }}
-          </span>
+            待开始
+          </el-button>
+          <el-button
+            v-else-if="scope.row.status===1"
+            type="primary"
+            size="mini"
+            plain
+          >
+            进行中
+          </el-button>
+          <el-button
+            v-else
+            type="success"
+            size="mini"
+            plain
+          >
+            已结束
+          </el-button>
         </template>
       </el-table-column>
-
       <el-table-column
         align="center"
-        prop="startWeek"
-        label="开课周次"
+        prop="startTime"
+        label="开始时间"
       />
       <el-table-column
         align="center"
-        prop="endWeek"
-        label="结课周次"
+        prop="endTime"
+        label="结束时间"
       />
 
       <el-table-column
         align="center"
         label="操作"
-        width="400"
+        width="300px"
       >
         <template slot-scope="scope">
           <el-button
@@ -114,18 +174,37 @@ export default class CourseClass extends Vue {
   showDialog = false
 
   statusOption = [{
+    value: -1,
+    label: '课程评价状态'
+  }, {
     value: 0,
-    label: '正常'
+    label: '待开始'
   }, {
     value: 1,
-    label: '异常'
+    label: '进行中'
   }, {
     value: 2,
-    label: '未知'
+    label: '已结束'
+  }]
+
+  timeOption = [{
+    value: -1,
+    label: '课程评价更新时间'
+  }, {
+    value: 0,
+    label: '过去一周内'
+  }, {
+    value: 1,
+    label: '过去一个月内'
+  }, {
+    value: 2,
+    label: '过去一年内'
   }]
 
   queryOptions = {
-    semesterId: -1,
+    name: '',
+    status: -1,
+    timeOrder: -1,
     page: 1,
     pageSize: 20
   }
@@ -145,7 +224,7 @@ export default class CourseClass extends Vue {
 
   async requestData() {
     this.loading = true
-    const res = await this.api.getMyCourse(this.queryOptions)
+    const res = await this.api.getMyCourseEvaluation(this.queryOptions)
     this.data = res.data.list
     this.total = res.data.total
     this.loading = false
@@ -158,7 +237,6 @@ export default class CourseClass extends Vue {
         this.semesterList = this.semesterList.concat(res.data.list)
       } else {
         this.semesterList = res.data.list
-        this.queryOptions.semesterId = res.data.list[0].id
         this.requestData()
       }
     }
@@ -168,11 +246,17 @@ export default class CourseClass extends Vue {
     this.querySemesterOption.page++
     this.querySemesterList()
   }
+
+  handleFilter() {
+    this.queryOptions.page = 1
+    this.requestData()
+  }
 }
 </script>
 
 <style scoped>
-.el-table {
-    left: 10%
+.el-select{
+    width: 80%;
 }
+
 </style>

@@ -88,6 +88,7 @@
       />
       <el-table-column
         align="center"
+        width="50px"
         prop="totalScore"
         label="分数"
       />
@@ -97,8 +98,10 @@
         label="班级"
       />
       <el-table-column
-        align="center"
+
         prop="describes"
+        show-overflow-tooltip
+        width="300px"
         label="描述"
       >
         <template slot-scope="scope">
@@ -116,6 +119,7 @@
         label="更新时间"
       />
       <el-table-column
+        width="400px"
         align="center"
         label="操作"
       >

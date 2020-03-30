@@ -8,6 +8,13 @@ export const queryCourseEvaluation = (queryOptions:any) =>
     method: 'GET'
   })
 
+export const getMyCourseEvaluation = (queryOptions:any) =>
+  request({
+    url: '/course-evaluation/getMyCourseEvaluation',
+    params: queryOptions,
+    method: 'GET'
+  })
+
 export const createCourseEvaluation = (data:m.CreateCourseEvaluationForm) =>
   request({
     url: '/course-evaluation',
