@@ -527,7 +527,7 @@ export interface ServerResponse {
    * @type {string}
    * @memberof ServerResponse
    */
-  msg: string;
+  message: string;
   /**
    * 
    * @type {number}

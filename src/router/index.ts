@@ -157,7 +157,7 @@ export const routes: RouteConfig[] = [
   }, {
     path: '/course-evaluation',
     component: Layout,
-    redirect: '/course-evaluation/my-course',
+    redirect: '/course-evaluation/index',
     name: 'test',
     meta: {
       title: '课程评价',
@@ -166,29 +166,41 @@ export const routes: RouteConfig[] = [
     },
     children: [
       {
-        path: 'my-course',
-        component: () => import('@/views/course-evaluation/my-course.vue'),
-        meta: {
-          title: '我的课程',
-          icon: 'course'
-        }
-      },
-      {
-        path: 'my-course/:courseClassId(\\d+)/student',
-        component: () => import('@/views/course-evaluation/class-student.vue'),
-        meta: {
-          title: '查看学生',
-          hidden: true,
-          activeMenu: '/course-evaluation/my-course'
-        }
-      }, {
-        path: 'course-evaluation',
+        path: 'index',
         component: () => import('@/views/course-evaluation/release-evaluation.vue'),
         meta: {
           title: '发布课程评价',
           icon: 'course'
         }
       }]
+  },
+  {
+    path: '/teacher-my-course',
+    component: Layout,
+    redirect: '/teacher-my-course/index',
+    meta: {
+      title: '我的课程',
+      icon: 'course'
+    },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/teacher-my-course/index.vue'),
+        meta: {
+          title: '我的课程',
+          icon: 'course',
+          breadcrumb: false
+        }
+      }, {
+        path: ':courseClassId(\\d+)/student',
+        component: () => import('@/views/teacher-my-course/class-student.vue'),
+        meta: {
+          title: '查看学生',
+          hidden: true,
+          activeMenu: '/teacher-my-course/index'
+        }
+      }
+    ]
   },
   {
     path: '/teacher-person-info',

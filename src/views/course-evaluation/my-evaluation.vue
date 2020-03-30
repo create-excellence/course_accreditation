@@ -140,7 +140,6 @@ export default class CourseClass extends Vue {
   }
 
   async init() {
-    this.requestData()
     this.querySemesterList()
   }
 
@@ -160,6 +159,7 @@ export default class CourseClass extends Vue {
       } else {
         this.semesterList = res.data.list
         this.queryOptions.semesterId = res.data.list[0].id
+        this.requestData()
       }
     }
   }

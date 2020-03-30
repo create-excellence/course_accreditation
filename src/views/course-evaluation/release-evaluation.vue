@@ -29,6 +29,7 @@
               <el-date-picker
                 v-model="editForm.startTime"
                 :picker-options="startOptions"
+                value-format="yyyy-MM-dd HH:mm:ss"
                 type="datetime"
                 @change="handleStartChange"
               />
@@ -40,6 +41,7 @@
               <el-date-picker
                 v-model="editForm.endTime"
                 :picker-options="endOptions"
+                value-format="yyyy-MM-dd HH:mm:ss"
                 type="datetime"
                 @change="handleEndChange"
               />
@@ -148,22 +150,28 @@ export default class ReleaseEvaluation extends Vue {
   }
 
   async init() {
-    this.queryCourseClassList('')
-    this.requestData()
     this.resetForm()
+    if (this.$route.query.courseClassId && this.$route.query.courseClassName) {
+      let courseClassId = Number(this.$route.query.courseClassId)
+      let courseClassName = String(this.$route.query.courseClassName)
+      await this.queryCourseClassList(courseClassName)
+      this.editForm.courseClassId = courseClassId
+    } else {
+      this.queryCourseClassList('')
+    }
   }
 
   handleEndChange(endTime) {
     this.startOptions = Object.assign(this.startOptions, {
       disabledDate: (time) => {
-        return time.getTime() < Date.now() - 8.64e7 || time.getTime() >= new Date(endTime).getTime()
+        return time.getTime() < Date.now() - 8.64e7 || time.getTime() > new Date(endTime).getTime()
       }
     })
   }
   handleStartChange(startTime) {
     this.endOptions = Object.assign(this.endOptions, {
       disabledDate: (time) => {
-        return time.getTime() < Date.now() - 8.64e7 || !(time.getTime() >= new Date(startTime).getTime())
+        return time.getTime() < Date.now() - 8.64e7 || !(time.getTime() > new Date(startTime).getTime() - 8.64e7)
       }
     })
   }
