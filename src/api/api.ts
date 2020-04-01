@@ -115,6 +115,7 @@ export interface api {
     deleteCourseTarget(id:number):m.ServerResponse
     putCourseTarget(id:number, data:m.CreateCourseTargetForm):m.ServerResponse
     batchDeleteCourseTarget(ids:number[]):m.ServerResponse
+    getPoint(questionnaireId:number):m.ServerResponse
 
     //  CourseEvaluation
     queryCourseEvaluation(queryOptions:any):m.ServerResponse

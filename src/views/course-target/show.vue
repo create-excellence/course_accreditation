@@ -79,14 +79,13 @@
       />
       <el-table-column
         align="center"
-        prop="sequence"
-        label="序号"
-      />
-      <el-table-column
-        align="center"
         label="问题"
         prop="title"
-      />
+      >
+        <template slot-scope="scope">
+          <text-view :value="scope.row.describes|string2delta" />
+        </template>
+      </el-table-column>
       <el-table-column
         align="center"
         label="选项"
@@ -136,7 +135,7 @@
     />
     <div v-if="showDialog">
       <el-dialog
-        :title="`${courseTarget.id ? '编辑' : '添加'}问卷`"
+        :title="`${courseTarget.id ? '编辑' : '添加'}题目`"
         :visible.sync="showDialog"
         @close="showDialog = false"
       >
@@ -161,17 +160,17 @@
             prop="title"
             label="题目"
           >
-            <el-input
+            <text-editor
+              ref="title"
               v-model="editForm.title"
               placeholder="请输入题目"
-              maxlength="10"
             />
           </el-form-item>
           <el-form-item
             prop="totalScore"
             label="总分"
           >
-            <el-input
+            <el-input-number
               v-model="editForm.totalScore"
               placeholder="请输入总分"
               maxlength="10"
@@ -334,6 +333,7 @@ export default class CourseTarget extends Vue {
   graduationPointList: m.GraduationPoint[] = []
   optionsList :m.OptionsList[]= []
   name : String = ''
+  questionnaireId:number=-1
 
   queryOptions = {
     title: '',
@@ -359,9 +359,10 @@ export default class CourseTarget extends Vue {
 
   async init() {
     let questionnaireId = Number(this.$route.params.questionnaireId)
+    this.questionnaireId = questionnaireId
     this.queryOptions.questionnaireId = questionnaireId
     let res = await this.api.getQuestionnaire(questionnaireId)
-    this.queryGraduationPointSelectList('')
+    this.queryGraduationPointSelectList()
     if (res.code === 0) {
       this.questionnaireList.push(res.data)
     }
@@ -371,31 +372,21 @@ export default class CourseTarget extends Vue {
     this.requestData()
   }
 
-  async queryGraduationPointList(query: string, cb:any) {
+  async queryGraduationPointList(cb:any) {
     // cb为搜索后的回调钩子
-    const option = {
-      page: 1,
-      pageSize: 20,
-      no: query
-    }
-    const res = await this.api.queryGraduationPoint(option)
+    const res = await this.api.getPoint(this.questionnaireId)
     if (res.code === 0) {
-      let GraduationPointList = res.data.list.map((item:m.GraduationPoint) => {
+      let GraduationPointList = res.data.map((item:m.GraduationPoint) => {
         return { value: item.no }
       })
       cb(GraduationPointList)
     }
   }
 
-  async queryGraduationPointSelectList(query: string) {
-    const option = {
-      page: 1,
-      pageSize: 20,
-      no: query
-    }
-    const res = await this.api.queryGraduationPoint(option)
-    if (res.code === 0 && res.data.list.length > 0) {
-      this.graduationPointList = res.data.list
+  async queryGraduationPointSelectList() {
+    const res = await this.api.getPoint(this.questionnaireId)
+    if (res.code === 0 && res.data.length > 0) {
+      this.graduationPointList = res.data
     }
   }
 
@@ -431,6 +422,7 @@ export default class CourseTarget extends Vue {
   }
 
   handleEdit(courseTarget: m.CourseTarget) {
+    this.courseTarget = courseTarget
     if (courseTarget.options !== undefined) {
       this.optionsList = JSON.parse(courseTarget.options)
     }

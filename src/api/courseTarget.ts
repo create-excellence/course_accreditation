@@ -41,3 +41,10 @@ export const putCourseTarget = (id:number, data:m.CreateCourseTargetForm) =>
     method: 'PUT',
     data
   })
+
+export const getPoint = (questionnaireId:number) =>
+  request({
+    url: '/course-target/point',
+    params: { questionnaireId: questionnaireId },
+    method: 'GET'
+  })

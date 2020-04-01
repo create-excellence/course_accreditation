@@ -98,16 +98,11 @@
         label="班级"
       />
       <el-table-column
-
         prop="describes"
         show-overflow-tooltip
         width="300px"
         label="描述"
-      >
-        <template slot-scope="scope">
-          <text-view :value="scope.row.describes|string2delta" />
-        </template>
-      </el-table-column>
+      />
       <el-table-column
         align="center"
         prop="createTime"
@@ -214,8 +209,7 @@
           label="问卷描述"
           prop="describes"
         >
-          <text-editor
-            ref="title"
+          <el-input
             v-model="editForm.describes"
             placeholder="请输入问卷描述"
           />
