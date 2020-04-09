@@ -254,7 +254,7 @@ export default class ReleaseEvaluation extends Vue {
     text-align: center;
   }
  .el-main{
-     margin: 10px 0 0 35px;
+    margin: 10px 0 0 35px;
  }
 
 .el-input{

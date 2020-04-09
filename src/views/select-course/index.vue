@@ -3,6 +3,7 @@
     <el-form
       ref="searchForm"
       :inline="true"
+      stripe
       :model="queryOptions"
       @submit.native.prevent="handleFilter"
     >

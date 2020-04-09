@@ -225,7 +225,7 @@ export default class TeacherPersonInfo extends Vue {
 .el-container {
   width:650px;
   height:650px;
-  margin: -200px 0 0 -250px;
+  margin: -100px 0 0 -250px;
   position: absolute;
   top: 30%;
   left: 40%;
@@ -242,7 +242,7 @@ export default class TeacherPersonInfo extends Vue {
     line-height: 60px;
   }
  .el-main{
-     margin: 10px 0 0 35px;
+    margin: 10px 0 0 35px;
  }
 
 .el-input{

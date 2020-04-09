@@ -118,33 +118,6 @@
         </template>
       </el-table-column>
       <el-table-column
-        v-if="!permission"
-        align="center"
-        label="是否评价"
-        prop="status"
-        width="100px"
-      >
-        <template slot-scope="scope">
-          <el-button
-            v-if="scope.row.isEvaluation"
-            prop="status"
-            type="warning"
-            size="mini"
-            plain
-          >
-            已评价
-          </el-button>
-          <el-button
-            v-else
-            type="success"
-            size="mini"
-            plain
-          >
-            未评价
-          </el-button>
-        </template>
-      </el-table-column>
-      <el-table-column
         align="center"
         prop="startTime"
         label="开始时间"
@@ -154,7 +127,11 @@
         prop="endTime"
         label="结束时间"
       />
-
+      <el-table-column
+        align="center"
+        label="评价人数"
+        prop="count"
+      />
       <el-table-column
         align="center"
         label="操作"
@@ -190,7 +167,6 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { ElForm } from 'element-ui/types/form'
-import { UserModule } from '@/store/modules/user'
 import * as m from '@/api/model'
 
 @Component({})
@@ -198,16 +174,12 @@ export default class CourseClass extends Vue {
   data:m.CourseClass[] = []
   total = 0
   loading = true
-  permission: boolean = false
   semesterList:m.Semester[] = []
   showDialog = false
 
   statusOption = [{
     value: -1,
     label: '课程评价状态'
-  }, {
-    value: -2,
-    label: '已评价'
   }, {
     value: 0,
     label: '待开始'
@@ -251,33 +223,12 @@ export default class CourseClass extends Vue {
   }
 
   async init() {
-    let roles = UserModule.roles
-    // 用户不是学生
-    if (roles.indexOf('student') === -1) {
-      this.permission = true
-    }
-    // 教师或管理员不用显示 已评价 选项
-    if (this.permission) {
-      this.statusOption = [{
-        value: -1,
-        label: '课程评价状态'
-      }, {
-        value: 0,
-        label: '待开始'
-      }, {
-        value: 1,
-        label: '进行中'
-      }, {
-        value: 2,
-        label: '已结束'
-      }]
-    }
     this.querySemesterList()
   }
 
   async requestData() {
     this.loading = true
-    const res = await this.api.getMyCourseEvaluation(this.queryOptions)
+    const res = await this.api.queryCourseEvaluation(this.queryOptions)
     this.data = res.data.list
     this.total = res.data.total
     this.loading = false
