@@ -51,12 +51,6 @@
         >
           搜索
         </el-button>
-        <el-button
-          type="primary"
-          icon="el-icon-plus"
-        >
-          开课信息
-        </el-button>
       </el-form-item>
     </el-form>
     <el-table
@@ -83,6 +77,7 @@
         show-overflow-tooltip
         prop="describes"
       />
+
       <el-table-column
         align="center"
         label="状态"
@@ -164,9 +159,9 @@
           <el-button
             size="mini"
             type="primary"
-            @click="handleEdit(scope.row)"
+            @click="$router.push({path:`my-evaluation/${scope.row.id}/evaluation-detail`,query:{course:scope.row.course}})"
           >
-            发布课程评价
+            查看评价详情
           </el-button>
           <el-button
             size="mini"
@@ -194,7 +189,7 @@ import { UserModule } from '@/store/modules/user'
 import * as m from '@/api/model'
 
 @Component({})
-export default class CourseClass extends Vue {
+export default class MyEvaluation extends Vue {
   data:m.CourseClass[] = []
   total = 0
   loading = true

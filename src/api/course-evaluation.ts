@@ -21,3 +21,10 @@ export const createCourseEvaluation = (data:m.CreateCourseEvaluationForm) =>
     method: 'POST',
     data
   })
+
+export const getCourseEvaluationStudent = (queryOptions:any) =>
+  request({
+    url: '/course-evaluation/getCourseEvaluationStudent',
+    params: queryOptions,
+    method: 'GET'
+  })

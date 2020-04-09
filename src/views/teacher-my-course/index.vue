@@ -12,10 +12,10 @@
         <el-select
           v-model="queryOptions.semesterId"
           v-loadmore="handleLoadMore"
-          size="medium"
+          size="small"
           style="width:80%"
           placeholder="请选择学期"
-          @change="requestData"
+          @change="handleFilter"
         >
           <el-option
             v-for="item in semesterList"
@@ -24,6 +24,25 @@
             :value="item.id"
           />
         </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-input
+          v-model="queryOptions.course"
+          size="small"
+          style="margin-left:-30px"
+          placeholder="请输入课程名称"
+          maxlength="10"
+        />
+      </el-form-item>
+      <el-form-item>
+        <el-button
+          style="margin-left:-30px"
+          icon="el-icon-search"
+          size="small"
+          @click="handleFilter"
+        >
+          搜索
+        </el-button>
       </el-form-item>
     </el-form>
     <el-table
@@ -126,6 +145,7 @@ export default class CourseClass extends Vue {
 
   queryOptions = {
     semesterId: -1,
+    course: '',
     page: 1,
     pageSize: 20
   }
@@ -167,6 +187,11 @@ export default class CourseClass extends Vue {
   async handleLoadMore() {
     this.querySemesterOption.page++
     this.querySemesterList()
+  }
+
+  handleFilter() {
+    this.queryOptions.page = 1
+    this.requestData()
   }
 }
 </script>

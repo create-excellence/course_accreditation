@@ -85,6 +85,18 @@
       />
       <el-table-column
         align="center"
+        label="参与人数"
+        width="100px"
+        prop="count"
+      />
+      <el-table-column
+        align="center"
+        label="班级人数"
+        width="100px"
+        prop="courseClassCount"
+      />
+      <el-table-column
+        align="center"
         label="状态"
         prop="status"
         width="100px"
@@ -129,11 +141,6 @@
       />
       <el-table-column
         align="center"
-        label="评价人数"
-        prop="count"
-      />
-      <el-table-column
-        align="center"
         label="操作"
         width="300px"
       >
@@ -141,9 +148,9 @@
           <el-button
             size="mini"
             type="primary"
-            @click="handleEdit(scope.row)"
+            @click="$router.push({path:`my-evaluation/${scope.row.id}/evaluation-detail`,query:{course:scope.row.course}})"
           >
-            发布课程评价
+            查看参与情况
           </el-button>
           <el-button
             size="mini"

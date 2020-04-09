@@ -157,8 +157,7 @@ export const routes: RouteConfig[] = [
   }, {
     path: '/course-evaluation',
     component: Layout,
-    redirect: '/course-evaluation/index',
-    name: 'test',
+    redirect: '/course-evaluation/my-evaluation',
     meta: {
       title: '课程评价',
       icon: 'major',
@@ -166,7 +165,7 @@ export const routes: RouteConfig[] = [
     },
     children: [
       {
-        path: 'index',
+        path: 'release-evaluation',
         component: () => import('@/views/course-evaluation/release-evaluation.vue'),
         meta: {
           title: '发布课程评价',
@@ -187,10 +186,18 @@ export const routes: RouteConfig[] = [
         component: () => import('@/views/course-evaluation/evaluation.vue'),
         meta: {
           title: '已发布课程评价',
-          icon: 'course'
+          icon: 'course',
+          roles: ['teacher']
         }
-      }
-    ]
+      }, {
+        path: 'my-evaluation/:courseEvaluationId(\\d+)/evaluation-detail',
+        component: () => import('@/views/course-evaluation/evaluation-detail.vue'),
+        meta: {
+          title: '查看评价详情',
+          hidden: true,
+          roles: ['teacher']
+        }
+      }]
   },
   {
     path: '/teacher-my-course',
