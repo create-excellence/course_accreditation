@@ -39,13 +39,13 @@
           题目
         </el-button>
       </el-form-item>
-      <el-button
+      <!-- <el-button
         type="primary"
         plain
         @click="showCheckbox=!showCheckbox"
       >
         多选
-      </el-button>
+      </el-button> -->
       <el-button
         v-if="showCheckbox"
         type="danger"
@@ -62,7 +62,7 @@
       </el-button>
     </el-form>
 
-    <el-table
+    <!-- <el-table
       :key="tableChange"
       v-loading="loading"
       :data="data"
@@ -125,14 +125,113 @@
           </el-button>
         </template>
       </el-table-column>
-    </el-table>
-    <pagination
+    </el-table> -->
+    <el-card class="box-card">
+      <div style="text-align:center;">
+        <h1 style="font-size:30px;">
+          {{ name }}
+        </h1>
+        <!-- <span style="font-size:20px;display:inline-block;">
+            <text-view
+              :value="describes|string2delta"
+            />
+          </span> -->
+      </div>
+    </el-card>
+    <div
+      v-for="item in data"
+      :key="item.id"
+      style="margin-top:15px;"
+    >
+      <el-card class="box-card">
+        <div style="float:right;">
+          <el-button-group style="margin-right:200px;">
+            <el-tooltip
+              content="编辑"
+              placement="top"
+              effect="light"
+            >
+              <el-button
+                icon="el-icon-setting"
+                @click="handleEdit(item)"
+              />
+            </el-tooltip>
+            <el-tooltip
+              content="向下移动"
+              placement="top"
+              effect="light"
+            >
+              <el-button
+                icon="el-icon-bottom"
+                @click="handlemove(item.id , 1)"
+              />
+            </el-tooltip>
+            <el-tooltip
+              content="向上移动"
+              placement="top"
+              effect="light"
+            >
+              <el-button
+                icon="el-icon-top"
+                @click="handlemove(item.id , 0)"
+              />
+            </el-tooltip>
+            <el-tooltip
+              content="复制"
+              placement="top"
+              effect="light"
+            >
+              <el-button
+                icon="el-icon-document-copy"
+                @click="handlecopy(item.id)"
+              />
+            </el-tooltip>
+            <el-tooltip
+              content="删除"
+              placement="top"
+              effect="light"
+            >
+              <el-button
+                icon="el-icon-delete"
+                @click="handleDelete(item.id)"
+              />
+            </el-tooltip>
+          </el-button-group>
+        </div>
+        <div style="font-size:18px;margin-left:200px;display:inline-block;">
+          <span><span style="font-weight:bold;">{{ item.sequence }}.</span><text-view
+            style="font-size:18px;"
+            :value="item.title|string2delta"
+          /></span>
+        </div>
+
+        <div style="margin-left:200px;">
+          <div
+            v-for="option in item.optionsList"
+            :key="option.prefix"
+            style="margin-bottom:20px;"
+          >
+            <el-radio
+              v-model="item.optionsScore"
+              :label="option.prefix"
+              size="medium"
+              style="font-size:30px;"
+            >
+              <span
+                style="font-size:18px;"
+              >{{ option.prefix }} . {{ option.content }}</span>
+            </el-radio>
+          </div>
+        </div>
+      </el-card>
+    </div>
+    <!-- <pagination
       v-show="total > 0"
       :total="total"
       :page.sync="queryOptions.page"
       :limit.sync="queryOptions.pageSize"
       @pagination="requestData"
-    />
+    /> -->
     <div v-if="showDialog">
       <el-dialog
         :title="`${courseTarget.id ? '编辑' : '添加'}题目`"
@@ -146,6 +245,19 @@
           :rules="rules"
           label-position="top"
         >
+<<<<<<< Updated upstream
+=======
+          <!-- <el-form-item
+            prop="sequence"
+            label="序号"
+          >
+            <el-input
+              v-model="editForm.sequence"
+              placeholder="请输入序号"
+              maxlength="10"
+            />
+          </el-form-item> -->
+>>>>>>> Stashed changes
           <el-form-item
             prop="title"
             label="题目"
@@ -191,46 +303,68 @@
             prop="optionsList"
           >
             <el-row>
-              <el-col :span="4">
+              <el-col :span="1">
                 <label>选项</label>
               </el-col>
-              <el-col :span="12">
+              <el-col :span="17">
                 <label>内容</label>
               </el-col>
-              <el-col :span="4">
+              <el-col
+                :span="2"
+                :offset="1"
+              >
                 <label>分值</label>
               </el-col>
             </el-row>
             <el-row>
               <el-form-item
-                v-for="(item,index) in optionsList"
+                v-for="(item) in optionsList"
                 :key="item.prefix"
+                style="margin-bottom:10px;"
               >
-                <el-col :span="4">
-                  <el-input v-model="item.prefix" />
+                <el-col :span="1">
+                  <!-- <el-input
+                    v-model="item.prefix"
+                    :disabled="true"
+                  /> -->
+                  <label>&nbsp;{{ item.prefix }}</label>
                 </el-col>
-                <el-col :span="12">
-                  <el-input v-model="item.content" />
+                <el-col :span="17">
+                  <el-input
+                    v-model="item.content"
+                  />
                 </el-col>
+<<<<<<< Updated upstream
                 <el-col :span="4">
                   <el-input
                     v-model="item.score"
                     @input="smallScore(item.score,index)"
+=======
+                <el-col
+                  :span="2"
+                  :offset="1"
+                >
+                  <!-- <el-input v-model="item.score" /> -->
+                  <el-input-number
+                    v-model="item.score"
+                    :min="1"
+                    :max="10"
+>>>>>>> Stashed changes
                   />
                 </el-col>
-                <el-col :span="4">
+                <!-- <el-col :span="4">
                   <el-button @click="deleteOptions(index)">
                     删除选项
                   </el-button>
-                </el-col>
+                </el-col> -->
               </el-form-item>
             </el-row>
           </el-form-item>
-          <div>
+          <!-- <div>
             <el-button @click="addOptions">
               增加选项
             </el-button>
-          </div>
+          </div> -->
           <el-form-item
             prop="describes"
             label="描述"
@@ -275,6 +409,7 @@
         v-for="(item,index) in data"
         :key="item.id"
       >
+<<<<<<< Updated upstream
         <div
           style="height: 40px;"
         >
@@ -289,12 +424,32 @@
             :label="option.prefix"
             size="medium"
             style="font-size:30px;"
+=======
+        <div style="margin-left:100px;">
+          <span style="font-size:18px;"><span style="font-weight:bold;">{{ item.sequence }}.</span><text-view
+            style="font-size:18px;"
+            :value="item.title|string2delta"
+          /></span>
+
+          <div
+            v-for="option in item.optionsList"
+            :key="option.prefix"
+            style="margin-left:40px;"
+>>>>>>> Stashed changes
           >
-            <span
-              style="font-size:20px;"
-            >{{ option.prefix }}、{{ option.content }}</span>
-          </el-radio>
+            <el-radio
+              v-model="item.optionsScore"
+              :label="option.prefix"
+              size="medium"
+              style="margin-bottom:10px;"
+            >
+              <span
+                style="font-size:18px;"
+              >  {{ option.prefix }} . {{ option.content }}</span>
+            </el-radio>
+          </div>
         </div>
+
         <el-divider />
       </div>
     </el-dialog>
@@ -302,6 +457,7 @@
 </template>
 
 <script lang="ts">
+import { string2delta } from '@/utils/quill'
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { ElForm } from 'element-ui/types/form'
 // eslint-disable-next-line import/no-duplicates
@@ -327,6 +483,7 @@ export default class CourseTarget extends Vue {
   optionsList :m.OptionsList[]= []
   name : String = ''
   questionnaireId:number=-1
+  describes : string = ''
 
   queryOptions = {
     title: '',
@@ -362,6 +519,9 @@ export default class CourseTarget extends Vue {
     if (this.questionnaireList[0].name !== undefined) {
       this.name = this.questionnaireList[0].name
     }
+    if (this.questionnaireList[0].describes !== undefined) {
+      this.describes = this.questionnaireList[0].describes
+    }
     this.requestData()
   }
 
@@ -388,6 +548,31 @@ export default class CourseTarget extends Vue {
     this.requestData()
   }
 
+  async handlemove(id, operate) {
+    const res = await this.api.CourseTargetMove(id, operate)
+    console.log(res)
+    if (res.code === 0) {
+      this.requestData()
+    } else {
+      this.$message({
+        type: 'warning',
+        message: '移动失败，请稍后再试！'
+      })
+    }
+  }
+
+  handlecopy(id) {
+    const res = this.api.CourseTargetCopy(id)
+    if (res.code === 0) {
+      this.requestData()
+    } else {
+      this.$message({
+        type: 'warning',
+        message: '复制失败，请稍后再试！'
+      })
+    }
+  }
+
   async requestData() {
     this.loading = true
     const res = await this.api.queryCourseTarget(this.queryOptions)
@@ -406,9 +591,10 @@ export default class CourseTarget extends Vue {
   }
 
   handleCreate() {
-    let optionsList = [{ prefix: 'a', content: '', score: '' },
-      { prefix: 'b', content: '', score: '' },
-      { prefix: 'c', content: '', score: '' }]
+    let optionsList = [{ prefix: 'A', content: '', score: '' },
+      { prefix: 'B', content: '', score: '' },
+      { prefix: 'C', content: '', score: '' },
+      { prefix: 'D', content: '', score: '' }]
     this.optionsList = optionsList
     this.courseTarget = {} as any
     this.resetForm()
@@ -474,22 +660,16 @@ export default class CourseTarget extends Vue {
     })
   }
 
-  handleDelete(courseTarget: m.CourseTarget) {
+  handleDelete(id:number) {
     this.$confirm(`确定删除该题吗？`, '提示', {
       type: 'warning'
     }).then(async() => {
-      const res = await this.api.deleteCourseTarget(courseTarget.id)
+      const res = await this.api.deleteCourseTarget(id)
       if (res.code === 0) {
         this.$message({
           type: 'success',
           message: '删除成功!'
         })
-        this.data = this.data.filter((e: m.CourseTarget) => e.id !== courseTarget.id)
-        if (this.total > 1) {
-          this.total--
-        } else {
-          this.requestData()
-        }
       }
     })
   }
@@ -500,16 +680,16 @@ export default class CourseTarget extends Vue {
     })
   }
 
-  addOptions() {
-    let optionsList = this.optionsList
-    let last = optionsList[optionsList.length - 1]
-    if (last) {
-      let newLastPrefix = String.fromCharCode(last.prefix.charCodeAt(0) + 1)
-      optionsList.push({ prefix: newLastPrefix, content: '', score: '' })
-    } else {
-      optionsList.push({ prefix: 'a', content: '', score: '' })
-    }
-  }
+  // addOptions() {
+  //   let optionsList = this.optionsList
+  //   let last = optionsList[optionsList.length - 1]
+  //   if (last) {
+  //     let newLastPrefix = String.fromCharCode(last.prefix.charCodeAt(0) + 1)
+  //     optionsList.push({ prefix: newLastPrefix, content: '', score: '' })
+  //   } else {
+  //     optionsList.push({ prefix: 'A', content: '', score: '' })
+  //   }
+  // }
 
   deleteOptions(index) {
     this.optionsList.splice(index, 1)
@@ -537,5 +717,4 @@ export default class CourseTarget extends Vue {
     })
   }
 }
-
 </script>

@@ -48,3 +48,17 @@ export const getPoint = (questionnaireId:number) =>
     params: { questionnaireId: questionnaireId },
     method: 'GET'
   })
+
+export const CourseTargetMove = (courseTargetId:number, operate:number) =>
+  request({
+    url: '/course-target/move',
+    params: { courseTargetId: courseTargetId, operate: operate },
+    method: 'GET'
+  })
+
+export const CourseTargetCopy = (courseTargetId:number) =>
+  request({
+    url: '/course-target/copy',
+    params: { courseTargetId: courseTargetId },
+    method: 'GET'
+  })

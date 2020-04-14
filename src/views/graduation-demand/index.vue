@@ -282,6 +282,7 @@ export default class GraduationDemand extends Vue {
     this.loading = true
     const res = await this.api.queryGraduationDemand(this.queryOptions)
     this.data = res.data.list
+    console.log(this.data)
     this.total = res.data.total
     this.loading = false
   }
