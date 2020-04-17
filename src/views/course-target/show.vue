@@ -199,17 +199,17 @@
           </el-button-group>
         </div>
         <div style="font-size:18px;margin-left:200px;display:inline-block;">
-          <span><span style="font-weight:bold;">{{ item.sequence }}.</span><text-view
-            style="font-size:18px;"
+          <span style="font-weight:bold;display:inline-block;">{{ item.sequence }}.</span><text-view
+            style="font-size:18px;display:inline-block;height:30px;overflow:hidden;"
             :value="item.title|string2delta"
-          /></span>
+          />
         </div>
 
         <div style="margin-left:200px;">
           <div
             v-for="option in item.optionsList"
             :key="option.prefix"
-            style="margin-bottom:20px;"
+            style="margin-top:20px;"
           >
             <el-radio
               v-model="item.optionsScore"
@@ -245,19 +245,6 @@
           :rules="rules"
           label-position="top"
         >
-<<<<<<< Updated upstream
-=======
-          <!-- <el-form-item
-            prop="sequence"
-            label="序号"
-          >
-            <el-input
-              v-model="editForm.sequence"
-              placeholder="请输入序号"
-              maxlength="10"
-            />
-          </el-form-item> -->
->>>>>>> Stashed changes
           <el-form-item
             prop="title"
             label="题目"
@@ -268,7 +255,7 @@
               placeholder="请输入题目"
             />
           </el-form-item>
-          <el-form-item
+          <!-- <el-form-item
             prop="totalScore"
             label="总分"
           >
@@ -277,7 +264,7 @@
               placeholder="请输入总分"
               maxlength="10"
             />
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item
             prop="pointId"
             label="指标点"
@@ -334,12 +321,6 @@
                     v-model="item.content"
                   />
                 </el-col>
-<<<<<<< Updated upstream
-                <el-col :span="4">
-                  <el-input
-                    v-model="item.score"
-                    @input="smallScore(item.score,index)"
-=======
                 <el-col
                   :span="2"
                   :offset="1"
@@ -349,7 +330,6 @@
                     v-model="item.score"
                     :min="1"
                     :max="10"
->>>>>>> Stashed changes
                   />
                 </el-col>
                 <!-- <el-col :span="4">
@@ -371,8 +351,9 @@
           >
             <el-input
               v-model="editForm.describes"
+              type="textarea"
+              :rows="2"
               placeholder="请输入描述"
-              maxlength="10"
             />
           </el-form-item>
         </el-form>
@@ -406,42 +387,26 @@
       </div>
       <el-divider />
       <div
-        v-for="(item,index) in data"
+        v-for="(item) in data"
         :key="item.id"
       >
-<<<<<<< Updated upstream
-        <div
-          style="height: 40px;"
-        >
-          <span style="font-size:27px;">{{ index+1 }}、{{ item.title }}({{ item.totalScore }}分)</span>
-        </div>
-        <div
-          v-for="option in item.optionsList"
-          :key="option.prefix"
-        >
-          <el-radio
-            v-model="item.optionsScore"
-            :label="option.prefix"
-            size="medium"
-            style="font-size:30px;"
-=======
         <div style="margin-left:100px;">
-          <span style="font-size:18px;"><span style="font-weight:bold;">{{ item.sequence }}.</span><text-view
-            style="font-size:18px;"
-            :value="item.title|string2delta"
-          /></span>
+          <span style="font-size:18px;">
+            <span style="font-weight:bold;display:inline-block;">{{ item.sequence }}.</span><text-view
+              style="font-size:18px;display:inline-block;height:30px;"
+              :value="item.title|string2delta"
+            /></span>
 
           <div
             v-for="option in item.optionsList"
             :key="option.prefix"
-            style="margin-left:40px;"
->>>>>>> Stashed changes
+            style="margin-left:20px;"
           >
             <el-radio
               v-model="item.optionsScore"
               :label="option.prefix"
               size="medium"
-              style="margin-bottom:10px;"
+              style="margin-top:15px;"
             >
               <span
                 style="font-size:18px;"
