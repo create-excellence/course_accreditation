@@ -322,22 +322,6 @@
             :max="25"
           />
         </el-form-item>
-        <el-form-item
-          prop="status"
-          label="状态"
-        >
-          <el-select
-            v-model="editForm.status"
-            placeholder="请选择状态"
-          >
-            <el-option
-              v-for="item in statusOption"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
-          </el-select>
-        </el-form-item>
       </el-form>
       <div
         slot="footer"

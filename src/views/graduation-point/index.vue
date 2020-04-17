@@ -205,7 +205,7 @@
       </div>
     </el-dialog>
     <excel-dialog
-      action="/graduationPoint/batchSave"
+      action="/graduation-point/batchSave"
       :show.sync="showExcelDialog"
       @requestData="requestData"
     />

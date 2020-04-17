@@ -392,6 +392,7 @@ export default class Teacher extends Vue {
     this.teacher = teacher
     this.editForm = {
       // role: teacher.role,
+      sex: teacher.sex,
       name: teacher.name,
       title: teacher.title,
       jno: teacher.jno,

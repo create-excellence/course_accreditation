@@ -149,6 +149,7 @@
       <el-dialog
         :title="`${graduationDemand.id ? '编辑' : '添加'}毕业要求`"
         :visible.sync="showDialog"
+        :close-on-click-modal="false"
         @close="showDialog = false"
       >
         <el-form
@@ -156,6 +157,7 @@
           ref="editForm"
           :model="editForm"
           :rules="rules"
+
           label-position="top"
         >
           <el-form-item
@@ -216,7 +218,7 @@
         </div>
       </el-dialog>
       <excel-dialog
-        action="/graduationDemand/batchSave"
+        action="/graduation-demand/batchSave"
         :show.sync="showExcelDialog"
         @requestData="requestData"
       />
