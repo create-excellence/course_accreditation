@@ -159,9 +159,9 @@
           <el-button
             size="mini"
             type="primary"
-            @click="$router.push({path:`my-evaluation/${scope.row.id}/evaluation-detail`,query:{course:scope.row.course}})"
+            @click="$router.push('/course-evaluation/evaluation_test')"
           >
-            查看评价详情
+            填写问卷
           </el-button>
           <el-button
             size="mini"

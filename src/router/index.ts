@@ -445,6 +445,11 @@ export const routes: RouteConfig[] = [
     ]
   },
   {
+    path: '/course-evaluation/evaluation_test',
+    component: () => import('@/views/course-evaluation/evaluation_test.vue'),
+    meta: { hidden: true }
+  },
+  {
     path: '*',
     redirect: '/404',
     meta: { hidden: true }
