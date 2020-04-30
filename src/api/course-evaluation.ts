@@ -28,3 +28,9 @@ export const getCourseEvaluationStudent = (queryOptions:any) =>
     params: queryOptions,
     method: 'GET'
   })
+
+export const startEvaluation = () =>
+  request({
+    url: '/course-evaluation/startEvaluation',
+    method: 'GET'
+  })

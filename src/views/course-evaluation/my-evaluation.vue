@@ -73,7 +73,7 @@
       <el-table-column
         align="center"
         label="描述"
-        width="300px"
+        width="200px"
         show-overflow-tooltip
         prop="describes"
       />
@@ -82,7 +82,7 @@
         align="center"
         label="状态"
         prop="status"
-        width="100px"
+        width="130px"
       >
         <template slot-scope="scope">
           <el-button
@@ -123,7 +123,7 @@
           <el-button
             v-if="scope.row.isEvaluation"
             prop="status"
-            type="warning"
+            type="success"
             size="mini"
             plain
           >
@@ -131,7 +131,7 @@
           </el-button>
           <el-button
             v-else
-            type="success"
+            type="warning"
             size="mini"
             plain
           >
@@ -156,19 +156,25 @@
         width="300px"
       >
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="primary"
-            @click="$router.push('/course-evaluation/evaluation_test')"
-          >
-            填写问卷
-          </el-button>
-          <el-button
-            size="mini"
-            @click="$router.push(`/course-evaluation/my-course/${scope.row.id}/student`)"
-          >
-            查看班级学生
-          </el-button>
+          <div v-if="!scope.row.status===1">
+            <el-button
+              v-if="!scope.row.isEvaluation"
+              size="mini"
+              type="primary"
+              @click="handleStart"
+            >
+              开始评价
+            </el-button>
+            <el-button
+              v-else
+              size="mini"
+              type="success"
+              plain
+              @click="handleStart"
+            >
+              修改评价
+            </el-button>
+          </div>
         </template>
       </el-table-column>
     </el-table>
@@ -246,27 +252,6 @@ export default class MyEvaluation extends Vue {
   }
 
   async init() {
-    let roles = UserModule.roles
-    // 用户不是学生
-    if (roles.indexOf('student') === -1) {
-      this.permission = true
-    }
-    // 教师或管理员不用显示 已评价 选项
-    if (this.permission) {
-      this.statusOption = [{
-        value: -1,
-        label: '课程评价状态'
-      }, {
-        value: 0,
-        label: '待开始'
-      }, {
-        value: 1,
-        label: '进行中'
-      }, {
-        value: 2,
-        label: '已结束'
-      }]
-    }
     this.querySemesterList()
   }
 
@@ -293,6 +278,15 @@ export default class MyEvaluation extends Vue {
   async handleLoadMore() {
     this.querySemesterOption.page++
     this.querySemesterList()
+  }
+
+  async handleStart() {
+    const res = await this.api.startEvaluation()
+    if (res.code === 0) {
+      console.log(1)
+    } else {
+      console.log(2)
+    }
   }
 
   handleFilter() {

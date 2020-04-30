@@ -13,7 +13,10 @@
           修改密码
         </h3>
       </div>
-      <el-form-item prop="oldPassword">
+      <el-form-item
+        label="旧密码"
+        prop="oldPassword"
+      >
         <el-input
           ref="oldPassword"
           v-model="passwordForm.oldPassword"
@@ -32,7 +35,10 @@
           />
         </span>
       </el-form-item>
-      <el-form-item prop="newPassword">
+      <el-form-item
+        label="新密码"
+        prop="newPassword"
+      >
         <el-input
           ref="newPassword"
           v-model="passwordForm.newPassword"
@@ -51,7 +57,10 @@
           />
         </span>
       </el-form-item>
-      <el-form-item prop="rePassword">
+      <el-form-item
+        label="确认新密码"
+        prop="rePassword"
+      >
         <el-input
           ref="rePassword"
           v-model="passwordForm.rePassword"
@@ -98,21 +107,20 @@ export default class extends Vue {
     newPassword: '',
     rePassword: ''
   }
+    validatePass = (rule, value, callback) => {
+      let patrn = /^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9]{6,18}$/
+      if (!patrn.exec(value)) {
+        callback(new Error('密码必须由字母、数字组成，区分大小写,长度为6-18位'))
+      } else {
+        callback()
+      }
+    }
+
   private passwordRules = {
     oldPassword: [{ required: true, message: '旧密码不能为空', trigger: 'blur' }],
-    newPassword: [{ required: true, message: '新密码不能为空', trigger: 'blur' }],
+    newPassword: [{ trigger: 'blur', validator: this.validatePass }],
     rePassword: [{ required: true, message: '确认密码不能为空', trigger: 'blur' }]
   };
-
-  mounted() {
-    if (this.passwordForm.oldPassword === '') {
-      (this.$refs.oldPassword as Input).focus()
-    } else if (this.passwordForm.newPassword === '') {
-      (this.$refs.newPassword as Input).focus()
-    } else if (this.passwordForm.rePassword === '') {
-      (this.$refs.rePassword as Input).focus()
-    }
-  }
 
   private showPwd() {
     if (this.passwordType === 'password') {

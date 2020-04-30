@@ -125,7 +125,7 @@ service.interceptors.response.use(
   },
   error => {
     Message({
-      message: error.message,
+      message: '操作失败，请稍后再试',
       type: 'error',
       duration: 5 * 1000
     })

@@ -33,22 +33,12 @@
 
       <div style="margin-top:15px;">
         <el-button
+          v-for="item in data"
+          :key="item.id"
           circle
-          type="primary"
+          @click="goAnchor('#anchor-'+item.sequence)"
         >
-          1
-        </el-button>
-        <el-button circle>
-          2
-        </el-button>
-        <el-button circle>
-          3
-        </el-button>
-        <el-button circle>
-          4
-        </el-button>
-        <el-button circle>
-          5
+          {{ item.sequence }}
         </el-button>
       </div>
     </el-card>
@@ -58,12 +48,16 @@
       style="margin-top:15px;"
     >
       <el-card
+        :id="'anchor-'+item.sequence"
         class="box-card"
         shadow="never"
         style="background-color:white;"
       >
         <div style="font-size:18px;">
-          <span style="font-weight:bold;">{{ item.sequence }}.{{ item.title }}</span>
+          <span
+
+            style="font-weight:bold;"
+          >{{ item.sequence }}.{{ item.title }}</span>
         </div>
 
         <div>
@@ -193,8 +187,16 @@ export default class CourseTarget extends Vue {
     ]
   }
   ];
-  creat() {
-    console.log(this.data)
+  create() {
+
+  }
+
+  async requestData() {
+
+  }
+
+  goAnchor(selector) {
+    document.querySelector(selector).scrollIntoView(true)
   }
 }
 </script>

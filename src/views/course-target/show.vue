@@ -38,104 +38,22 @@
         >
           题目
         </el-button>
+
+        <el-button
+          type="info"
+          float:right
+          @click="showPreview = true"
+        >
+          预览
+        </el-button>
       </el-form-item>
-      <!-- <el-button
-        type="primary"
-        plain
-        @click="showCheckbox=!showCheckbox"
-      >
-        多选
-      </el-button> -->
-      <el-button
-        v-if="showCheckbox"
-        type="danger"
-        @click="handleBatchDelete"
-      >
-        批量删除
-      </el-button>
-      <el-button
-        type="info"
-        float:right
-        @click="showPreview = true"
-      >
-        预览
-      </el-button>
     </el-form>
 
-    <!-- <el-table
-      :key="tableChange"
-      v-loading="loading"
-      :data="data"
-      border
-      fit
-      highlight-current-row
-      style="width: 100%;"
-      @selection-change="handleSelect"
-    >
-      <el-table-column
-        v-if="showCheckbox"
-        type="selection"
-        width="55"
-      />
-      <el-table-column
-        align="center"
-        label="问题"
-        prop="title"
-      >
-        <template slot-scope="scope">
-          <text-view :value="scope.row.describes|string2delta" />
-        </template>
-      </el-table-column>
-      <el-table-column
-        align="center"
-        label="选项"
-        prop="optionsList"
-      >
-        <template slot-scope="scope">
-          <text-view :value="scope.row.optionsList|formatOptionList" />
-        </template>
-      </el-table-column>
-      <el-table-column
-        align="center"
-        label="描述"
-        prop="describes"
-      />
-      <el-table-column
-        align="center"
-        prop="totalScore"
-        label="总分"
-      />
-      <el-table-column
-        align="center"
-        label="操作"
-      >
-        <template slot-scope="scope">
-          <el-button
-            size="mini"
-            @click="handleEdit(scope.row)"
-          >
-            编辑
-          </el-button>
-          <el-button
-            type="danger"
-            size="mini"
-            @click="handleDelete(scope.row)"
-          >
-            删除
-          </el-button>
-        </template>
-      </el-table-column>
-    </el-table> -->
     <el-card class="box-card">
       <div style="text-align:center;">
         <h1 style="font-size:30px;">
           {{ name }}
         </h1>
-        <!-- <span style="font-size:20px;display:inline-block;">
-            <text-view
-              :value="describes|string2delta"
-            />
-          </span> -->
       </div>
     </el-card>
     <div
@@ -225,13 +143,7 @@
         </div>
       </el-card>
     </div>
-    <!-- <pagination
-      v-show="total > 0"
-      :total="total"
-      :page.sync="queryOptions.page"
-      :limit.sync="queryOptions.pageSize"
-      @pagination="requestData"
-    /> -->
+
     <div v-if="showDialog">
       <el-dialog
         :title="`${courseTarget.id ? '编辑' : '添加'}题目`"
@@ -255,16 +167,7 @@
               placeholder="请输入题目"
             />
           </el-form-item>
-          <!-- <el-form-item
-            prop="totalScore"
-            label="总分"
-          >
-            <el-input-number
-              v-model="editForm.totalScore"
-              placeholder="请输入总分"
-              maxlength="10"
-            />
-          </el-form-item> -->
+
           <el-form-item
             prop="pointId"
             label="指标点"
@@ -310,10 +213,6 @@
                 style="margin-bottom:10px;"
               >
                 <el-col :span="1">
-                  <!-- <el-input
-                    v-model="item.prefix"
-                    :disabled="true"
-                  /> -->
                   <label>&nbsp;{{ item.prefix }}</label>
                 </el-col>
                 <el-col :span="17">
@@ -325,26 +224,16 @@
                   :span="2"
                   :offset="1"
                 >
-                  <!-- <el-input v-model="item.score" /> -->
                   <el-input-number
                     v-model="item.score"
-                    :min="1"
+                    :min="0"
                     :max="10"
                   />
                 </el-col>
-                <!-- <el-col :span="4">
-                  <el-button @click="deleteOptions(index)">
-                    删除选项
-                  </el-button>
-                </el-col> -->
               </el-form-item>
             </el-row>
           </el-form-item>
-          <!-- <div>
-            <el-button @click="addOptions">
-              增加选项
-            </el-button>
-          </div> -->
+
           <el-form-item
             prop="describes"
             label="描述"
@@ -503,7 +392,7 @@ export default class CourseTarget extends Vue {
 
   async queryGraduationPointSelectList() {
     const res = await this.api.getPoint(this.questionnaireId)
-    if (res.code === 0 && res.data.length > 0) {
+    if (res.code === 0) {
       this.graduationPointList = res.data
     }
   }
@@ -515,7 +404,6 @@ export default class CourseTarget extends Vue {
 
   async handlemove(id, operate) {
     const res = await this.api.CourseTargetMove(id, operate)
-    console.log(res)
     if (res.code === 0) {
       this.requestData()
     } else {
@@ -526,8 +414,8 @@ export default class CourseTarget extends Vue {
     }
   }
 
-  handlecopy(id) {
-    const res = this.api.CourseTargetCopy(id)
+  async handlecopy(id) {
+    const res = await this.api.CourseTargetCopy(id)
     if (res.code === 0) {
       this.requestData()
     } else {
@@ -631,6 +519,7 @@ export default class CourseTarget extends Vue {
     }).then(async() => {
       const res = await this.api.deleteCourseTarget(id)
       if (res.code === 0) {
+        this.requestData()
         this.$message({
           type: 'success',
           message: '删除成功!'
@@ -644,17 +533,6 @@ export default class CourseTarget extends Vue {
       return item.id
     })
   }
-
-  // addOptions() {
-  //   let optionsList = this.optionsList
-  //   let last = optionsList[optionsList.length - 1]
-  //   if (last) {
-  //     let newLastPrefix = String.fromCharCode(last.prefix.charCodeAt(0) + 1)
-  //     optionsList.push({ prefix: newLastPrefix, content: '', score: '' })
-  //   } else {
-  //     optionsList.push({ prefix: 'A', content: '', score: '' })
-  //   }
-  // }
 
   deleteOptions(index) {
     this.optionsList.splice(index, 1)

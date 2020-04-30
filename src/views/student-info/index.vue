@@ -19,7 +19,7 @@
             <svg-icon name="user" /> 姓名: {{ data.name }}<br><br><br>
             <svg-icon name="sex" /> 性别: {{ data.sex }}<br><br><br>
             <svg-icon name="birth" /> 年级: {{ data.grade }}<br><br><br>
-            <svg-icon name="major" /> 毕业专业: {{ data.graduateMajor }}<br><br><br>
+            <svg-icon name="major" /> 毕业专业: {{ data.major }}<br><br><br>
           </div>
           <el-form
             v-else
@@ -30,17 +30,6 @@
             label-width="80px"
             width="50%"
           >
-            <el-form-item
-              prop="sno"
-              label="学号"
-            >
-              <el-input
-                v-model="editForm.sno"
-                disabled
-                placeholder="请输入学号"
-                maxlength="20"
-              />
-            </el-form-item>
             <el-form-item
               prop="name"
               label="姓名"

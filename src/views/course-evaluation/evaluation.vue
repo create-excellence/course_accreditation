@@ -51,12 +51,6 @@
         >
           搜索
         </el-button>
-        <el-button
-          type="primary"
-          icon="el-icon-plus"
-        >
-          开课信息
-        </el-button>
       </el-form-item>
     </el-form>
     <el-table
@@ -76,6 +70,12 @@
         label="班级"
         prop="course"
       />
+      <el-table-column
+        align="center"
+        label="问卷"
+        prop="questionnaire"
+      />
+
       <el-table-column
         align="center"
         label="描述"

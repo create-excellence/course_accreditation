@@ -30,10 +30,10 @@
           </router-link>
           <a
             target="_blank"
-            href="https://github.com/create-excellence/course_accreditation"
+            @click.prevent="handlePerson()"
           >
             <el-dropdown-item>
-              Github
+              个人中心
             </el-dropdown-item>
           </a>
           <a
@@ -83,8 +83,22 @@ export default class extends Vue {
     return UserModule.avatar
   }
 
+  private handlePerson() {
+    let roles = UserModule.roles
+    if (roles.indexOf('student') !== -1) {
+      this.$router.push(`/student-info`)
+    } else {
+      this.$router.push(`/teacher-person-info`)
+    }
+  }
+
   private handlePassword() {
-    this.$router.push(`/change-password`)
+    let roles = UserModule.roles
+    if (roles.indexOf('student') !== -1) {
+      this.$router.push(`/student-info/change-password`)
+    } else {
+      this.$router.push(`/teacher-person-info/change-password`)
+    }
   }
 
   private toggleSideBar() {

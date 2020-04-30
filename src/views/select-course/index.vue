@@ -68,7 +68,7 @@
       />
       <el-table-column
         align="center"
-        label="学生编号"
+        label="学生学号"
         prop="sno"
       />
       <el-table-column
@@ -126,7 +126,7 @@
             @click="handleEdit(scope.row)"
           >
             编辑
-          </el-button><br>
+          </el-button>
           <el-button
             style="margin-top:10px"
             type="danger"

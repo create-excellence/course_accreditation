@@ -7,6 +7,21 @@
       size="small"
       @submit.native.prevent="handleFilter"
     >
+      <!-- <el-form-item
+        style="margin-right:-30px"
+      >
+        <el-select
+          v-model="queryOptions.status"
+          @change="handleFilter"
+        >
+          <el-option
+            v-for="item in statusOption"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+      </el-form-item> -->
       <el-form-item>
         <el-input
           v-model="queryOptions.name"
@@ -89,6 +104,7 @@
       >
         <template slot-scope="scope">
           <el-button
+            v-if="scope.row.isEvaluation"
             size="mini"
             type="primary"
             @click="handleEdit(scope.row)"
@@ -128,6 +144,17 @@ export default class CourseClass extends Vue {
     page: 1,
     pageSize: 20
   }
+
+    statusOption = [{
+      value: -1,
+      label: '课程评价状态'
+    }, {
+      value: 0,
+      label: '未评价'
+    }, {
+      value: 1,
+      label: '已评价'
+    }]
 
   querySemesterOption = {
     page: 1,

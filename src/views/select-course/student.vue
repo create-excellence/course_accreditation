@@ -52,7 +52,7 @@
       </el-form-item>
     </el-form>
     <div style="margin-top: 60px">
-      <el-button @click="showDialog = false">
+      <el-button @click="dialogClose">
         取 消
       </el-button>
       <el-button
@@ -95,11 +95,6 @@ export default class extends Vue {
   }
 
   async init() {
-    // let roles = UserModule.roles
-    // // 用户不是学生
-    // if (roles.indexOf('student') === -1) {
-    //   this.permission = true
-    // }
     this.requestData()
     this.queryStudentList('')
     this.queryCourseClassList('')

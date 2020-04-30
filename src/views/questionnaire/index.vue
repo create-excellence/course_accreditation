@@ -43,28 +43,7 @@
         >
           问卷
         </el-button>
-        <el-button
-          plain
-          type="primary"
-          @click="showCheckbox=!showCheckbox"
-        >
-          多选
-        </el-button>
       </el-form-item>
-      <el-button
-        v-if="showCheckbox"
-        type="danger"
-        @click="handleBatchDelete"
-      >
-        批量删除
-      </el-button>
-      <el-button
-
-        type="primary"
-        @click="showExcelDialog=true"
-      >
-        批量导入问卷
-      </el-button>
     </el-form>
 
     <el-table
@@ -88,15 +67,13 @@
       />
       <el-table-column
         align="center"
-        width="50px"
-        prop="totalScore"
-        label="分数"
-      />
-      <el-table-column
-        align="center"
-        prop="no"
+
         label="班级"
-      />
+      >
+        <template slot-scope="scope">
+          <span> {{ scope.row.no+scope.row.className }}</span>
+        </template>
+      </el-table-column>
       <el-table-column
         prop="describes"
         show-overflow-tooltip
@@ -196,21 +173,12 @@
           </el-select>
         </el-form-item>
         <el-form-item
-          prop="totalScore"
-          label="问卷总分"
-        >
-          <el-input
-            v-model="editForm.totalScore"
-            placeholder="请输入问卷总分"
-            maxlength="10"
-          />
-        </el-form-item>
-        <el-form-item
           label="问卷描述"
           prop="describes"
         >
           <el-input
             v-model="editForm.describes"
+            type="textarea"
             placeholder="请输入问卷描述"
           />
         </el-form-item>
