@@ -132,6 +132,7 @@
     <el-dialog
       :title="`${questionnaire.id ? '编辑' : '添加'}问卷`"
       :visible.sync="showDialog"
+      :close-on-click-modal="false"
       @close="showDialog = false"
     >
       <el-form

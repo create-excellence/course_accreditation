@@ -29,8 +29,21 @@ export const getCourseEvaluationStudent = (queryOptions:any) =>
     method: 'GET'
   })
 
-export const startEvaluation = () =>
+export const startEvaluation = (evaluationId:number) =>
   request({
-    url: '/course-evaluation/startEvaluation',
+    url: '/course-evaluation/startEvaluation?courseEvaluationId=' + evaluationId,
     method: 'GET'
+  })
+
+export const getQuestions = (evaluationId:number) =>
+  request({
+    url: '/course-evaluation/getQuestions?courseEvaluationId=' + evaluationId,
+    method: 'GET'
+  })
+
+export const submit = (data:any) =>
+  request({
+    url: '/course-evaluation/submit',
+    method: 'POST',
+    data
   })

@@ -148,7 +148,7 @@
           <el-button
             size="mini"
             type="primary"
-            @click="$router.push({path:`my-evaluation/${scope.row.id}/evaluation-detail`,query:{course:scope.row.course}})"
+            @click="$router.push({path:`evaluation/${scope.row.id}/evaluation-detail`,query:{course:scope.row.course}})"
           >
             查看参与情况
           </el-button>

@@ -156,12 +156,12 @@
         width="300px"
       >
         <template slot-scope="scope">
-          <div v-if="!scope.row.status===1">
+          <div v-if="scope.row.status===1">
             <el-button
               v-if="!scope.row.isEvaluation"
               size="mini"
               type="primary"
-              @click="handleStart"
+              @click="handleStart(scope.row.id)"
             >
               开始评价
             </el-button>
@@ -170,7 +170,7 @@
               size="mini"
               type="success"
               plain
-              @click="handleStart"
+              @click="handleStart(scope.row.id)"
             >
               修改评价
             </el-button>
@@ -280,12 +280,10 @@ export default class MyEvaluation extends Vue {
     this.querySemesterList()
   }
 
-  async handleStart() {
-    const res = await this.api.startEvaluation()
+  async handleStart(courseEvaluationId:number) {
+    const res = await this.api.startEvaluation(courseEvaluationId)
     if (res.code === 0) {
-      console.log(1)
-    } else {
-      console.log(2)
+      this.$router.push(`/my-evaluation/${courseEvaluationId}/evaluation_test`)
     }
   }
 

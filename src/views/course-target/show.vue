@@ -148,6 +148,7 @@
       <el-dialog
         :title="`${courseTarget.id ? '编辑' : '添加'}题目`"
         :visible.sync="showDialog"
+        :close-on-click-modal="false"
         @close="showDialog = false"
       >
         <el-form

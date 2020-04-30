@@ -124,6 +124,7 @@ export interface api {
     createCourseEvaluation(data:m.CreateCourseEvaluationForm):m.ServerResponse
     getMyCourseEvaluation(queryOptions:any):m.ServerResponse
     getCourseEvaluationStudent(queryOptions:any):m.ServerResponse
-    startEvaluation():m.ServerResponse
-
+    startEvaluation(evaluationId:number):m.ServerResponse
+    getQuestions(evaluationId:number):m.ServerResponse
+    submit(data:any):m.ServerResponse
 }

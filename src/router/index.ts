@@ -67,7 +67,8 @@ export const routes: RouteConfig[] = [
     redirect: '/teacher-my-course/index',
     meta: {
       title: '我的课程',
-      icon: 'course'
+      icon: 'course',
+      roles: ['teacher']
     },
     children: [
       {
@@ -76,7 +77,8 @@ export const routes: RouteConfig[] = [
         meta: {
           title: '我的课程',
           icon: 'course',
-          breadcrumb: false
+          breadcrumb: false,
+          roles: ['teacher']
         }
       }, {
         path: ':courseClassId(\\d+)/student',
@@ -84,7 +86,8 @@ export const routes: RouteConfig[] = [
         meta: {
           title: '查看学生',
           hidden: true,
-          activeMenu: '/teacher-my-course/index'
+          activeMenu: '/teacher-my-course/index',
+          roles: ['teacher']
         }
       }
     ]
@@ -92,7 +95,8 @@ export const routes: RouteConfig[] = [
     path: '/questionnaire',
     component: Layout,
     meta: {
-      title: '问卷'
+      title: '问卷',
+      roles: ['teacher']
     },
     children: [
       {
@@ -101,7 +105,8 @@ export const routes: RouteConfig[] = [
         meta: {
           title: '问卷',
           icon: 'questionnaire',
-          breadcrumb: false
+          breadcrumb: false,
+          roles: ['teacher']
         }
       },
       {
@@ -111,7 +116,8 @@ export const routes: RouteConfig[] = [
           title: '题目编辑',
           noCache: true,
           activeMenu: '/questionnaire',
-          hidden: true
+          hidden: true,
+          roles: ['teacher']
         }
       }
     ]
@@ -143,7 +149,7 @@ export const routes: RouteConfig[] = [
           roles: ['teacher']
         }
       }, {
-        path: 'my-evaluation/:courseEvaluationId(\\d+)/evaluation-detail',
+        path: 'evaluation/:courseEvaluationId(\\d+)/evaluation-detail',
         component: () => import('@/views/course-evaluation/evaluation-detail.vue'),
         meta: {
           title: '查看评价详情',
@@ -161,7 +167,8 @@ export const routes: RouteConfig[] = [
         component: () => import('@/views/student/index.vue'),
         meta: {
           title: '学生管理',
-          icon: 'student'
+          icon: 'student',
+          roles: ['admin']
         }
       }
     ]
@@ -171,7 +178,8 @@ export const routes: RouteConfig[] = [
     component: Layout,
     meta: {
       title: '课程管理',
-      icon: 'course'
+      icon: 'course',
+      roles: ['admin']
     },
     children: [
       {
@@ -180,7 +188,8 @@ export const routes: RouteConfig[] = [
         meta: {
           title: '课程管理',
           icon: 'course',
-          breadcrumb: false
+          breadcrumb: false,
+          roles: ['admin']
         }
       },
       {
@@ -188,7 +197,8 @@ export const routes: RouteConfig[] = [
         component: () => import('@/views/course-class/show.vue'),
         meta: {
           title: '开课班级',
-          hidden: true
+          hidden: true,
+          roles: ['admin']
         }
       }
     ]
@@ -203,7 +213,8 @@ export const routes: RouteConfig[] = [
         component: () => import('@/views/select-course/index.vue'),
         meta: {
           title: '选课管理',
-          icon: 'select-course'
+          icon: 'select-course',
+          roles: ['admin']
         }
       }
     ]
@@ -218,7 +229,8 @@ export const routes: RouteConfig[] = [
         component: () => import('@/views/major/index.vue'),
         meta: {
           title: '专业管理',
-          icon: 'major'
+          icon: 'major',
+          roles: ['admin']
         }
       }
     ]
@@ -247,9 +259,13 @@ export const routes: RouteConfig[] = [
         component: () => import('@/views/course-evaluation/my-evaluation.vue'),
         meta: {
           title: '我的课程评价',
-          icon: 'course',
+          icon: 'evaluation',
           roles: ['student']
         }
+      }, {
+        path: ':courseEvaluationId(\\d+)/evaluation_test',
+        component: () => import('@/views/course-evaluation/evaluation_test.vue'),
+        meta: { hidden: true, title: '课程评价' }
       }
     ]
   },
@@ -289,7 +305,8 @@ export const routes: RouteConfig[] = [
     component: Layout,
     meta: {
       title: '毕业要求管理',
-      icon: 'graduation-demand'
+      icon: 'graduation-demand',
+      roles: ['admin']
     },
     children: [
       {
@@ -298,7 +315,8 @@ export const routes: RouteConfig[] = [
         meta: {
           title: '毕业要求管理',
           icon: 'graduation-demand',
-          breadcrumb: false
+          breadcrumb: false,
+          roles: ['admin']
         }
       },
       {
@@ -308,7 +326,8 @@ export const routes: RouteConfig[] = [
           title: '毕业指标点',
           noCache: true,
           activeMenu: '/graduation-demand',
-          hidden: true
+          hidden: true,
+          roles: ['admin']
         },
         children: [ {
           path: '/graduation-demand/:graduationDemandId(\\d+)/graduation-point/:graduationPointId(\\d+)/supporting-course',
@@ -316,7 +335,8 @@ export const routes: RouteConfig[] = [
           meta: {
             title: '支撑课程',
             activeMenu: '/graduation-demand',
-            hidden: true
+            hidden: true,
+            roles: ['admin']
           }
         }]
       }
@@ -329,7 +349,8 @@ export const routes: RouteConfig[] = [
     redirect: '/graduation-point/index',
     meta: {
       title: '毕业要求指标点管理',
-      icon: 'graduation-point'
+      icon: 'graduation-point',
+      roles: ['admin']
     },
     children: [
       {
@@ -338,7 +359,8 @@ export const routes: RouteConfig[] = [
         meta: {
           title: '毕业要求指标点管理',
           icon: 'graduation-point',
-          breadcrumb: false
+          breadcrumb: false,
+          roles: ['admin']
         }
       },
       {
@@ -348,7 +370,8 @@ export const routes: RouteConfig[] = [
           title: '支撑课程',
           noCache: true,
           activeMenu: '/graduation-point',
-          hidden: true
+          hidden: true,
+          roles: ['admin']
         }
       }
     ]
@@ -363,7 +386,8 @@ export const routes: RouteConfig[] = [
         component: () => import('@/views/supporting-course/index.vue'),
         meta: {
           title: '支撑课程管理',
-          icon: 'supporting-course'
+          icon: 'supporting-course',
+          roles: ['admin']
         }
       }
     ]
@@ -378,7 +402,8 @@ export const routes: RouteConfig[] = [
         component: () => import('@/views/semester/index.vue'),
         meta: {
           title: '学期管理',
-          icon: 'semester'
+          icon: 'semester',
+          roles: ['admin']
         }
       }
     ]
@@ -394,7 +419,8 @@ export const routes: RouteConfig[] = [
         component: () => import('@/views/teacher/index.vue'),
         meta: {
           title: '老师管理',
-          icon: 'teacher'
+          icon: 'teacher',
+          roles: ['admin']
         }
       }
     ]
@@ -409,7 +435,8 @@ export const routes: RouteConfig[] = [
         component: () => import('@/views/course-class/index.vue'),
         meta: {
           title: '开课班级管理',
-          icon: 'course-class'
+          icon: 'course-class',
+          roles: ['admin']
         }
       }
     ]
@@ -443,10 +470,6 @@ export const routes: RouteConfig[] = [
         }
       }
     ]
-  }, {
-    path: '/course-evaluation/evaluation_test',
-    component: () => import('@/views/course-evaluation/evaluation_test.vue'),
-    meta: { hidden: true, title: '课程评价' }
   },
   {
     path: '*',

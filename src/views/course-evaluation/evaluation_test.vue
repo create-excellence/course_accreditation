@@ -1,5 +1,8 @@
 <template>
-  <div class="main">
+  <div
+    v-loading.fullscreen.lock="loading"
+    class="main"
+  >
     <el-card
       class="box-card"
       shadow="never"
@@ -16,25 +19,11 @@
       shadow="never"
       style="background-color:white;margin-top:15px;"
     >
-      <div>
-        <el-radio
-          v-model="radio"
-          label="1"
-        >
-          已答
-        </el-radio>
-        <el-radio
-          v-model="radio"
-          label="2"
-        >
-          未答
-        </el-radio>
-      </div>
-
       <div style="margin-top:15px;">
         <el-button
           v-for="item in data"
           :key="item.id"
+          :type="item.choose?'primary':''"
           circle
           @click="goAnchor('#anchor-'+item.sequence)"
         >
@@ -67,7 +56,7 @@
             style="margin-top:15px;"
           >
             <el-radio
-              v-model="item.optionsScore"
+              v-model="item.choose"
               :label="option.prefix"
               size="medium"
               style="font-size:30px;"
@@ -88,6 +77,7 @@
       <el-button
         type="primary"
         style="float:right;"
+        @click="handleSubmit"
       >
         提交
       </el-button>
@@ -98,101 +88,37 @@
 <script lang="ts">
 import * as m from '@/api/model'
 import { Component, Vue, Watch } from 'vue-property-decorator'
-export default class CourseTarget extends Vue {
-  radio:string = '1'
-  name:string = '测试卷一'
-  optionsList :m.OptionsList[]= []
-  data:m.CourseTarget[] = [{
-    id: 1,
-    describes: '第一道题',
-    questionnaireId: 1,
-    sequence: 1,
-    title: '题目题目题目',
-    totalScore: 100,
-    optionsList: [{
-      prefix: 'A',
-      content: '选项A',
-      score: '2'
-    }, {
-      prefix: 'B',
-      content: '选项B',
-      score: '2'
-    },
-    {
-      prefix: 'C',
-      content: '选项C',
-      score: '2'
-    },
-    {
-      prefix: 'D',
-      content: '选项D',
-      score: '2'
-    }
-    ]
-  },
-  {
-    id: 2,
-    describes: '第二道题',
-    questionnaireId: 2,
-    sequence: 2,
-    title: '题目题目题目',
-    totalScore: 100,
-    optionsList: [{
-      prefix: 'A',
-      content: '选项A',
-      score: '2'
-    }, {
-      prefix: 'B',
-      content: '选项B',
-      score: '2'
-    },
-    {
-      prefix: 'C',
-      content: '选项C',
-      score: '2'
-    },
-    {
-      prefix: 'D',
-      content: '选项D',
-      score: '2'
-    }
-    ]
-  },
-  {
-    id: 3,
-    describes: '第三道题',
-    questionnaireId: 3,
-    sequence: 3,
-    title: '题目题目题目',
-    totalScore: 100,
-    optionsList: [{
-      prefix: 'A',
-      content: '选项A',
-      score: '2'
-    }, {
-      prefix: 'B',
-      content: '选项B',
-      score: '2'
-    },
-    {
-      prefix: 'C',
-      content: '选项C',
-      score: '2'
-    },
-    {
-      prefix: 'D',
-      content: '选项D',
-      score: '2'
-    }
-    ]
-  }
-  ];
-  create() {
+@Component({})
+export default class EvaluationTest extends Vue {
+  name='测试卷一'
+  data:m.CourseTarget[] = []
+  courseEvaluationId=-1
+  loading=false
 
+  created() {
+    this.init()
+  }
+
+  async init() {
+    let courseEvaluationId = Number(this.$route.params.courseEvaluationId)
+    this.courseEvaluationId = courseEvaluationId
+    this.requestData()
   }
 
   async requestData() {
+    this.loading = true
+    const res = await this.api.getQuestions(this.courseEvaluationId)
+    if (res.code === 0) {
+      this.data = res.data
+    }
+    this.loading = false
+  }
 
+  async handleSubmit() {
+    const res = await this.api.submit(this.data)
+    if (res.code === 0) {
+      this.$router.push(`/my-evaluation`)
+    }
   }
 
   goAnchor(selector) {

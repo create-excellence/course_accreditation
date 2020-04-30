@@ -34,16 +34,6 @@
       style="width: 100%;"
       @selection-change="handleSelect"
     >
-      <!-- <el-table-column
-        align="center"
-        label="学生编号"
-        prop="sno"
-      />
-      <el-table-column
-        align="center"
-        label="学生姓名"
-        prop="student"
-      /> -->
       <el-table-column
         align="center"
         label="课程序号"
@@ -74,36 +64,6 @@
         label="结束周"
         prop="endWeek"
       />
-      <el-table-column
-        align="center"
-        prop="createTime"
-        label="添加时间"
-      />
-      <!-- <el-table-column
-        align="center"
-        prop="updateTime"
-        label="更新时间"
-      /> -->
-      <el-table-column
-        align="center"
-        label="操作"
-      >
-        <template slot-scope="scope">
-          <!-- <el-button
-            size="mini"
-            @click="handleEdit(scope.row)"
-          >
-            编辑
-          </el-button> -->
-          <el-button
-            type="danger"
-            size="mini"
-            @click="handleDelete(scope.row)"
-          >
-            退课
-          </el-button>
-        </template>
-      </el-table-column>
     </el-table>
     <pagination
       v-show="total > 0"
