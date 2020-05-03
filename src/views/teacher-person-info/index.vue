@@ -72,7 +72,7 @@
               <el-input
                 v-model="editForm.name"
                 placeholder="请输入姓名"
-                maxlength="10"
+                maxlength="20"
               />
             </el-form-item>
             <el-form-item
@@ -161,6 +161,7 @@ export default class TeacherPersonInfo extends Vue {
   showChange = false
   editForm:m.CreateTeacherForm={} as any
   headers={} as any
+  baseUrl = process.env.VUE_APP_BASE_API
 
   rules={
     name: [{ required: true, message: '姓名不能为空', trigger: 'blur' }]

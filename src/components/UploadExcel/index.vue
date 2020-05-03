@@ -35,6 +35,7 @@
               2.必须按照模板上传
               <el-link
                 type="primary"
+                @click="handleDownload"
               >
                 点击下载模板
               </el-link>
@@ -106,10 +107,12 @@ import { UserModule } from '@/store/modules/user'
 export default class extends Vue {
     @Prop({ default: false, required: true }) private show!: boolean
     @Prop({ required: true }) private action!: string
+    @Prop({ required: true }) private download!: string
     data=[]
     total = 0
     showData = false
-    // TODO 下载模板未完成
+    baseUrl = process.env.VUE_APP_BASE_API
+
   pageOption={
     page: 1,
     pageSize: 10
@@ -134,6 +137,10 @@ export default class extends Vue {
   handleBack() {
     this.pageOption.page = 1
     this.showData = false
+  }
+
+  handleDownload() {
+    window.open(this.baseUrl + '/excel/' + this.download)
   }
 
   success(res:any) {

@@ -21,7 +21,7 @@
         <el-input
           v-model="queryOptions.code"
           placeholder="请输入专业代码"
-          maxlength="10"
+          maxlength="20"
         />
       </el-form-item>
       <el-form-item>
@@ -142,7 +142,7 @@
           <el-input
             v-model="editForm.name"
             placeholder="请输入专业名称"
-            maxlength="10"
+            maxlength="20"
           />
         </el-form-item>
         <el-form-item
@@ -152,7 +152,7 @@
           <el-input
             v-model="editForm.code"
             placeholder="请输入专业代码"
-            maxlength="10"
+            maxlength="20"
           />
         </el-form-item>
       </el-form>
@@ -174,6 +174,7 @@
     <excel-dialog
       action="/major/batchSave"
       :show.sync="showExcelDialog"
+      download="专业导入模板.xls"
       @requestData="requestData"
     />
   </div>

@@ -127,4 +127,5 @@ export interface api {
     startEvaluation(evaluationId:number):m.ServerResponse
     getQuestions(evaluationId:number):m.ServerResponse
     submit(data:any):m.ServerResponse
+    deleteEvaluation(id:number):m.ServerResponse
 }

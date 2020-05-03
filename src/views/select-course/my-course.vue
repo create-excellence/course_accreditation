@@ -85,11 +85,6 @@
         />
       </el-dialog>
     </div>
-    <excel-dialog
-      action="/select-course/batchSave"
-      :show.sync="showExcelDialog"
-      @requestData="requestData"
-    />
   </div>
 </template>
 

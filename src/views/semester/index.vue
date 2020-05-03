@@ -133,7 +133,7 @@
           <el-input
             v-model="editForm.name"
             placeholder="请输入学期名称"
-            maxlength="10"
+            maxlength="20"
           />
         </el-form-item>
         <el-form-item
@@ -165,6 +165,7 @@
     <excel-dialog
       action="/semester/batchSave"
       :show.sync="showExcelDialog"
+      download="学期导入模板.xls"
       @requestData="requestData"
     />
   </div>

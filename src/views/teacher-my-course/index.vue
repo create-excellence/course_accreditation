@@ -31,7 +31,7 @@
           size="small"
           style="margin-left:-30px"
           placeholder="请输入课程名称"
-          maxlength="10"
+          maxlength="20"
         />
       </el-form-item>
       <el-form-item>
@@ -96,7 +96,7 @@
           <el-button
             size="mini"
             type="primary"
-            @click="$router.push({path:`/course-evaluation/index` ,query:{courseClassId:scope.row.id,courseClassName:scope.row.course}})"
+            @click="$router.push({path:`/course-evaluation/release-evaluation` ,query:{courseClassId:scope.row.id,courseClassName:scope.row.course}})"
           >
             发布课程评价
           </el-button>

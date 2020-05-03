@@ -37,7 +37,7 @@
               <el-input
                 v-model="editForm.name"
                 placeholder="请输入姓名"
-                maxlength="10"
+                maxlength="20"
               />
             </el-form-item>
             <el-form-item

@@ -8,6 +8,12 @@ export const queryCourseEvaluation = (queryOptions:any) =>
     method: 'GET'
   })
 
+export const deleteEvaluation = (id:number) =>
+  request({
+    url: '/course-evaluation/' + id,
+    method: 'DELETE'
+  })
+
 export const getMyCourseEvaluation = (queryOptions:any) =>
   request({
     url: '/course-evaluation/getMyCourseEvaluation',

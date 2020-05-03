@@ -12,7 +12,7 @@
         <el-input
           v-model="queryOptions.title"
           placeholder="请输入问题"
-          maxlength="10"
+          maxlength="20"
         />
       </el-form-item>
       <el-form-item
@@ -21,7 +21,7 @@
         <el-input
           v-model="queryOptions.options"
           placeholder="请输入选项"
-          maxlength="10"
+          maxlength="20"
         />
       </el-form-item>
       <el-form-item>

@@ -37,7 +37,10 @@ export const routes: RouteConfig[] = [
       title: 'Login',
       hidden: true
     }
-  },
+  }
+]
+
+export const DynamicRoutes : RouteConfig[] = [
   {
     path: '/404',
     component: () => import(/* webpackChunkName: "404" */ '@/views/404.vue'),
@@ -161,6 +164,9 @@ export const routes: RouteConfig[] = [
     path: '/student',
     component: Layout,
     redirect: '/student/index',
+    meta: {
+      roles: ['admin']
+    },
     children: [
       {
         path: 'index',
@@ -207,6 +213,9 @@ export const routes: RouteConfig[] = [
     path: '/select-course',
     component: Layout,
     redirect: '/select-course/index',
+    meta: {
+      roles: ['admin']
+    },
     children: [
       {
         path: 'index',
@@ -223,6 +232,9 @@ export const routes: RouteConfig[] = [
     path: '/major',
     component: Layout,
     redirect: '/major/index',
+    meta: {
+      roles: ['admin']
+    },
     children: [
       {
         path: 'index',
@@ -238,6 +250,9 @@ export const routes: RouteConfig[] = [
     path: '/my-course',
     component: Layout,
     redirect: '/my-course/index',
+    meta: {
+      roles: ['student']
+    },
     children: [
       {
         path: 'index',
@@ -253,6 +268,9 @@ export const routes: RouteConfig[] = [
     path: '/my-evaluation',
     component: Layout,
     redirect: '/my-evaluation/index',
+    meta: {
+      roles: ['student']
+    },
     children: [
       {
         path: 'index',
@@ -265,7 +283,7 @@ export const routes: RouteConfig[] = [
       }, {
         path: ':courseEvaluationId(\\d+)/evaluation_test',
         component: () => import('@/views/course-evaluation/evaluation_test.vue'),
-        meta: { hidden: true, title: '课程评价' }
+        meta: { hidden: true, title: '课程评价', roles: ['student'] }
       }
     ]
   },
@@ -380,6 +398,9 @@ export const routes: RouteConfig[] = [
     path: '/supporting-course',
     component: Layout,
     redirect: '/supporting-course/index',
+    meta: {
+      roles: ['admin']
+    },
     children: [
       {
         path: 'index',
@@ -395,6 +416,9 @@ export const routes: RouteConfig[] = [
   {
     path: '/semester',
     component: Layout,
+    meta: {
+      roles: ['admin']
+    },
     redirect: '/semester/index',
     children: [
       {
@@ -413,6 +437,9 @@ export const routes: RouteConfig[] = [
     path: '/teacher',
     component: Layout,
     redirect: '/teacher/index',
+    meta: {
+      roles: ['admin']
+    },
     children: [
       {
         path: 'index',
@@ -429,6 +456,9 @@ export const routes: RouteConfig[] = [
     path: '/course-class',
     component: Layout,
     redirect: '/course-class/index',
+    meta: {
+      roles: ['admin']
+    },
     children: [
       {
         path: 'index',
@@ -480,6 +510,7 @@ export const routes: RouteConfig[] = [
 
 const createRouter = () => new Router({
   mode: 'history',
+
   scrollBehavior: (to, from, savedPosition) => {
     if (savedPosition) {
       return savedPosition
@@ -487,7 +518,8 @@ const createRouter = () => new Router({
       return { x: 0, y: 0 }
     }
   },
-  base: process.env.BASE_URL,
+  base: '/app/',
+  // base: process.env.BASE_URL,
   routes: routes
 })
 

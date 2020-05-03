@@ -217,7 +217,7 @@
           <el-input
             v-model="editForm.name"
             placeholder="请输入姓名"
-            maxlength="10"
+            maxlength="20"
           />
         </el-form-item>
         <el-form-item
@@ -313,6 +313,7 @@
     <excel-dialog
       action="/teacher/batchSave"
       :show.sync="showExcelDialog"
+      download="老师导入模板.xls"
       @requestData="requestData"
     />
   </div>

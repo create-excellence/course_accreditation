@@ -12,7 +12,7 @@
         <el-input
           v-model="queryOptions.courseName"
           placeholder="请输入课程名称"
-          maxlength="10"
+          maxlength="20"
         />
       </el-form-item>
       <el-form-item
@@ -224,6 +224,7 @@
     <excel-dialog
       action="/supporting-course/batchSave"
       :show.sync="showExcelDialog"
+      download="支撑课程导入模板.xls"
       @requestData="requestData"
     />
   </div>

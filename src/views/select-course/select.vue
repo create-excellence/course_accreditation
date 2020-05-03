@@ -21,7 +21,7 @@
         <el-input
           v-model="queryOptions.teacher"
           placeholder="执教老师姓名"
-          maxlength="10"
+          maxlength="20"
         />
       </el-form-item>
       <el-form-item

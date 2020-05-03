@@ -15,7 +15,7 @@
         <el-input
           v-model="queryOptions.name"
           placeholder="请输入问卷名称"
-          maxlength="10"
+          maxlength="20"
         />
       </el-form-item>
       <el-form-item
@@ -149,7 +149,7 @@
           <el-input
             v-model="editForm.name"
             placeholder="请输入问卷名称"
-            maxlength="10"
+            maxlength="20"
           />
         </el-form-item>
         <el-form-item
@@ -199,11 +199,6 @@
         </el-button>
       </div>
     </el-dialog>
-    <excel-dialog
-      action="/questionnaire/batchSave"
-      :show.sync="showExcelDialog"
-      @requestData="requestData"
-    />
   </div>
 </template>
 
@@ -353,7 +348,7 @@ export default class Questionnaire extends Vue {
       pageSize: 20,
       no: query
     }
-    const res = await this.api.queryCourseClass(option)
+    const res = await this.api.getMyCourse(option)
     if (res.code === 0) {
       let CourseClassList = res.data.list.map((item:m.CourseClass) => {
         return { value: item.no }
@@ -368,8 +363,8 @@ export default class Questionnaire extends Vue {
       pageSize: 20,
       no: query
     }
-    const res = await this.api.queryCourseClass(option)
-    if (res.code === 0 && res.data.list.length > 0) {
+    const res = await this.api.getMyCourse(option)
+    if (res.code === 0) {
       this.courseClassList = res.data.list
     }
   }

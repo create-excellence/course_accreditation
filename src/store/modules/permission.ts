@@ -1,9 +1,8 @@
-import { UserModule } from '@/store/modules/user'
-import { VuexModule, Module, getModule, MutationAction } from 'vuex-module-decorators'
+import { VuexModule, Module, Mutation, Action, getModule } from 'vuex-module-decorators'
 import { RouteConfig } from 'vue-router'
+import { DynamicRoutes, routes } from '@/router'
 import store from '@/store'
-import { routes } from '@/router'
-
+import { UserModule } from '@/store/modules/user'
 const hasPermission = (roles: string[], route: RouteConfig) => {
   if (route.meta && route.meta.roles) {
     return roles.some(role => route.meta.roles.includes(role))
@@ -12,13 +11,13 @@ const hasPermission = (roles: string[], route: RouteConfig) => {
   }
 }
 
-export const filterRoutes = (routes: RouteConfig[], roles: string[]) => {
+export const filterDynamicRoutes = (routes: RouteConfig[], roles: string[]) => {
   const res: RouteConfig[] = []
   routes.forEach(route => {
     const r = { ...route }
     if (hasPermission(roles, r)) {
       if (r.children) {
-        r.children = filterRoutes(r.children, roles)
+        r.children = filterDynamicRoutes(r.children, roles)
       }
       res.push(r)
     }
@@ -28,16 +27,25 @@ export const filterRoutes = (routes: RouteConfig[], roles: string[]) => {
 
 export interface IPermissionState {
   routes: RouteConfig[]
+  dynamicRoutes: RouteConfig[]
 }
 
 @Module({ dynamic: true, store, name: 'permission' })
 class Permission extends VuexModule implements IPermissionState {
-  routes: RouteConfig[] = []
+  public routes: RouteConfig[] = []
+  public dynamicRoutes: RouteConfig[] = []
 
-  @MutationAction({ mutate: ['routes'] })
-  async genrateRoutes() {
-    let accessedRoutes = filterRoutes(routes, UserModule.roles).filter(item => item.children && item.children.length > 0)
-    return { routes: accessedRoutes }
+  @Mutation
+  private SET_ROUTES(newRoutes: RouteConfig[]) {
+    this.routes = routes.concat(newRoutes)
+    this.dynamicRoutes = newRoutes
+  }
+
+  @Action
+  public genrateRoutes() {
+    let accessedRoutes
+    accessedRoutes = filterDynamicRoutes(DynamicRoutes, UserModule.roles)
+    this.SET_ROUTES(accessedRoutes)
   }
 }
 

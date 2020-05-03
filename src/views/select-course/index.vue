@@ -161,6 +161,7 @@
     <excel-dialog
       action="/select-course/batchSave"
       :show.sync="showExcelDialog"
+      download="选课导入模板.xls"
       @requestData="requestData"
     />
   </div>

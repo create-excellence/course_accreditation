@@ -36,8 +36,7 @@ Vue.config.productionTip = false
 
 declare module 'vue/types/vue' {
   interface Vue {
-    api: api.api,
-    baseUrl:'http://localhost:8888/v1'
+    api: api.api
   }
 }
 

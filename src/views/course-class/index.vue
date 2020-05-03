@@ -12,7 +12,7 @@
         <el-input
           v-model="queryOptions.semester"
           placeholder="学期"
-          maxlength="10"
+          maxlength="20"
         />
       </el-form-item>
       <el-form-item
@@ -21,7 +21,7 @@
         <el-input
           v-model="queryOptions.teacher"
           placeholder="执教老师姓名"
-          maxlength="10"
+          maxlength="20"
         />
       </el-form-item>
       <el-form-item
@@ -30,7 +30,7 @@
         <el-input
           v-model="queryOptions.course"
           placeholder="课程名称"
-          maxlength="10"
+          maxlength="20"
         />
       </el-form-item>
       <el-form-item>
@@ -341,6 +341,7 @@
     <excel-dialog
       action="/course-class/batchSave"
       :show.sync="showExcelDialog"
+      download="开课班级导入模板.xls"
       @requestData="requestData"
     />
   </div>

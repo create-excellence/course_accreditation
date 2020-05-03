@@ -17,7 +17,7 @@
           <el-input
             v-model="queryOptions.no"
             placeholder="请输入指标点编号"
-            maxlength="10"
+            maxlength="20"
           />
         </el-form-item>
         <el-form-item
@@ -26,7 +26,7 @@
           <el-input
             v-model="queryOptions.content"
             placeholder="请输入指标点内容"
-            maxlength="10"
+            maxlength="20"
           />
         </el-form-item>
         <el-form-item>
@@ -156,7 +156,7 @@
             <el-input
               v-model="editForm.no"
               placeholder="请输入指标点编号"
-              maxlength="10"
+              maxlength="20"
             />
           </el-form-item>
           <el-form-item
@@ -182,7 +182,7 @@
             <el-input
               v-model="editForm.content"
               placeholder="请输入指标点内容"
-              maxlength="10"
+              maxlength="20"
             />
           </el-form-item>
         </el-form>

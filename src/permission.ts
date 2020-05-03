@@ -4,6 +4,7 @@ import 'nprogress/nprogress.css'
 import { Message } from 'element-ui'
 import { Route } from 'vue-router'
 import { UserModule } from '@/store/modules/user'
+import { PermissionModule } from '@/store/modules/permission'
 
 NProgress.configure({ showSpinner: false })
 
@@ -25,6 +26,8 @@ router.beforeEach(async(to: Route, _: Route, next: any) => {
         try {
           // 注释掉获取信息模块
           await UserModule.GetUserInfo()
+          PermissionModule.genrateRoutes()
+          router.addRoutes(PermissionModule.dynamicRoutes)
           // Set the replace: true, so the navigation will not leave a history record
           next({ ...to, replace: true })
         } catch (err) {

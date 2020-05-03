@@ -16,7 +16,7 @@
           <el-input
             v-model="queryOptions.no"
             placeholder="请输入毕业要求编号"
-            maxlength="10"
+            maxlength="20"
           />
         </el-form-item>
         <el-form-item
@@ -167,7 +167,7 @@
             <el-input
               v-model="editForm.no"
               placeholder="请输入毕业要求编号"
-              maxlength="10"
+              maxlength="20"
             />
           </el-form-item>
           <el-form-item
@@ -220,6 +220,7 @@
       <excel-dialog
         action="/graduation-demand/batchSave"
         :show.sync="showExcelDialog"
+        download="毕业要求导入模板.xls"
         @requestData="requestData"
       />
     </div>

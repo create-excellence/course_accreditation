@@ -26,7 +26,7 @@
         <el-input
           v-model="queryOptions.name"
           placeholder="请输入学生姓名"
-          maxlength="10"
+          maxlength="20"
         />
       </el-form-item>
       <el-form-item>

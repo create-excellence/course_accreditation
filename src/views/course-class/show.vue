@@ -12,7 +12,7 @@
         <el-input
           v-model="queryOptions.semester"
           placeholder="学期"
-          maxlength="10"
+          maxlength="20"
         />
       </el-form-item>
       <el-form-item
@@ -21,7 +21,7 @@
         <el-input
           v-model="queryOptions.teacher"
           placeholder="执教老师姓名"
-          maxlength="10"
+          maxlength="20"
         />
       </el-form-item>
       <el-form-item
@@ -30,7 +30,7 @@
         <el-input
           v-model="queryOptions.course"
           placeholder="课程名称"
-          maxlength="10"
+          maxlength="20"
         />
       </el-form-item>
       <el-form-item>
@@ -61,13 +61,6 @@
         @click="handleBatchDelete"
       >
         批量删除
-      </el-button>
-      <el-button
-        type="primary"
-        plain
-        @click="showExcelDialog=true"
-      >
-        批量导入开课信息
       </el-button>
     </el-form>
     <el-table
@@ -354,11 +347,6 @@
         </el-button>
       </div>
     </el-dialog>
-    <excel-dialog
-      action="/course-class/batchSave"
-      :show.sync="showExcelDialog"
-      @requestData="requestData"
-    />
   </div>
 </template>
 
@@ -380,8 +368,6 @@ export default class CourseClass extends Vue {
   editForm:m.CreateCourseClassForm={} as any
   showCheckbox = false
   selectCourseClassId:number[] = []
-
-  showExcelDialog=false
 
   statusOption = [{
     value: 0,

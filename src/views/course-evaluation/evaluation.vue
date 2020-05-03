@@ -41,7 +41,7 @@
         <el-input
           v-model="queryOptions.name"
           placeholder="请输入课程评价名称"
-          maxlength="10"
+          maxlength="20"
         />
       </el-form-item>
       <el-form-item>
@@ -146,6 +146,7 @@
       >
         <template slot-scope="scope">
           <el-button
+            v-if="scope.row.status>0"
             size="mini"
             type="primary"
             @click="$router.push({path:`evaluation/${scope.row.id}/evaluation-detail`,query:{course:scope.row.course}})"
@@ -153,11 +154,19 @@
             查看参与情况
           </el-button>
           <el-button
+            v-if="scope.row.status===0"
+            size="mini"
+            type="danger"
+            @click="handleDelete(scope.row.id)"
+          >
+            删除
+          </el-button>
+          <!-- <el-button
             size="mini"
             @click="$router.push(`/course-evaluation/my-course/${scope.row.id}/student`)"
           >
             查看班级学生
-          </el-button>
+          </el-button> -->
         </template>
       </el-table-column>
     </el-table>
@@ -177,8 +186,8 @@ import { ElForm } from 'element-ui/types/form'
 import * as m from '@/api/model'
 
 @Component({})
-export default class CourseClass extends Vue {
-  data:m.CourseClass[] = []
+export default class Evaluation extends Vue {
+  data =[]
   total = 0
   loading = true
   semesterList:m.Semester[] = []
@@ -235,7 +244,7 @@ export default class CourseClass extends Vue {
 
   async requestData() {
     this.loading = true
-    const res = await this.api.queryCourseEvaluation(this.queryOptions)
+    const res = await this.api.getMyCourseEvaluation(this.queryOptions)
     this.data = res.data.list
     this.total = res.data.total
     this.loading = false
@@ -261,6 +270,17 @@ export default class CourseClass extends Vue {
   handleFilter() {
     this.queryOptions.page = 1
     this.requestData()
+  }
+
+  async handleDelete(id:number) {
+    const res = await this.api.deleteEvaluation(id)
+    if (res.code === 0) {
+      this.$message({
+        type: 'success',
+        message: '删除成功!'
+      })
+      this.requestData()
+    }
   }
 }
 </script>

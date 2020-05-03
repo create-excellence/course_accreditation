@@ -22,7 +22,7 @@
         <el-input
           v-model="queryOptions.name"
           placeholder="学生姓名"
-          maxlength="10"
+          maxlength="20"
         />
       </el-form-item>
       <el-form-item>
@@ -231,7 +231,7 @@
           <el-input
             v-model="editForm.name"
             placeholder="请输入学生姓名"
-            maxlength="10"
+            maxlength="20"
           />
         </el-form-item>
         <el-form-item
@@ -259,7 +259,7 @@
           <el-input
             v-model="editForm.grade"
             placeholder="请输入年级"
-            maxlength="10"
+            maxlength="20"
           />
         </el-form-item>
         <el-form-item
@@ -313,6 +313,7 @@
     <excel-dialog
       action="/student/batchSave"
       :show.sync="showExcelDialog"
+      download="学生导入模板.xls"
       @requestData="requestData"
     />
   </div>

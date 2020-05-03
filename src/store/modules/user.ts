@@ -75,7 +75,6 @@ class User extends VuexModule implements IUserState {
     const roles = data.role || []
     setToken(token)
     this.SET_TOKEN(token)
-    this.SET_ROLES(roles)
     this.SET_NAME(name)
     this.SET_AVATAR(avatar)
   }
@@ -115,6 +114,7 @@ class User extends VuexModule implements IUserState {
     removeToken()
     this.SET_TOKEN('')
     this.SET_ROLES([])
+    location.reload()
   }
 }
 
