@@ -4,7 +4,8 @@ import { UserModule } from '@/store/modules/user'
 import * as m from '@/api/model'
 
 const service = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API,
+  baseURL: 'http://localhost:8880/v1',
+  // baseURL: process.env.VUE_APP_BASE_API,
   timeout: 5000
 })
 

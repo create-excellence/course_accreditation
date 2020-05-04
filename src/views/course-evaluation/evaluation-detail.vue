@@ -49,6 +49,7 @@
         align="center"
         label="序号"
         type="index"
+        :index="indexMethod"
       />
       <el-table-column
         align="center"
@@ -100,7 +101,7 @@
       <el-table-column
         align="center"
         label="操作"
-        width="300px"
+        width="200px"
       >
         <template slot-scope="scope">
           <el-button
@@ -183,6 +184,12 @@ export default class CourseClass extends Vue {
   handleFilter() {
     this.queryOptions.page = 1
     this.requestData()
+  }
+
+  indexMethod(index:number) {
+    let curpage = this.queryOptions.page // 单前页码，具体看组件取值
+    let limitpage = this.queryOptions.pageSize // 每页条数，具体是组件取值
+    return (index + 1) + (curpage - 1) * limitpage
   }
 }
 </script>

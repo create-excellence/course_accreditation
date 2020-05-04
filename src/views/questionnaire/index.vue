@@ -102,7 +102,7 @@
             type="primary"
             @click="$router.push(`/questionnaire/${scope.row.id}/course-target`)"
           >
-            查看问卷
+            编辑问卷
           </el-button>
           <el-button
             size="mini"
